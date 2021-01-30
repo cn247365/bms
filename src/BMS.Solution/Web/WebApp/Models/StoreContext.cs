@@ -15,8 +15,9 @@ namespace WebApp.Models
   {
 
 
-   public StoreContext()
-        : base("Name=DefaultConnection") {
+    public StoreContext()
+         : base("Name=DefaultConnection")
+    {
       //获取登录用户信息,tenantid
       //QueryFilterManager.AllowPropertyFilter = true;
       //var claimsidentity = (ClaimsIdentity)HttpContext.Current.User?.Identity;
@@ -32,15 +33,21 @@ namespace WebApp.Models
 
     }
     //业务相关
-   
-     public DbSet<Company> Companies { get; set; }
-   
 
+    public DbSet<Company> Companies { get; set; }
     public DbSet<Attachment> Attachments { get; set; }
-    //业务相关
+    public DbSet<Employee> Employees {get;set;}
+    public DbSet<Book> Books { get; set; }
+    public DbSet<BookPicture> BookPictures { get; set; }
+    public DbSet<CheckOut> CheckOuts { get; set; }
+    public DbSet<Stock> Stocks { get; set; }
+    public DbSet<Comment> Comments { get; set; }
+    public DbSet<Favorite> Favorites { get; set; }
+        //业务相关
 
     #region 系统必须
-    public DbSet<CodeItem> CodeItems { get; set; }
+        public DbSet<CodeItem> CodeItems
+    { get; set; }
     public DbSet<MenuItem> MenuItems { get; set; }
     public DbSet<RoleMenu> RoleMenus { get; set; }
     public DbSet<DataTableImportMapping> DataTableImportMappings { get; set; }
@@ -89,7 +96,7 @@ namespace WebApp.Models
     public override int SaveChanges()
     {
       var currentDateTime = DateTime.Now;
-      var claimsidentity =(ClaimsIdentity)HttpContext.Current?.User.Identity;
+      var claimsidentity = (ClaimsIdentity)HttpContext.Current?.User.Identity;
       var tenantclaim = claimsidentity?.FindFirst("http://schemas.microsoft.com/identity/claims/tenantid");
       var tenantid = Convert.ToInt32(tenantclaim?.Value);
       foreach (var auditableEntity in this.ChangeTracker.Entries<Entity>())
@@ -133,7 +140,7 @@ namespace WebApp.Models
       #region 设置特殊格式以及浮点型长度
       //统一设置Decimal 长度（数据库实际位数可以缩短）
       //modelBuilder.Properties<decimal>().Configure(c => c.HasPrecision(18, 5));
-      
+
 
 
 

@@ -1,0 +1,688 @@
+﻿@model WebApp.Models.CheckOut
+<script type="text/javascript">
+  //全屏事件
+  document.addEventListener('panel.onfullscreen', () => {
+       $checkoutdg.datagrid('resize');
+   });
+    //是否开启行内编辑
+    var SUBEDITINLINE = true;
+   //初始化 CheckOut datagrid
+   var $checkoutdg = $('#checkout_datagrid');
+   //当前行记录
+   var checkout = {};
+   //datagrid CRUD method
+    var checkout_editIndex = undefined;
+    //取消编辑恢复状态
+    function checkout_rejectChanges() {
+		$checkoutdg.datagrid('rejectChanges');
+		checkout_editIndex = undefined;
+    }
+    //重新加载数据
+    function checkout_reloadData() {
+			$checkoutdg.datagrid('unselectAll');
+            $checkoutdg.datagrid('uncheckAll');
+	        $checkoutdg.datagrid('reload');
+	}
+    //关闭编辑状态
+	function checkout_endEditing() {
+			if (checkout_editIndex === undefined) {
+                return true; 
+            }
+			if ($checkoutdg.datagrid('validateRow', checkout_editIndex)) {
+				$checkoutdg.datagrid('endEdit', checkout_editIndex);
+				checkout_editIndex = undefined;
+                return true;
+			} else {
+				const invalidinput = $('input.validatebox-invalid',$checkoutdg.datagrid('getPanel'));
+                const fieldnames = invalidinput.map((index, item) => {
+                  return $(item).attr('placeholder') || $(item).attr('id');
+                });
+                $.messager.alert('提示', `${Array.from(fieldnames)} 输入有误.`, 'error');
+				return false;
+			}
+		}
+    //单击列开启编辑功能
+	function checkout_onClickCell(index, field) {
+			const _operates = ['_operate1', 'ck'];
+             $('button[name*=\'checkoutdeleterowbutton\']').prop('disabled', false);
+			if (!SUBEDITINLINE || $.inArray(field, _operates) >= 0) {
+				return false;
+			}
+			if (checkout_editIndex !== index) {
+				if (checkout_endEditing()) {
+					$checkoutdg.datagrid('selectRow', index)
+							.datagrid('beginEdit', index);
+                    //checkout_editIndex = index;
+					var ed = $checkoutdg.datagrid('getEditor', { index: index, field: field });
+					if (ed) {
+						($(ed.target).data('textbox') ? $(ed.target).textbox('textbox') : $(ed.target)).focus();
+					}
+				} else {
+					$checkoutdg.datagrid('selectRow', checkout_editIndex);
+				}
+			}
+		}
+    //双击弹出编辑当前行对话框
+    function checkout_onDblClickRow(index, row) {
+        if (!SUBEDITINLINE) {
+            open_checkoutdlg(index, row, 'Modified');
+        }
+    }
+    //订阅对话框新增返回事件
+    $(document).on('checkout_form.add', (e, index,item) => {
+        $checkoutdg.datagrid("insertRow",
+            {
+                index: 0,
+                row: item
+            });
+        $("button[name*='checkout_cancelchangesbutton']").prop('disabled', false);
+        $("button[name*='checkout_savechangesbutton']").prop('disabled', false);
+    });
+    //订阅对话框修改返回事件
+    $(document).on('checkout_form.edit', (e,index, item) => {
+        $checkoutdg.datagrid('updateRow', {
+            index: index,
+            row: item
+        });
+        $("button[name*='checkout_cancelchangesbutton']").prop('disabled', false);
+        $("button[name*='checkout_savechangesbutton']").prop('disabled', false);
+    });
+    //新增记录
+    function checkout_appendItem() {
+       const $employeeform = $('#employee_form');
+       if ($employeeform.form('enableValidation').form('validate')) {
+          const employee = $employeeform.serializeJSON();
+       const item = {
+          Qty: 1, 
+BorrowDate: moment().format('YYYY-MM-DD HH:mm:ss'), 
+BackDate: null, 
+Days: 1, 
+Status: 'Check Out', 
+Notified: false, 
+Expiry: false, 
+
+          EmployeeId:employee.Id
+        };
+      if (!SUBEDITINLINE) {
+        open_checkoutdlg(0, item, 'Added');
+      } else {
+			if (checkout_endEditing()) {
+				//对必填字段进行默认值初始化
+				$checkoutdg.datagrid('insertRow', 
+                               { index: 0,
+                                  row: item 
+                               });
+				checkout_editIndex = 0;
+				$checkoutdg.datagrid('selectRow', checkout_editIndex)
+						.datagrid('beginEdit', checkout_editIndex);
+			}
+        }
+        }
+	 }
+    //删除编辑的行
+	function checkout_removeItem() {
+		if (checkout_editIndex !== undefined) {  
+            const delindex = checkout_editIndex;
+			$checkoutdg.datagrid('cancelEdit', delindex)
+					           .datagrid('deleteRow', delindex);
+            $("button[name*='checkout_cancelchangesbutton']").prop('disabled', false);
+            $("button[name*='checkout_savechangesbutton']").prop('disabled', false);
+        } else {
+           const rows = $checkoutdg.datagrid('getChecked');
+           rows.slice().reverse().forEach(row => {
+                const rowindex = $checkoutdg.datagrid('getRowIndex', row);
+                $checkoutdg.datagrid('deleteRow', rowindex);
+                $("button[name*='checkout_cancelchangesbutton']").prop('disabled', false);
+                $("button[name*='checkout_savechangesbutton']").prop('disabled', false);
+            });
+        }
+	}
+    //删除选中的行
+    function checkout_deleteChecked() {
+            const rows = $checkoutdg.datagrid('getChecked');
+            if (rows.length > 0) {
+                var id = rows.filter(item=>item.Id!=null).map(item => {
+                    return item.Id;
+                });
+                $.messager.confirm('确认', `你确定要删除这 <span class='badge bg-color-red'>${id.length}</span> 行记录?`,result => {
+                    if (result) {
+                        $.post('/CheckOuts/DeleteChecked', { id: id })
+                         .done(response => {
+                            if (response.success) {
+                                $checkoutdg.datagrid('reload');
+                            } else {
+                                $.messager.alert('错误', response.err,'error');
+                            }
+                         });
+                    }
+                });  
+            } else {
+                $.messager.alert('提示', '请先选择要删除的记录!','question');
+            }
+      }
+  //获取修改的行
+  function checkout_getChanges() {
+    if (checkout_endEditing()) {
+      if ($checkoutdg.datagrid('getChanges').length > 0) {
+        const inserted = $checkoutdg.datagrid('getChanges', 'inserted').map(item => {
+          item.TrackingState = 1;
+          return item;
+        });
+        const deleted = $checkoutdg.datagrid('getChanges', 'deleted').map(item => {
+          item.TrackingState = 3;
+          return item;
+        });
+        const updated = $checkoutdg.datagrid('getChanges', 'updated').map(item => {
+          item.TrackingState = 2;
+          return item;
+        });
+        //过滤已删除的重复项
+        const changed = inserted.concat(updated.filter(item => {
+          return !deleted.includes(item);
+        })).concat(deleted);
+        return { success: true, changed };
+      } else {
+        return { success: true, changed:undefined};
+      }
+    } else {
+      return { success: false,changed:undefined };
+    }
+  }
+  //提交修改的数据
+  //function checkout_acceptChanges() {
+  //  $checkoutdg.datagrid('acceptChanges');
+  //}
+  //提交保存后台数据库
+  async function checkout_acceptChanges() {
+			if (checkout_endEditing()) {
+				if ($checkoutdg.datagrid('getChanges').length > 0) {
+					const inserted = $checkoutdg.datagrid('getChanges', 'inserted').map(item => {
+                       item.TrackingState = 1;
+                       return item;
+                    });
+					const deleted = $checkoutdg.datagrid('getChanges', 'deleted').map(item => {
+                       item.TrackingState = 3;
+                       return item;
+                    });
+					const updated = $checkoutdg.datagrid('getChanges', 'updated').map(item => {
+                       item.TrackingState = 2;
+                       return item;
+                    });
+					//过滤已删除的重复项
+                    const changed = inserted.concat(updated.filter(item => {
+                           return !deleted.includes(item);
+                         })).concat(deleted);
+                   //console.table(changed);
+				  if (MODELSTATE === 'Added') {
+                    return { success:true, changed };
+                  } else {
+                    const response = await $.post('/CheckOuts/AcceptChanges', {checkouts:changed});
+                    response.changed = undefined;
+    				if (response.success) {
+							toastr.success('保存明细成功'); 
+							$checkoutdg.datagrid('acceptChanges');
+							checkout_reloadData()
+                            return { success:true}; 
+				    } else {
+                           $.messager.alert('错误', response.err ,'error');
+                           return { success:false, err:response.err };
+                    }
+                   }
+				} else {
+                  return { success: true, changed: undefined};
+                }
+			} else {
+               return { success: false };
+            }
+      }
+
+
+$(() => {
+    $checkoutdg.datagrid({
+            fit: false,
+            height: 300,
+            rownumbers: true,
+            striped: true,
+            idField: 'Id',
+            sortName: 'Id',
+            sortOrder: 'asc',
+            remoteFilter: true,
+            singleSelect: true,
+            checkOnSelect: false,
+		    selectOnCheck: false,
+            method: 'post',
+            pageList: [10, 20, 50, 100,1000],
+            pagination: true,
+            clientPaging:false,
+            pagination: true,
+            onDblClickRow: checkout_onDblClickRow,
+            onClickCell: checkout_onClickCell,
+            onBeforeLoad: function () {
+
+            },
+            onLoadSuccess: function (data) {
+              checkout_editIndex = undefined;
+              $("button[name*='checkout_deleterowbutton']").prop('disabled', true);
+              $("button[name*='checkout_cancelchangesbutton']").prop('disabled', true);
+              $("button[name*='checkout_savechangesbutton']").prop('disabled', true);
+            },
+            onCheck: function () {
+                $("button[name*='checkout_deleterowbutton']").prop('disabled', false);
+            },
+            onUncheck: function () {
+               const checked = $(this).datagrid('getChecked').length > 0;
+               $("button[name*='checkout_deleterowbutton']").prop('disabled', !checked);
+            },
+           onCheckAll: function (rows) {
+              if (rows.length > 0) {
+                 $("button[name*='checkout_deleterowbutton']").prop('disabled', false);
+              }
+           },
+           onUncheckAll: function () {
+              $("button[name*='checkout_deleterowbutton']").prop('disabled', true);           
+           },
+            onSelect: function(index,row) {
+              checkout = row;
+            },
+            onBeforeEdit: function (index, row) {
+                 checkout_editIndex = index;
+                 row.editing = true;
+                 $("button[name*='checkout_deleterowbutton']").prop('disabled', false);
+                 $("button[name*='checkout_cancelchangesbutton']").prop('disabled', false);
+                 $("button[name*='checkout_savechangesbutton']").prop('disabled', false);
+                 $(this).datagrid('refreshRow', index);
+             },
+            onBeginEdit: function (index, row) {
+               //const editors = $(this).datagrid('getEditors', index);
+				        const bookid = $(this).datagrid('getEditor', { index: index, field: 'BookId' });
+				        $(bookid.target).combobox('options')
+                             .onSelect = (item) => {
+                               row['BookId'] = item.Id;
+                               row['BookTitle'] = item.Title;
+                             };	
+                        $(bookid.target).combobox('textbox')
+                             .bind('keydown', (e)=> {
+                               if (e.keyCode === 13) {
+                                 $(e.target).emulateTab();
+                               }
+                         });
+  
+            },
+            onEndEdit: function (index, row) {
+
+             },
+             onAfterEdit: function (index, row) {
+                   row.editing = false;
+                   checkout_editIndex = undefined;
+                   $(this).datagrid('refreshRow', index);
+             },
+             onCancelEdit: function (index, row) {
+                checkout_editIndex = undefined;
+                row.editing = false;
+                $("button[name*='checkout_deleterowbutton']").prop('disabled', true);
+              $("button[name*='checkout_cancelchangesbutton']").prop('disabled', true);
+              $("button[name*='checkout_savechangesbutton']").prop('disabled', true);
+                $(this).datagrid('refreshRow', index);
+            },
+            columns: [[
+            { field: 'ck', checkbox: true },
+		     
+           {     /*Global Id*/
+                 field:'GlobalId', 
+                 title:'<span class="text-danger">*</span>  @Html.DisplayNameFor(model => model.GlobalId)', 
+                 width:100, 
+                 align:'right',
+                 editor:{
+                        type:'numberbox',
+                        options:{ 
+                                  id:'editor_GlobalId',
+                                  prompt:'@Html.DescriptionFor(model => model.GlobalId)',
+                                  required:true,
+                                  validType:'integer',
+                                  
+                                 } 
+                        },
+                sortable:true,
+                resizable:true,
+                hidden:false,
+                formatter:intformatter
+			},
+			{    /*Short Name*/
+                 field:'ShortName', 
+                 title:'<span class="text-danger">*</span>  @Html.DisplayNameFor(model => model.ShortName)', 
+                 width:120,
+                 editor:{
+                          type:'textbox',
+                          options:{ 
+                                 id:'editor_ShortName',
+                                 prompt:'@Html.DescriptionFor(model => model.ShortName)',
+                                 required:true, 
+                                 validType: 'length[0,0]' 
+                                 }  
+                       },
+                 sortable:true,
+                 hidden:false,
+                 resizable:true 
+			},
+			{    /*Display Name*/
+                 field:'DisplayName', 
+                 title:'  @Html.DisplayNameFor(model => model.DisplayName)', 
+                 width:160,
+                 editor:{
+                          type:'textbox',
+                          options:{ 
+                                 id:'editor_DisplayName',
+                                 prompt:'@Html.DescriptionFor(model => model.DisplayName)',
+                                 required:false, 
+                                 validType: 'length[0,0]' 
+                                 }  
+                       },
+                 sortable:true,
+                 hidden:false,
+                 resizable:true 
+			},
+			{   /*Book*/
+                field:'BookId',
+                title:'<span class="text-danger">*</span> @Html.DisplayNameFor(model => model.BookId)',
+                width:160, 
+                sortable:true, 
+                resizable:true,
+                hidden:false,
+                formatter:function(value,row) {
+				        return row.BookTitle;
+					},
+			    editor:{
+					    type:'combobox',
+					    options:{
+                                id:'editor_BookId',
+								prompt:'@Html.DescriptionFor(model => model.BookId)' ,
+                                mode: 'remote',
+                                panelHeight:'auto',
+                                editable: false,
+								valueField:'Id',
+								textField:'Title',
+								method:'get',
+								url:'/Employees/GetBooks',
+								required:true
+							}
+						}
+			},
+			{    /*BarCode*/
+                 field:'BarCode', 
+                 title:'  @Html.DisplayNameFor(model => model.BarCode)', 
+                 width:120,
+                 editor:{
+                          type:'textbox',
+                          options:{ 
+                                 id:'editor_BarCode',
+                                 prompt:'@Html.DescriptionFor(model => model.BarCode)',
+                                 required:false, 
+                                 validType: 'length[0,0]' 
+                                 }  
+                       },
+                 sortable:true,
+                 hidden:false,
+                 resizable:true 
+			},
+			{    /*ISBN*/
+                 field:'ISBN', 
+                 title:'  @Html.DisplayNameFor(model => model.ISBN)', 
+                 width:120,
+                 editor:{
+                          type:'textbox',
+                          options:{ 
+                                 id:'editor_ISBN',
+                                 prompt:'@Html.DescriptionFor(model => model.ISBN)',
+                                 required:false, 
+                                 validType: 'length[0,0]' 
+                                 }  
+                       },
+                 sortable:true,
+                 hidden:false,
+                 resizable:true 
+			},
+			{    /*Book Name*/
+                 field:'Title', 
+                 title:'  @Html.DisplayNameFor(model => model.Title)', 
+                 width:200,
+                 editor:{
+                          type:'textbox',
+                          options:{ 
+                                 id:'editor_Title',
+                                 prompt:'@Html.DescriptionFor(model => model.Title)',
+                                 required:false, 
+                                 validType: 'length[0,0]' 
+                                 }  
+                       },
+                 sortable:true,
+                 hidden:false,
+                 resizable:true 
+			},
+           {     /*Qty*/
+                 field:'Qty', 
+                 title:'<span class="text-danger">*</span>  @Html.DisplayNameFor(model => model.Qty)', 
+                 width:100, 
+                 align:'right',
+                 editor:{
+                        type:'numberbox',
+                        options:{ 
+                                  id:'editor_Qty',
+                                  prompt:'@Html.DescriptionFor(model => model.Qty)',
+                                  required:true,
+                                  validType:'integer',
+                                  
+                                 } 
+                        },
+                sortable:true,
+                resizable:true,
+                hidden:false,
+                formatter:intformatter
+			},
+            {   /*Borrow Date*/
+                field:'BorrowDate', 
+                title:'<span class="text-danger">*</span>  @Html.DisplayNameFor(model => model.BorrowDate)', 
+                width:100, 
+                align:'right', 
+                hidden:false,
+                editor:{
+                      type:'datebox',
+                      options:{
+                           id:'editor_BorrowDate',
+                           prompt:'@Html.DescriptionFor(model => model.BorrowDate)',
+                           required:true
+                           }  
+                      },
+                sortable:true, 
+                resizable:true, 
+                formatter:dateformatter 
+			} ,
+            {   /*Back Date*/
+                field:'BackDate', 
+                title:'  @Html.DisplayNameFor(model => model.BackDate)', 
+                width:100, 
+                align:'right', 
+                hidden:false,
+                editor:{
+                      type:'datebox',
+                      options:{
+                           id:'editor_BackDate',
+                           prompt:'@Html.DescriptionFor(model => model.BackDate)',
+                           required:false
+                           }  
+                      },
+                sortable:true, 
+                resizable:true, 
+                formatter:dateformatter 
+			} ,
+            {   /*Date of expiry*/
+                field:'ExpiryDate', 
+                title:'  @Html.DisplayNameFor(model => model.ExpiryDate)', 
+                width:100, 
+                align:'right', 
+                hidden:false,
+                editor:{
+                      type:'datebox',
+                      options:{
+                           id:'editor_ExpiryDate',
+                           prompt:'@Html.DescriptionFor(model => model.ExpiryDate)',
+                           required:false
+                           }  
+                      },
+                sortable:true, 
+                resizable:true, 
+                formatter:dateformatter 
+			} ,
+           {     /*Days*/
+                 field:'Days', 
+                 title:'<span class="text-danger">*</span>  @Html.DisplayNameFor(model => model.Days)', 
+                 width:100, 
+                 align:'right',
+                 editor:{
+                        type:'numberbox',
+                        options:{ 
+                                  id:'editor_Days',
+                                  prompt:'@Html.DescriptionFor(model => model.Days)',
+                                  required:true,
+                                  validType:'integer',
+                                  
+                                 } 
+                        },
+                sortable:true,
+                resizable:true,
+                hidden:false,
+                formatter:intformatter
+			},
+            {    /*Status*/
+                 field:'Status',
+                 title:'  @Html.DisplayNameFor(model => model.Status)', 
+                 width:100,
+                 align:'right',
+                 hidden:false,
+			     editor:{ 
+                       /*需要在键值对中维护status枚举值并生成JavaScript才能使用*/
+                       type:'statuseditor',
+					   options:{
+                                id:'editor_Status',
+						     	prompt:'@Html.DescriptionFor(model => model.Status)' ,
+								required:false
+                                } 
+					   },
+			     formatter: statusformatter
+			},
+			{  /*Notified*/
+               field:'Notified', 
+               title:'<span class="text-danger">*</span>  @Html.DisplayNameFor(model => model.Notified)', 
+               width:90, 
+               align:'center',
+               hidden:false,
+               editor:{
+                      type:'checkbox',
+                      options:{
+                                 id:'editor_Notified',
+                                 prompt:'@Html.DescriptionFor(model => model.Notified)', 
+                                 required:true
+                               } 
+                      },
+                formatter:booleanformatter,
+                sortable:true, 
+                resizable:true 
+			},
+			{  /*Expiry*/
+               field:'Expiry', 
+               title:'<span class="text-danger">*</span>  @Html.DisplayNameFor(model => model.Expiry)', 
+               width:90, 
+               align:'center',
+               hidden:false,
+               editor:{
+                      type:'checkbox',
+                      options:{
+                                 id:'editor_Expiry',
+                                 prompt:'@Html.DescriptionFor(model => model.Expiry)', 
+                                 required:true
+                               } 
+                      },
+                formatter:booleanformatter,
+                sortable:true, 
+                resizable:true 
+			},
+            ]]
+            })
+            .datagrid('enableFilter',[
+                /*需要在键值队维护好status枚举值*/
+				{    /*Status*/
+					  field: 'Status',
+					  type: 'statusfilter',
+					  options: {
+					
+						       }
+				 },
+				{    /*Global Id*/
+					  field: 'GlobalId',
+					  type: 'numberbox',
+					  op:['equal','notequal','less','lessorequal','greater','greaterorequal']
+				  },
+				{    /*Qty*/
+					  field: 'Qty',
+					  type: 'numberbox',
+					  op:['equal','notequal','less','lessorequal','greater','greaterorequal']
+				  },
+				{    /*Days*/
+					  field: 'Days',
+					  type: 'numberbox',
+					  op:['equal','notequal','less','lessorequal','greater','greaterorequal']
+				  },
+				{     /*Borrow Date*/
+					  field: 'BorrowDate',
+					  type: 'dateRange',
+					  options: {
+					  }
+				  },
+				{     /*Back Date*/
+					  field: 'BackDate',
+					  type: 'dateRange',
+					  options: {
+					  }
+				  },
+				{     /*Date of expiry*/
+					  field: 'ExpiryDate',
+					  type: 'dateRange',
+					  options: {
+					  }
+				  },
+				{     /*Notified*/
+					  field: 'Notified',
+					  type: 'booleanfilter'
+     			 },
+				{     /*Expiry*/
+					  field: 'Expiry',
+					  type: 'booleanfilter'
+     			 },
+		   {
+				 field: 'BookId',
+				 type:'combobox',
+				 options:{
+								valueField:'Id',
+								textField:'Title',
+								method:'get',
+								url:'/Employees/GetBooks',
+								onChange: function (value) {
+								if (value == '') {
+									$checkoutdg.datagrid('removeFilterRule', 'BookId');
+								} else {
+									$checkoutdg.datagrid('addFilterRule', {
+										field: 'BookId',
+										op: 'equal',
+										value: value
+								});
+							}
+							$checkoutdg.datagrid('doFilter');
+						}
+					}
+		   },
+		   ]);
+  });
+      
+</script>
+
+
+ 

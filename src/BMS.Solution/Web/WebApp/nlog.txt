@@ -94,3 +94,4 @@
 2021-01-30 12:02:30.7944|FATAL|WebApp.MvcApplication|??????????“CommonServiceLocator, Version=2.0.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0”?????????????????????????????? (???? HRESULT:0x80131040)
 2021-01-30 12:17:47.6928|FATAL|WebApp.MvcApplication|The controller for path '/FileUpload/Download' was not found or does not implement IController.
 2021-01-30 12:18:06.8197|FATAL|WebApp.MvcApplication|The controller for path '/FileUpload/Download' was not found or does not implement IController.
+2021-01-30 19:12:15.9167|FATAL|WebApp.MvcApplication|A public action method 'Notfound' was not found on controller 'WebApp.Controllers.ErrorController'.

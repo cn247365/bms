@@ -432,6 +432,7 @@
     <Compile Include="App_Start\ViewBagFilter.cs" />
     <Compile Include="App_Start\WebApi.UnityConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
     <Compile Include="Controllers\TenantsController.cs" />
     <Compile Include="Controllers\AccountManageController.cs" />
@@ -476,13 +477,25 @@
     <Compile Include="Migrations\202101300332366_init_database.designer.cs">
       <DependentUpon>202101300332366_init_database.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101301153437_create_tables.cs" />
+    <Compile Include="Migrations\202101301153437_create_tables.designer.cs">
+      <DependentUpon>202101301153437_create_tables.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attachment.cs" />
+    <Compile Include="Models\Book.cs" />
+    <Compile Include="Models\BookPicture.cs" />
+    <Compile Include="Models\CheckOut.cs" />
+    <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Dto\CompanyTreeItem.cs" />
+    <Compile Include="Models\Employee.cs" />
+    <Compile Include="Models\Favorite.cs" />
     <Compile Include="Models\Metadata\AttachmentMetadata.cs" />
+    <Compile Include="Models\Metadata\EmployeeMetadata.cs" />
     <Compile Include="Models\resource\Attachment.Designer.cs" />
     <Compile Include="Models\resource\Category.Designer.cs" />
     <Compile Include="Models\resource\Covid19.Designer.cs" />
+    <Compile Include="Models\resource\Employee.Designer.cs" />
     <Compile Include="Models\resource\FaceLib.Designer.cs" />
     <Compile Include="Models\resource\Log.Designer.cs" />
     <Compile Include="Models\resource\Notification.Designer.cs" />
@@ -490,6 +503,7 @@
     <Compile Include="Models\resource\OrderDetail.Designer.cs" />
     <Compile Include="Models\resource\Product.Designer.cs" />
     <Compile Include="Models\resource\Work.Designer.cs" />
+    <Compile Include="Models\Stock.cs" />
     <Compile Include="Models\ViewModel\ErrorViewModel.cs" />
     <Compile Include="Models\ViewModel\logtotal.cs" />
     <Compile Include="Models\ViewModel\NavigationModel.cs" />
@@ -499,6 +513,8 @@
     <Compile Include="Repositories\Attachments\AttachmentRepository.cs" />
     <Compile Include="Repositories\Companies\CompanyQuery.cs" />
     <Compile Include="Repositories\Companies\CompanyRepository.cs" />
+    <Compile Include="Repositories\Employees\EmployeeQuery.cs" />
+    <Compile Include="Repositories\Employees\EmployeeRepository.cs" />
     <Compile Include="Repositories\Notifications\NotificationQuery.cs" />
     <Compile Include="Repositories\Notifications\NotificationRepository.cs" />
     <Compile Include="resource\Global.zh-TW.Designer.cs">
@@ -520,6 +536,8 @@
     <Compile Include="Services\Attachments\IAttachmentService.cs" />
     <Compile Include="Services\Companies\CompanyService.cs" />
     <Compile Include="Services\Companies\ICompanyService.cs" />
+    <Compile Include="Services\Employees\EmployeeService.cs" />
+    <Compile Include="Services\Employees\IEmployeeService.cs" />
     <Compile Include="Services\Notifications\INotificationService.cs" />
     <Compile Include="Services\Notifications\NotificationService.cs" />
     <Compile Include="SmartHubs\ChatHub.cs" />
@@ -3834,6 +3852,15 @@
     <Content Include="Views\Error\ServerError.cshtml" />
     <Content Include="Views\Companies\Index.cshtml" />
     <Content Include="Views\Companies\_PopupDetailFormView.cshtml" />
+    <Content Include="Views\Employees\_DisplayForm.cshtml" />
+    <Content Include="Views\Employees\_PopupDetailFormView.cshtml" />
+    <Content Include="Views\Employees\Index.cshtml" />
+    <Content Include="Views\Employees\Create.cshtml" />
+    <Content Include="Views\Employees\Details.cshtml" />
+    <Content Include="Views\Employees\Edit.cshtml" />
+    <Content Include="Views\Employees\EditForm.cshtml" />
+    <Content Include="Views\Employees\_CheckOutEditForm.cshtml" />
+    <Content Include="Views\Employees\_checkoutdatagridjsview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Helpers\Extensions.Logging\" />
@@ -3920,6 +3947,9 @@
     <EmbeddedResource Include="Migrations\202101300332366_init_database.resx">
       <DependentUpon>202101300332366_init_database.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101301153437_create_tables.resx">
+      <DependentUpon>202101301153437_create_tables.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Models\resource\Attachment.en-US.resx" />
     <EmbeddedResource Include="Models\resource\Attachment.resx" />
     <EmbeddedResource Include="Models\resource\Attachment.zh-TW.resx" />
@@ -3929,6 +3959,9 @@
     <EmbeddedResource Include="Models\resource\Covid19.en-US.resx" />
     <EmbeddedResource Include="Models\resource\Covid19.resx" />
     <EmbeddedResource Include="Models\resource\Covid19.zh-TW.resx" />
+    <EmbeddedResource Include="Models\resource\Employee.en-US.resx" />
+    <EmbeddedResource Include="Models\resource\Employee.resx" />
+    <EmbeddedResource Include="Models\resource\Employee.zh-TW.resx" />
     <EmbeddedResource Include="Models\resource\FaceLib.en-US.resx" />
     <EmbeddedResource Include="Models\resource\FaceLib.resx" />
     <EmbeddedResource Include="Models\resource\FaceLib.zh-TW.resx" />

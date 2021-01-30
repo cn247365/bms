@@ -84,7 +84,8 @@ namespace WebApp
       //业务实体相关
       container.RegisterType<IRepositoryAsync<Attachment>, Repository<Attachment>>();
       container.RegisterType<IAttachmentService, AttachmentService>();
-     
+      container.RegisterType<IRepositoryAsync<Employee>, Repository<Employee>>();
+      container.RegisterType<IEmployeeService, EmployeeService>();
 
 
     }
