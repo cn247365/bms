@@ -1,0 +1,96 @@
+2021-01-02 15:48:22.2888|FATAL|WebApp.MvcApplication|A public action method 'GetProducts' was not found on controller 'WebApp.Controllers.OrdersController'.
+2021-01-02 15:48:23.2460|FATAL|WebApp.MvcApplication|A public action method 'GetProducts' was not found on controller 'WebApp.Controllers.OrdersController'.
+2021-01-02 15:50:34.3067|FATAL|WebApp.MvcApplication|A public action method 'GetProducts' was not found on controller 'WebApp.Controllers.OrdersController'.
+2021-01-02 15:50:35.3598|FATAL|WebApp.MvcApplication|A public action method 'GetProducts' was not found on controller 'WebApp.Controllers.OrdersController'.
+2021-01-02 15:52:16.6307|FATAL|WebApp.MvcApplication|A public action method 'GetProducts' was not found on controller 'WebApp.Controllers.OrdersController'.
+2021-01-02 15:52:17.8390|FATAL|WebApp.MvcApplication|A public action method 'GetProducts' was not found on controller 'WebApp.Controllers.OrdersController'.
+2021-01-02 15:54:55.1508|FATAL|WebApp.MvcApplication|The controller for path '/media/sound/messagebox.mp3' was not found or does not implement IController.
+2021-01-02 16:01:44.1587|FATAL|WebApp.MvcApplication|A public action method 'GetProducts' was not found on controller 'WebApp.Controllers.OrdersController'.
+2021-01-02 16:01:44.3958|FATAL|WebApp.MvcApplication|A public action method 'GetProducts' was not found on controller 'WebApp.Controllers.OrdersController'.
+2021-01-02 16:02:07.3627|FATAL|WebApp.MvcApplication|A public action method 'GetProducts' was not found on controller 'WebApp.Controllers.OrdersController'.
+2021-01-02 16:02:07.3657|FATAL|WebApp.MvcApplication|A public action method 'GetProducts' was not found on controller 'WebApp.Controllers.OrdersController'.
+2021-01-02 20:07:48.3147|FATAL|WebApp.MvcApplication|A public action method 'GetProducts' was not found on controller 'WebApp.Controllers.OrdersController'.
+2021-01-02 20:07:48.3147|FATAL|WebApp.MvcApplication|A public action method 'GetProducts' was not found on controller 'WebApp.Controllers.OrdersController'.
+2021-01-02 20:07:50.3448|FATAL|WebApp.MvcApplication|?????“Unity.Exceptions.InvalidRegistrationException”????
+2021-01-02 20:08:29.1404|FATAL|WebApp.MvcApplication|?????“Unity.Exceptions.InvalidRegistrationException”????
+2021-01-02 20:08:34.0111|FATAL|WebApp.MvcApplication|A public action method 'GetProducts' was not found on controller 'WebApp.Controllers.OrdersController'.
+2021-01-02 20:08:34.0111|FATAL|WebApp.MvcApplication|A public action method 'GetProducts' was not found on controller 'WebApp.Controllers.OrdersController'.
+2021-01-02 20:08:34.9331|FATAL|WebApp.MvcApplication|?????“Unity.Exceptions.InvalidRegistrationException”????
+2021-01-02 20:08:44.0684|FATAL|WebApp.MvcApplication|A public action method 'GetProducts' was not found on controller 'WebApp.Controllers.OrdersController'.
+2021-01-02 20:08:44.2958|FATAL|WebApp.MvcApplication|A public action method 'GetProducts' was not found on controller 'WebApp.Controllers.OrdersController'.
+2021-01-02 20:08:45.3633|FATAL|WebApp.MvcApplication|?????“Unity.Exceptions.InvalidRegistrationException”????
+2021-01-30 11:33:23.4062|FATAL|WebApp.MvcApplication|The view 'Error' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/Home/Error.aspx
+~/Views/Home/Error.ascx
+~/Views/Shared/Error.aspx
+~/Views/Shared/Error.ascx
+~/Views/Home/Error.cshtml
+~/Views/Home/Error.vbhtml
+~/Views/Shared/Error.cshtml
+~/Views/Shared/Error.vbhtml
+2021-01-30 11:33:36.0977|FATAL|WebApp.MvcApplication|The view 'Error' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/Home/Error.aspx
+~/Views/Home/Error.ascx
+~/Views/Shared/Error.aspx
+~/Views/Shared/Error.ascx
+~/Views/Home/Error.cshtml
+~/Views/Home/Error.vbhtml
+~/Views/Shared/Error.cshtml
+~/Views/Shared/Error.vbhtml
+2021-01-30 11:45:38.1957|FATAL|WebApp.MvcApplication|The view 'Error' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/Home/Error.aspx
+~/Views/Home/Error.ascx
+~/Views/Shared/Error.aspx
+~/Views/Shared/Error.ascx
+~/Views/Home/Error.cshtml
+~/Views/Home/Error.vbhtml
+~/Views/Shared/Error.cshtml
+~/Views/Shared/Error.vbhtml
+2021-01-30 11:56:55.3560|FATAL|WebApp.MvcApplication|The view 'Error' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/MenuItems/Error.aspx
+~/Views/MenuItems/Error.ascx
+~/Views/Shared/Error.aspx
+~/Views/Shared/Error.ascx
+~/Views/MenuItems/Error.cshtml
+~/Views/MenuItems/Error.vbhtml
+~/Views/Shared/Error.cshtml
+~/Views/Shared/Error.vbhtml
+2021-01-30 11:57:52.4106|FATAL|WebApp.MvcApplication|The view 'Error' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/Companies/Error.aspx
+~/Views/Companies/Error.ascx
+~/Views/Shared/Error.aspx
+~/Views/Shared/Error.ascx
+~/Views/Companies/Error.cshtml
+~/Views/Companies/Error.vbhtml
+~/Views/Shared/Error.cshtml
+~/Views/Shared/Error.vbhtml
+2021-01-30 11:58:32.0063|FATAL|WebApp.MvcApplication|The view 'Error' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/Companies/Error.aspx
+~/Views/Companies/Error.ascx
+~/Views/Shared/Error.aspx
+~/Views/Shared/Error.ascx
+~/Views/Companies/Error.cshtml
+~/Views/Companies/Error.vbhtml
+~/Views/Shared/Error.cshtml
+~/Views/Shared/Error.vbhtml
+2021-01-30 11:58:50.3166|FATAL|WebApp.MvcApplication|The view 'Error' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/Companies/Error.aspx
+~/Views/Companies/Error.ascx
+~/Views/Shared/Error.aspx
+~/Views/Shared/Error.ascx
+~/Views/Companies/Error.cshtml
+~/Views/Companies/Error.vbhtml
+~/Views/Shared/Error.cshtml
+~/Views/Shared/Error.vbhtml
+2021-01-30 12:01:04.0805|FATAL|WebApp.MvcApplication|The view 'Index' or its master was not found or no view engine supports the searched locations. The following locations were searched:
+~/Views/Companies/Index.aspx
+~/Views/Companies/Index.ascx
+~/Views/Shared/Index.aspx
+~/Views/Shared/Index.ascx
+~/Views/Companies/Index.cshtml
+~/Views/Companies/Index.vbhtml
+~/Views/Shared/Index.cshtml
+~/Views/Shared/Index.vbhtml
+2021-01-30 12:02:30.7944|FATAL|WebApp.MvcApplication|??????????“CommonServiceLocator, Version=2.0.5.0, Culture=neutral, PublicKeyToken=489b6accfaf20ef0”?????????????????????????????? (???? HRESULT:0x80131040)
+2021-01-30 12:17:47.6928|FATAL|WebApp.MvcApplication|The controller for path '/FileUpload/Download' was not found or does not implement IController.
+2021-01-30 12:18:06.8197|FATAL|WebApp.MvcApplication|The controller for path '/FileUpload/Download' was not found or does not implement IController.
