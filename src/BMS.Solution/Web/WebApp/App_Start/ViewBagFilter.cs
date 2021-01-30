@@ -55,8 +55,8 @@ namespace WebApp
         controller.ViewBag.ThemeVersion = Settings.ThemeVersion;
         controller.ViewBag.Bs4v = "4.5.0";
         controller.ViewBag.IconPrefix = Settings.IconPrefix;
-        controller.ViewBag.Logo = "logo.png";
-        controller.ViewBag.LogoM = "logo.png";
+        controller.ViewBag.Logo = "voith-logo.png";
+        controller.ViewBag.LogoM = "voith-logo.png";
         controller.ViewBag.Copyright = $"2019 © { Settings.AppName} &nbsp; { Settings.Company} <a href='http://beian.miit.gov.cn/' class='text-primary fw-500' title='苏ICP备{Settings.ICP}号' target='_blank'>工业和信息化部备案管理系统网站 苏ICP备{Settings.ICP}号 </a>";
         controller.ViewBag.CopyrightInverse = $"2019 © { Settings.AppName} &nbsp;{ Settings.Company} <a href='http://beian.miit.gov.cn/' class='text-primary fw-500' title='苏ICP备{Settings.ICP}号' target='_blank'>工业和信息化部备案管理系统网站 苏ICP备{Settings.ICP}号 </a>";
       }

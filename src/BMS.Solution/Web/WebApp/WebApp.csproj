@@ -1002,6 +1002,7 @@
     <Content Include="Content\img\thumbs\pic-7.png" />
     <Content Include="Content\img\thumbs\pic-8.png" />
     <Content Include="Content\img\thumbs\pic-9.png" />
+    <Content Include="Content\img\voith-logo.png" />
     <Content Include="Content\media\sound\bigbox.mp3" />
     <Content Include="Content\media\sound\license.txt" />
     <Content Include="Content\media\sound\messagebox.mp3" />

@@ -259,7 +259,7 @@ namespace WebApp.Controllers
         stream.Seek(0, SeekOrigin.Begin);
         uploadfile.InputStream.Seek(0, SeekOrigin.Begin);
         var data = await NPOIHelper.GetDataTableFromExcelAsync(stream, ext);
-        await this.employeeService.ImportDataTable(data, Auth.GetFullName());
+        await this.employeeService.ImportDataTable(data, Auth.GetGivenName());
         await this.unitOfWork.SaveChangesAsync();
         if (autosave)
         {
