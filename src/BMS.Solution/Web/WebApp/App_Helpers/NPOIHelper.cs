@@ -143,13 +143,15 @@ namespace WebApp
       {
         var fieldname = PropertyInfos[i].Name;
         var fieldtype = PropertyInfos[i].PropertyType;
-        if (colopts.Where(n => n.FieldName == fieldname && n.IgnoredColumn).Any())
-        {
-          var displayname = colopts.Where(x => x.FieldName == fieldname).FirstOrDefault()?.SourceFieldName;
-          var cell = headerRow.CreateCell(col++);
-          cell.SetCellValue(displayname ?? fieldname);
-          cell.CellStyle = headstyle;
-        }
+
+          if (colopts.Where(n => n.FieldName == fieldname && n.IgnoredColumn).Any())
+          {
+            var displayname = colopts.Where(x => x.FieldName == fieldname).FirstOrDefault()?.SourceFieldName;
+            var cell = headerRow.CreateCell(col++);
+            cell.SetCellValue(displayname ?? fieldname);
+            cell.CellStyle = headstyle;
+          }
+        
 
       }
       for (var i = 0; i < list.Count; i++)

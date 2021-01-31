@@ -21,7 +21,7 @@ namespace WebApp.Services
     private readonly IAppCache cache;
     private readonly IRepositoryAsync<CodeItem> _repository;
     private readonly IDataTableImportMappingService _mappingservice;
- 
+
     public CodeItemService(
       IAppCache cache,
       IRepositoryAsync<CodeItem> repository,
@@ -98,12 +98,31 @@ namespace WebApp.Services
     public async Task<Stream> ExportExcelAsync(string filterRules = "", string sort = "Id", string order = "asc")
     {
       var filters = JsonConvert.DeserializeObject<IEnumerable<filterRule>>(filterRules);
+      var expcolopts = await this._mappingservice.Queryable()
+             .Where(x => x.EntitySetName == "CodeItem")
+             .Select(x => new ExpColumnOpts()
+             {
+               EntitySetName = x.EntitySetName,
+               FieldName = x.FieldName,
+               IgnoredColumn = x.IgnoredColumn,
+               SourceFieldName = x.SourceFieldName
+             }).ToArrayAsync();
+      var codeitems = await this.Query(new CodeItemQuery()
+        .Withfilter(filters))
+        .OrderBy(n => n.OrderBy(sort, order))
+        .SelectAsync();
 
-      var codeitems = await this.Query(new CodeItemQuery().Withfilter(filters)).OrderBy(n => n.OrderBy(sort, order)).SelectAsync();
+      var datarows = codeitems.Select(n => new
+      {
+        Id = n.Id,
+        CodeType=n.CodeType,
+        Code = n.Code,
+        Text = n.Text,
+        Description = n.Description,
+        IsDisabled = n.IsDisabled
+      }).ToList();
 
-      var datarows = codeitems.Select(n => new { Id = n.Id, Code = n.Code, Text = n.Text, Description = n.Description, IsDisabled = n.IsDisabled }).ToList();
-
-      return await NPOIHelper.ExportExcelAsync("Codeitem", datarows);
+      return await NPOIHelper.ExportExcelAsync("Codeitem", datarows, expcolopts);
 
     }
 
@@ -246,16 +265,18 @@ namespace WebApp.Services
       File.WriteAllText(filename, sw.ToString());
     }
     private async Task<IEnumerable<CodeItem>> GetCodeItemsAsync() => await this.Queryable().Where(x => x.IsDisabled == 0).OrderBy(x => x.CodeType).ThenBy(x => x.Code).ToListAsync();
-    public async Task<string> Code2Text(string type, string code) {
-      var items =await  this.cache.GetOrAddAsync(type,  async () =>
-      {
-        var list = await this.Queryable().Where(x => x.CodeType == type).ToListAsync();
-        return list;
-      });
+    public async Task<string> Code2Text(string type, string code)
+    {
+      var items = await this.cache.GetOrAddAsync(type, async () =>
+     {
+       var list = await this.Queryable().Where(x => x.CodeType == type).ToListAsync();
+       return list;
+     });
       return items.Where(x => x.Code == code).First().Text;
 
-      }
-    public async Task<string> Text2Code(string type, string text) {
+    }
+    public async Task<string> Text2Code(string type, string text)
+    {
       var items = await this.cache.GetOrAddAsync(type, async () =>
       {
         var list = await this.Queryable().Where(x => x.CodeType == type).ToListAsync();

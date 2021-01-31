@@ -126,3 +126,5 @@
 2021-01-31 10:04:22.4674|FATAL|WebApp.MvcApplication|A public action method 'GetEmployees' was not found on controller 'WebApp.Controllers.BooksController'.
 2021-01-31 10:04:23.8945|FATAL|WebApp.MvcApplication|A public action method 'GetComments' was not found on controller 'WebApp.Controllers.BooksController'.
 2021-01-31 10:04:43.8852|FATAL|WebApp.MvcApplication|A public action method 'GetComments' was not found on controller 'WebApp.Controllers.BooksController'.
+2021-01-31 11:42:58.7396|FATAL|WebApp.MvcApplication|?“??????”???? DataTableImportMapping?
+2021-01-31 12:20:52.5156|FATAL|WebApp.MvcApplication|A public action method 'CheckIn' was not found on controller 'WebApp.Controllers.CheckOutsController'.

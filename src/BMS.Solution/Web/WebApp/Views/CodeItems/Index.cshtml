@@ -136,11 +136,10 @@
         formData.append("filterRules", filterRules);
         formData.append("sort", "Id");
         formData.append("order", "asc");
-        $.postDownload("/CodeItems/ExportExcel", formData, function (fileName) {
-            $.messager.progress("close");
-            console.log(fileName);
-
-        })
+      $.postDownload("/CodeItems/ExportExcel", formData).then(res => {
+        $.messager.progress("close");
+        toastr.success('导出完成!');
+      });
     }
             //datagrid 增删改查操作
             var $dg = $("#codeitems_datagrid");

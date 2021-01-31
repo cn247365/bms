@@ -190,8 +190,8 @@ namespace WebApp.Services
             EntitySetName = row["实体名称"].ToString(),
             DefaultValue = row["默认值"].ToString(),
             FieldName = row["字段名"].ToString(),
-            IgnoredColumn = Convert.ToBoolean(row["是否忽略导出"].ToString()),
-            IsEnabled = Convert.ToBoolean(row["是否启用"].ToString()),
+            IgnoredColumn = Convert.ToBoolean(row["是否导出"].ToString()),
+            IsEnabled = Convert.ToBoolean(row["是否导入"].ToString()),
             IsRequired = Convert.ToBoolean(row["是否必填"].ToString()),
             SourceFieldName = row["Excel列名"].ToString(),
             RegularExpression = row["验证表达式"].ToString(),
@@ -227,7 +227,78 @@ namespace WebApp.Services
         IgnoredColumn = n.IgnoredColumn,
         RegularExpression = n.RegularExpression
       }).ToList();
-      return await NPOIHelper.ExportExcelAsync("DataTableImportMapping", datarows);
+
+      var opts = new List<ExpColumnOpts>() { new ExpColumnOpts {
+         EntitySetName="DataTableImportMapping",
+          FieldName="EntitySetName",
+           IgnoredColumn=true,
+            SourceFieldName="实体名称"
+
+        },
+        new ExpColumnOpts {
+         EntitySetName="DataTableImportMapping",
+          FieldName="FieldName",
+           IgnoredColumn=true,
+            SourceFieldName="字段名"
+
+        },
+         new ExpColumnOpts {
+         EntitySetName="DataTableImportMapping",
+          FieldName="SourceFieldName",
+           IgnoredColumn=true,
+            SourceFieldName="Excel列名"
+
+        }
+         ,
+         new ExpColumnOpts {
+         EntitySetName="DataTableImportMapping",
+          FieldName="TypeName",
+           IgnoredColumn=true,
+            SourceFieldName="类型"
+
+        }
+         ,
+         new ExpColumnOpts {
+         EntitySetName="DataTableImportMapping",
+          FieldName="DefaultValue",
+           IgnoredColumn=true,
+            SourceFieldName="默认值"
+
+        }
+         ,
+         new ExpColumnOpts {
+         EntitySetName="DataTableImportMapping",
+          FieldName="IsRequired",
+           IgnoredColumn=true,
+            SourceFieldName="是否必填"
+
+        }
+         ,
+         new ExpColumnOpts {
+         EntitySetName="DataTableImportMapping",
+          FieldName="IsEnabled",
+           IgnoredColumn=true,
+            SourceFieldName="是否导入"
+
+        }
+         ,
+         new ExpColumnOpts {
+         EntitySetName="DataTableImportMapping",
+          FieldName="IgnoredColumn",
+           IgnoredColumn=true,
+            SourceFieldName="是否导出"
+
+        }
+         ,
+         new ExpColumnOpts {
+         EntitySetName="DataTableImportMapping",
+          FieldName="RegularExpression",
+           IgnoredColumn=true,
+            SourceFieldName="验证表达式"
+
+        }
+        };
+      return await NPOIHelper.ExportExcelAsync("DataTableImportMapping", datarows, opts.ToArray());
     }
   }
 }
