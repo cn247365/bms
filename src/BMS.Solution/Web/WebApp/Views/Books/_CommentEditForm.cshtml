@@ -1,0 +1,176 @@
+﻿@model WebApp.Models.Comment
+<div id="commentdlg" class="easyui-dialog"
+     title="Comment" style="width:600px;height:300px; display:none"
+     data-options="
+                iconCls: 'fal fa-window',
+                modal:true,
+                closed:true,
+                cache: false,
+                resizable:true,
+                width:620,
+                height:300,
+                buttons: [{
+                    text:'确认',
+                    handler:function(){
+                        confirm_commentform();
+                    }
+                },{
+                    text:'取消',
+                    handler:function(){
+                        $('#commentdlg').dialog('close');
+                    }
+                }]
+            ">
+<div class="panel-container show">
+      <div class="panel-content p-0">
+        <form id="comment_form" class="form-horizontal needs-validation" novalidate>
+          <fieldset class="form-group">
+            <div class="row h-100 align-items-center m-0 pt-1">
+    <!--系统主键-->
+	@Html.HiddenFor(model => model.Id)		
+             
+    <!--Content-->
+        <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.Content)" > @Html.DisplayNameFor(model => model.Content) </label>
+<div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+		<input id="@Html.IdFor(model => model.Content)" 
+							name="@Html.NameFor(model => model.Content)" 
+							value="@Html.ValueFor(model => model.Content)"
+							tabindex="1" 
+			     			class="easyui-textbox" 
+							type="text" 
+                            style="width:100%"
+							data-options="prompt:'@Html.DisplayNameFor(model => model.Content)',
+     						 required:false ,validType:'length[0,512]'" />
+    </div>
+             
+    <!--User Name-->
+        <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.UserName)" > @Html.DisplayNameFor(model => model.UserName) </label>
+<div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+		<input id="@Html.IdFor(model => model.UserName)" 
+							name="@Html.NameFor(model => model.UserName)" 
+							value="@Html.ValueFor(model => model.UserName)"
+							tabindex="2" 
+			     			class="easyui-textbox" 
+							type="text" 
+                            style="width:100%"
+							data-options="prompt:'@Html.DisplayNameFor(model => model.UserName)',
+     						 required:false ,validType:'length[0,20]'" />
+    </div>
+             
+    <!--Display Name-->
+        <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.DisplayName)" > @Html.DisplayNameFor(model => model.DisplayName) </label>
+<div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+		<input id="@Html.IdFor(model => model.DisplayName)" 
+							name="@Html.NameFor(model => model.DisplayName)" 
+							value="@Html.ValueFor(model => model.DisplayName)"
+							tabindex="3" 
+			     			class="easyui-textbox" 
+							type="text" 
+                            style="width:100%"
+							data-options="prompt:'@Html.DisplayNameFor(model => model.DisplayName)',
+     						 required:false ,validType:'length[0,56]'" />
+    </div>
+             
+     <!--Date-->
+          <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.PublishDate)" ><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.PublishDate) </label>
+		  <div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+          <input id="@Html.IdFor(model => model.PublishDate)" 
+							name="@Html.NameFor(model => model.PublishDate)" 
+							tabindex="4" 
+							class="easyui-datebox" 
+                            type="text"
+                            style="width:100%"
+							value="@Html.ValueFor(model => model.PublishDate)"
+							data-options="prompt:'@Html.DisplayNameFor(model => model.PublishDate)',
+								 formatter:dateformatter,
+                                 required:true " />
+     </div>
+             
+    <!--Evaluate-->
+        <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.Evaluate)" ><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Evaluate) </label>
+<div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+		<input id="@Html.IdFor(model => model.Evaluate)"
+							name="@Html.NameFor(model => model.Evaluate)" 
+							value="@Html.ValueFor(model => model.Evaluate)"
+							tabindex="5" 
+							class="easyui-numberbox" 
+							type="text" 
+                            style="width:100%"
+							data-options="prompt:'@Html.DisplayNameFor(model => model.Evaluate)',
+								 required:true,
+                                 formatter:intformatter,
+                                 parser:parsernumber
+                                 " />
+    </div>
+             
+       <!--Comment-->
+            <input type="hidden" id="CommentContent" name="CommentContent" value="">
+			<label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.ParentId)" ><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.ParentId) </label>
+            <div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+            <input id="@Html.IdFor(model => model.ParentId)"
+			       name="@Html.NameFor(model => model.ParentId)"
+				   value="@Html.ValueFor(model => model.ParentId)"
+                   style="width:100%"
+                   tabindex="6"
+				   class="easyui-combobox" 
+                   data-options="
+						prompt:'@Html.DisplayNameFor(model => model.ParentId)' ,
+						valueField: 'Id',
+						textField: 'Content' ,
+                        required:true,
+                        panelHeight:'auto',
+                        editable:false,
+						url: '/Comments/GetComments' ,
+						onSelect: function(item){
+                            $('#CommentContent').val(item.Content);
+				        }
+                        ">
+    </div>
+             
+      <!--Book-->
+      <input type="hidden" id="BookTitle" name="BookTitle" value="">
+	  <input id="@Html.IdFor(model => model.BookId)"
+			       name="@Html.NameFor(model => model.BookId)"
+				   value="@Html.ValueFor(model => model.BookId)"
+                   type="hidden" />
+             
+  
+           </div>
+       </fieldset>
+    </form>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+     var form_state = 'Added';
+     var current_index = -1;
+     var comment = {};
+ 
+     function open_commentdlg(index, row, state) {
+         form_state = state;
+         current_index = index;
+         comment = row;
+         $('#commentdlg').dialog('open');
+         if (form_state === 'Added') {
+             $('#commentdlg').dialog('setTitle', '新增明细');
+         } else {
+             $('#commentdlg').dialog('setTitle', '修改明细');
+         }
+         $('#comment_form').form('reset');
+         $('#comment_form').form('load', comment);
+     }
+     function confirm_commentform() {
+         $commentform = $('#comment_form');
+         if ($commentform.form('enableValidation').form('validate')) {
+             comment = $commentform.serializeJSON();
+             if (form_state === 'Added') {
+                 $(document).trigger('comment_form.add', [current_index, comment])
+             } else {
+                 $(document).trigger('comment_form.edit', [current_index, comment])
+             }
+             $('#commentdlg').dialog('close');
+         }
+     }
+ </script>
+
+ 

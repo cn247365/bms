@@ -56,36 +56,36 @@ License: You must have a valid license purchased only from wrapbootstrap.com (li
         @Html.AntiForgeryToken()
         @Html.ValidationBootstrap()
         <div class="form-group" style="position:relative;">
-          <label class="form-label" for="username">用户名</label>
-          <input type="text" id="email" name="email" class="form-control" placeholder="用户名或电子邮件" value="@Model.Email" required>
+          <label class="form-label" for="username">User Name</label>
+          <input type="text" id="email" name="email" class="form-control" placeholder="Short name or Email address" value="@Model.Email" required>
           <div class="invalid-tooltip">
-            请输入用户名或电子邮件.
+            please input short name.
           </div>
           <span class="help-block">
-            用户名或邮件
+            Short name or Email address
           </span>
         </div>
         <div class="form-group" style="position:relative;">
-          <label class="form-label" for="password">密码</label>
-          <input type="password" id="password" name="password" class="form-control" placeholder="密码" value="@Model.Password" required>
+          <label class="form-label" for="password">Password</label>
+          <input type="password" id="password" name="password" class="form-control" placeholder="Password" value="@Model.Password" required>
           <div class="invalid-tooltip">
-            请输入用密码.
+            please input password.
           </div>
           <span class="help-block">
-            默认密码:123456
+             
           </span>
         </div>
         <div class="form-group text-left">
           <div class="custom-control custom-checkbox">
             <input type="checkbox" class="custom-control-input" id="rememberme" name="rememberMe" value="true" checked="checked">
-            <label class="custom-control-label" for="rememberme"> 30天内免登录</label>
+            <label class="custom-control-label" for="rememberme"> Remember me</label>
           </div>
         </div>
-        <button type="submit" class="btn btn-default float-right">登 录</button>
+        <button type="submit" class="btn btn-default float-right">Login</button>
       </form>
     </div>
     <div class="blankpage-footer text-center">
-      <a href="@Url.Action("forgotpassword", "account")"><strong>忘记密码</strong></a> | <a href="@Url.Action("Register", "account")"><strong>注册新用户</strong></a>
+      <a href="@Url.Action("forgotpassword", "account")"><strong>Forgot Password</strong></a> | <a href="@Url.Action("Register", "account")"><strong>Register</strong></a>
     </div>
   </div>
 

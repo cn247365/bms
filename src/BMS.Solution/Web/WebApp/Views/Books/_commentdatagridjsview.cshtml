@@ -1,0 +1,434 @@
+﻿@model WebApp.Models.Comment
+<script type="text/javascript">
+  //全屏事件
+  document.addEventListener('panel.onfullscreen', () => {
+       $commentdg.datagrid('resize');
+   });
+    //是否开启行内编辑
+    var SUBEDITINLINE = true;
+   //初始化 Comment datagrid
+   var $commentdg = $('#comment_datagrid');
+   //当前行记录
+   var comment = {};
+   //datagrid CRUD method
+    var comment_editIndex = undefined;
+    //取消编辑恢复状态
+    function comment_rejectChanges() {
+		$commentdg.datagrid('rejectChanges');
+		comment_editIndex = undefined;
+    }
+    //重新加载数据
+    function comment_reloadData() {
+			$commentdg.datagrid('unselectAll');
+            $commentdg.datagrid('uncheckAll');
+	        $commentdg.datagrid('reload');
+	}
+    //关闭编辑状态
+	function comment_endEditing() {
+			if (comment_editIndex === undefined) {
+                return true; 
+            }
+			if ($commentdg.datagrid('validateRow', comment_editIndex)) {
+				$commentdg.datagrid('endEdit', comment_editIndex);
+				comment_editIndex = undefined;
+                return true;
+			} else {
+				const invalidinput = $('input.validatebox-invalid',$commentdg.datagrid('getPanel'));
+                const fieldnames = invalidinput.map((index, item) => {
+                  return $(item).attr('placeholder') || $(item).attr('id');
+                });
+                $.messager.alert('提示', `${Array.from(fieldnames)} 输入有误.`, 'error');
+				return false;
+			}
+		}
+    //单击列开启编辑功能
+	function comment_onClickCell(index, field) {
+			const _operates = ['_operate1', 'ck'];
+             $('button[name*=\'commentdeleterowbutton\']').prop('disabled', false);
+			if (!SUBEDITINLINE || $.inArray(field, _operates) >= 0) {
+				return false;
+			}
+			if (comment_editIndex !== index) {
+				if (comment_endEditing()) {
+					$commentdg.datagrid('selectRow', index)
+							.datagrid('beginEdit', index);
+                    //comment_editIndex = index;
+					var ed = $commentdg.datagrid('getEditor', { index: index, field: field });
+					if (ed) {
+						($(ed.target).data('textbox') ? $(ed.target).textbox('textbox') : $(ed.target)).focus();
+					}
+				} else {
+					$commentdg.datagrid('selectRow', comment_editIndex);
+				}
+			}
+		}
+    //双击弹出编辑当前行对话框
+    function comment_onDblClickRow(index, row) {
+        if (!SUBEDITINLINE) {
+            open_commentdlg(index, row, 'Modified');
+        }
+    }
+    //订阅对话框新增返回事件
+    $(document).on('comment_form.add', (e, index,item) => {
+        $commentdg.datagrid("insertRow",
+            {
+                index: 0,
+                row: item
+            });
+        $("button[name*='comment_cancelchangesbutton']").prop('disabled', false);
+        $("button[name*='comment_savechangesbutton']").prop('disabled', false);
+    });
+    //订阅对话框修改返回事件
+    $(document).on('comment_form.edit', (e,index, item) => {
+        $commentdg.datagrid('updateRow', {
+            index: index,
+            row: item
+        });
+        $("button[name*='comment_cancelchangesbutton']").prop('disabled', false);
+        $("button[name*='comment_savechangesbutton']").prop('disabled', false);
+    });
+    //新增记录
+    function comment_appendItem() {
+       const $bookform = $('#book_form');
+       if ($bookform.form('enableValidation').form('validate')) {
+          const book = $bookform.serializeJSON();
+       const item = {
+          UserName: $.getusername(), 
+PublishDate: moment().format('YYYY-MM-DD HH:mm:ss'), 
+
+          BookId:book.Id
+        };
+      if (!SUBEDITINLINE) {
+        open_commentdlg(0, item, 'Added');
+      } else {
+			if (comment_endEditing()) {
+				//对必填字段进行默认值初始化
+				$commentdg.datagrid('insertRow', 
+                               { index: 0,
+                                  row: item 
+                               });
+				comment_editIndex = 0;
+				$commentdg.datagrid('selectRow', comment_editIndex)
+						.datagrid('beginEdit', comment_editIndex);
+			}
+        }
+        }
+	 }
+    //删除编辑的行
+	function comment_removeItem() {
+		if (comment_editIndex !== undefined) {  
+            const delindex = comment_editIndex;
+			$commentdg.datagrid('cancelEdit', delindex)
+					           .datagrid('deleteRow', delindex);
+            $("button[name*='comment_cancelchangesbutton']").prop('disabled', false);
+            $("button[name*='comment_savechangesbutton']").prop('disabled', false);
+        } else {
+           const rows = $commentdg.datagrid('getChecked');
+           rows.slice().reverse().forEach(row => {
+                const rowindex = $commentdg.datagrid('getRowIndex', row);
+                $commentdg.datagrid('deleteRow', rowindex);
+                $("button[name*='comment_cancelchangesbutton']").prop('disabled', false);
+                $("button[name*='comment_savechangesbutton']").prop('disabled', false);
+            });
+        }
+	}
+    //删除选中的行
+    function comment_deleteChecked() {
+            const rows = $commentdg.datagrid('getChecked');
+            if (rows.length > 0) {
+                var id = rows.filter(item=>item.Id!=null).map(item => {
+                    return item.Id;
+                });
+                $.messager.confirm('确认', `你确定要删除这 <span class='badge bg-color-red'>${id.length}</span> 行记录?`,result => {
+                    if (result) {
+                        $.post('/Comments/DeleteChecked', { id: id })
+                         .done(response => {
+                            if (response.success) {
+                                $commentdg.datagrid('reload');
+                            } else {
+                                $.messager.alert('错误', response.err,'error');
+                            }
+                         });
+                    }
+                });  
+            } else {
+                $.messager.alert('提示', '请先选择要删除的记录!','question');
+            }
+      }
+  //获取修改的行
+  function comment_getChanges() {
+    if (comment_endEditing()) {
+      if ($commentdg.datagrid('getChanges').length > 0) {
+        const inserted = $commentdg.datagrid('getChanges', 'inserted').map(item => {
+          item.TrackingState = 1;
+          return item;
+        });
+        const deleted = $commentdg.datagrid('getChanges', 'deleted').map(item => {
+          item.TrackingState = 3;
+          return item;
+        });
+        const updated = $commentdg.datagrid('getChanges', 'updated').map(item => {
+          item.TrackingState = 2;
+          return item;
+        });
+        //过滤已删除的重复项
+        const changed = inserted.concat(updated.filter(item => {
+          return !deleted.includes(item);
+        })).concat(deleted);
+        return { success: true, changed };
+      } else {
+        return { success: true, changed:undefined};
+      }
+    } else {
+      return { success: false,changed:undefined };
+    }
+  }
+  //提交修改的数据
+  //function comment_acceptChanges() {
+  //  $commentdg.datagrid('acceptChanges');
+  //}
+  //提交保存后台数据库
+  async function comment_acceptChanges() {
+			if (comment_endEditing()) {
+				if ($commentdg.datagrid('getChanges').length > 0) {
+					const inserted = $commentdg.datagrid('getChanges', 'inserted').map(item => {
+                       item.TrackingState = 1;
+                       return item;
+                    });
+					const deleted = $commentdg.datagrid('getChanges', 'deleted').map(item => {
+                       item.TrackingState = 3;
+                       return item;
+                    });
+					const updated = $commentdg.datagrid('getChanges', 'updated').map(item => {
+                       item.TrackingState = 2;
+                       return item;
+                    });
+					//过滤已删除的重复项
+                    const changed = inserted.concat(updated.filter(item => {
+                           return !deleted.includes(item);
+                         })).concat(deleted);
+                   //console.table(changed);
+				  if (MODELSTATE === 'Added') {
+                    return { success:true, changed };
+                  } else {
+                    const response = await $.post('/Comments/AcceptChanges', {comments:changed});
+                    response.changed = undefined;
+    				if (response.success) {
+							toastr.success('保存明细成功'); 
+							$commentdg.datagrid('acceptChanges');
+							comment_reloadData()
+                            return { success:true}; 
+				    } else {
+                           $.messager.alert('错误', response.err ,'error');
+                           return { success:false, err:response.err };
+                    }
+                   }
+				} else {
+                  return { success: true, changed: undefined};
+                }
+			} else {
+               return { success: false };
+            }
+      }
+
+
+$(() => {
+    $commentdg.datagrid({
+            fit: false,
+            height: 300,
+            rownumbers: true,
+            striped: true,
+            idField: 'Id',
+            sortName: 'Id',
+            sortOrder: 'asc',
+            remoteFilter: true,
+            singleSelect: true,
+            checkOnSelect: false,
+		    selectOnCheck: false,
+            method: 'post',
+            pageList: [10, 20, 50, 100,1000],
+            pagination: true,
+            clientPaging:false,
+            pagination: true,
+            onBeforeLoad: function () {
+
+            },
+            onLoadSuccess: function (data) {
+              comment_editIndex = undefined;
+              $("button[name*='comment_deleterowbutton']").prop('disabled', true);
+              $("button[name*='comment_cancelchangesbutton']").prop('disabled', true);
+              $("button[name*='comment_savechangesbutton']").prop('disabled', true);
+            },
+            onCheck: function () {
+                $("button[name*='comment_deleterowbutton']").prop('disabled', false);
+            },
+            onUncheck: function () {
+               const checked = $(this).datagrid('getChecked').length > 0;
+               $("button[name*='comment_deleterowbutton']").prop('disabled', !checked);
+            },
+           onCheckAll: function (rows) {
+              if (rows.length > 0) {
+                 $("button[name*='comment_deleterowbutton']").prop('disabled', false);
+              }
+           },
+           onUncheckAll: function () {
+              $("button[name*='comment_deleterowbutton']").prop('disabled', true);           
+           },
+            onSelect: function(index,row) {
+              comment = row;
+            },
+            onBeforeEdit: function (index, row) {
+                 comment_editIndex = index;
+                 row.editing = true;
+                 $("button[name*='comment_deleterowbutton']").prop('disabled', false);
+                 $("button[name*='comment_cancelchangesbutton']").prop('disabled', false);
+                 $("button[name*='comment_savechangesbutton']").prop('disabled', false);
+                 $(this).datagrid('refreshRow', index);
+             },
+            onBeginEdit: function (index, row) {
+               //const editors = $(this).datagrid('getEditors', index);
+				        const parentid = $(this).datagrid('getEditor', { index: index, field: 'ParentId' });
+				        $(parentid.target).combobox('options')
+                             .onSelect = (item) => {
+                               row['ParentId'] = item.Id;
+                               row['ParentContent'] = item.Content;
+                             };	
+                        $(parentid.target).combobox('textbox')
+                             .bind('keydown', (e)=> {
+                               if (e.keyCode === 13) {
+                                 $(e.target).emulateTab();
+                               }
+                         });
+  
+            },
+            onEndEdit: function (index, row) {
+
+             },
+             onAfterEdit: function (index, row) {
+                   row.editing = false;
+                   comment_editIndex = undefined;
+                   $(this).datagrid('refreshRow', index);
+             },
+             onCancelEdit: function (index, row) {
+                comment_editIndex = undefined;
+                row.editing = false;
+                $("button[name*='comment_deleterowbutton']").prop('disabled', true);
+              $("button[name*='comment_cancelchangesbutton']").prop('disabled', true);
+              $("button[name*='comment_savechangesbutton']").prop('disabled', true);
+                $(this).datagrid('refreshRow', index);
+            },
+            columns: [[
+            { field: 'ck', checkbox: true },
+		     
+			{    /*Content*/
+                 field:'Content', 
+                 title:'  @Html.DisplayNameFor(model => model.Content)', 
+                 width:200,
+                 editor:{
+                          type:'textbox',
+                          options:{ 
+                                 id:'editor_Content',
+                                 prompt:'@Html.DescriptionFor(model => model.Content)',
+                                 required:false, 
+                                 validType: 'length[0,512]' 
+                                 }  
+                       },
+                 sortable:true,
+                 hidden:false,
+                 resizable:true 
+			},
+			{    /*User Name*/
+                 field:'UserName', 
+                 title:'  @Html.DisplayNameFor(model => model.UserName)', 
+                 width:120,
+                 editor:{
+                          type:'textbox',
+                          options:{ 
+                                 id:'editor_UserName',
+                                 prompt:'@Html.DescriptionFor(model => model.UserName)',
+                                 required:false, 
+                                 validType: 'length[0,20]' 
+                                 }  
+                       },
+                 sortable:true,
+                 hidden:false,
+                 resizable:true 
+			},
+			{    /*Display Name*/
+                 field:'DisplayName', 
+                 title:'  @Html.DisplayNameFor(model => model.DisplayName)', 
+                 width:160,
+                 editor:{
+                          type:'textbox',
+                          options:{ 
+                                 id:'editor_DisplayName',
+                                 prompt:'@Html.DescriptionFor(model => model.DisplayName)',
+                                 required:false, 
+                                 validType: 'length[0,56]' 
+                                 }  
+                       },
+                 sortable:true,
+                 hidden:false,
+                 resizable:true 
+			},
+            {   /*Date*/
+                field:'PublishDate', 
+                title:'<span class="text-danger">*</span>  @Html.DisplayNameFor(model => model.PublishDate)', 
+                width:100, 
+                align:'right', 
+                hidden:false,
+                editor:{
+                      type:'datebox',
+                      options:{
+                           id:'editor_PublishDate',
+                           prompt:'@Html.DescriptionFor(model => model.PublishDate)',
+                           required:true
+                           }  
+                      },
+                sortable:true, 
+                resizable:true, 
+                formatter:dateformatter 
+			} ,
+           {     /*Evaluate*/
+                 field:'Evaluate', 
+                 title:'<span class="text-danger">*</span>  @Html.DisplayNameFor(model => model.Evaluate)', 
+                 width:100, 
+                 align:'right',
+                 editor:{
+                        type:'numberbox',
+                        options:{ 
+                                  id:'editor_Evaluate',
+                                  prompt:'@Html.DescriptionFor(model => model.Evaluate)',
+                                  required:true,
+                                  validType:'integer',
+                                  
+                                 } 
+                        },
+                sortable:true,
+                resizable:true,
+                hidden:false,
+                formatter:intformatter
+			},
+			
+            ]]
+            })
+            .datagrid('enableFilter',[
+				{    /*Evaluate*/
+					  field: 'Evaluate',
+					  type: 'numberbox',
+					  op:['equal','notequal','less','lessorequal','greater','greaterorequal']
+				  },
+				{     /*Date*/
+					  field: 'PublishDate',
+					  type: 'dateRange',
+					  options: {
+					  }
+				  },
+		   
+		   ]);
+  });
+      
+</script>
+
+
+ 

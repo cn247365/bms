@@ -1,0 +1,158 @@
+﻿﻿@model WebApp.Models.CheckOut
+  <div class="form-row">
+   @Html.HiddenFor(x=>x.Id)
+      
+       <!--Employee-->
+       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label"> <span class="text-danger">*</span> @Html.DisplayNameFor(model => model.EmployeeId)</label>
+   	        @Html.DropDownListFor(model => model.EmployeeId, ViewBag.EmployeeId as List<SelectListItem>, htmlAttributes: new { @class = "form-control" }) 
+       </div>
+
+		<!--Global Id-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label"> <span class="text-danger">*</span> @Html.DisplayNameFor(model => model.GlobalId)</label>
+            @Html.EditorFor(x => x.GlobalId, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.GlobalId) } })
+
+        </div>
+
+        <!--Short Name-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label"> <span class="text-danger">*</span> @Html.DisplayNameFor(model => model.ShortName)</label>
+			@Html.EditorFor(x => x.ShortName, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.ShortName) } })
+      
+         </div>
+
+        <!--Display Name-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.DisplayName)</label>
+			@Html.EditorFor(x => x.DisplayName, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.DisplayName) } })
+      
+         </div>
+
+     
+       <!--Book-->
+       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label"> <span class="text-danger">*</span> @Html.DisplayNameFor(model => model.BookId)</label>
+   	        @Html.DropDownListFor(model => model.BookId, ViewBag.BookId as List<SelectListItem>, htmlAttributes: new { @class = "form-control" }) 
+       </div>
+
+        <!--BarCode-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.BarCode)</label>
+			@Html.EditorFor(x => x.BarCode, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.BarCode) } })
+      
+         </div>
+
+        <!--ISBN-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.ISBN)</label>
+			@Html.EditorFor(x => x.ISBN, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.ISBN) } })
+      
+         </div>
+
+        <!--Book Name-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.Title)</label>
+			@Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Title) } })
+      
+         </div>
+
+		<!--Qty-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label"> <span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Qty)</label>
+            @Html.EditorFor(x => x.Qty, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.Qty) } })
+
+        </div>
+
+       <!--Borrow Date-->
+       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label"> <span class="text-danger">*</span> @Html.DisplayNameFor(model => model.BorrowDate)</label>
+            <div class="input-group">
+			  @Html.EditorFor(x => x.BorrowDate, 
+                         new { htmlAttributes = new { @class = "form-control datepicker",
+                               placeholder = Html.DisplayNameFor(x => x.BorrowDate ) } })
+               <div class="input-group-append">
+                                                            <span class="input-group-text fs-xl">
+                                                                <i class="fal fa-calendar-alt"></i>
+                                                            </span>
+                                                        </div>
+			 </div>
+         </div>
+
+       <!--Back Date-->
+       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.BackDate)</label>
+            <div class="input-group">
+			  @Html.EditorFor(x => x.BackDate, 
+                         new { htmlAttributes = new { @class = "form-control datepicker",
+                               placeholder = Html.DisplayNameFor(x => x.BackDate ) } })
+               <div class="input-group-append">
+                                                            <span class="input-group-text fs-xl">
+                                                                <i class="fal fa-calendar-alt"></i>
+                                                            </span>
+                                                        </div>
+			 </div>
+         </div>
+
+       <!--Date of expiry-->
+       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.ExpiryDate)</label>
+            <div class="input-group">
+			  @Html.EditorFor(x => x.ExpiryDate, 
+                         new { htmlAttributes = new { @class = "form-control datepicker",
+                               placeholder = Html.DisplayNameFor(x => x.ExpiryDate ) } })
+               <div class="input-group-append">
+                                                            <span class="input-group-text fs-xl">
+                                                                <i class="fal fa-calendar-alt"></i>
+                                                            </span>
+                                                        </div>
+			 </div>
+         </div>
+
+		<!--Days-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label"> <span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Days)</label>
+            @Html.EditorFor(x => x.Days, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.Days) } })
+
+        </div>
+
+        <!--Status-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.Status)</label>
+			@Html.EditorFor(x => x.Status, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Status) } })
+      
+         </div>
+
+		
+      <!--Notified-->
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+              <label class="form-label"> <span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Notified)</label>
+              <div class="custom-control custom-checkbox">
+                 <input id="@Html.IdFor(model => model.Notified)"
+                       name="@Html.NameFor(model => model.Notified)"
+                       value="true" @(Model.Notified ? "checked=\"checked\"" : "")
+                       class="custom-control-input"
+                       tabindex="6"
+                       type="checkbox" />
+                <label class="custom-control-label" for="@Html.IdFor(model => model.Notified)">@Html.DisplayNameFor(model => model.Notified)</label>
+            </div>
+      </div>
+
+		
+      <!--Expiry-->
+      <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+              <label class="form-label"> <span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Expiry)</label>
+              <div class="custom-control custom-checkbox">
+                 <input id="@Html.IdFor(model => model.Expiry)"
+                       name="@Html.NameFor(model => model.Expiry)"
+                       value="true" @(Model.Expiry ? "checked=\"checked\"" : "")
+                       class="custom-control-input"
+                       tabindex="6"
+                       type="checkbox" />
+                <label class="custom-control-label" for="@Html.IdFor(model => model.Expiry)">@Html.DisplayNameFor(model => model.Expiry)</label>
+            </div>
+      </div>
+
+	    
+</div>
+

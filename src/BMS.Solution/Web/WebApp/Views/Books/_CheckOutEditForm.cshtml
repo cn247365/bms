@@ -1,0 +1,333 @@
+﻿@model WebApp.Models.CheckOut
+<div id="checkoutdlg" class="easyui-dialog"
+     title="CheckOut" style="width:600px;height:300px; display:none"
+     data-options="
+                iconCls: 'fal fa-window',
+                modal:true,
+                closed:true,
+                cache: false,
+                resizable:true,
+                width:620,
+                height:300,
+                buttons: [{
+                    text:'确认',
+                    handler:function(){
+                        confirm_checkoutform();
+                    }
+                },{
+                    text:'取消',
+                    handler:function(){
+                        $('#checkoutdlg').dialog('close');
+                    }
+                }]
+            ">
+<div class="panel-container show">
+      <div class="panel-content p-0">
+        <form id="checkout_form" class="form-horizontal needs-validation" novalidate>
+          <fieldset class="form-group">
+            <div class="row h-100 align-items-center m-0 pt-1">
+    <!--系统主键-->
+	@Html.HiddenFor(model => model.Id)		
+             
+       <!--Employee-->
+            <input type="hidden" id="EmployeeShortName" name="EmployeeShortName" value="">
+			<label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.EmployeeId)" ><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.EmployeeId) </label>
+            <div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+            <input id="@Html.IdFor(model => model.EmployeeId)"
+			       name="@Html.NameFor(model => model.EmployeeId)"
+				   value="@Html.ValueFor(model => model.EmployeeId)"
+                   style="width:100%"
+                   tabindex="1"
+				   class="easyui-combobox" 
+                   data-options="
+						prompt:'@Html.DisplayNameFor(model => model.EmployeeId)' ,
+						valueField: 'Id',
+						textField: 'ShortName' ,
+                        required:true,
+                        panelHeight:'auto',
+                        editable:false,
+						url: '/CheckOuts/GetEmployees' ,
+						onSelect: function(item){
+                            $('#EmployeeShortName').val(item.ShortName);
+				        }
+                        ">
+    </div>
+             
+    <!--Global Id-->
+        <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.GlobalId)" ><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.GlobalId) </label>
+<div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+		<input id="@Html.IdFor(model => model.GlobalId)"
+							name="@Html.NameFor(model => model.GlobalId)" 
+							value="@Html.ValueFor(model => model.GlobalId)"
+							tabindex="2" 
+							class="easyui-numberbox" 
+							type="text" 
+                            style="width:100%"
+							data-options="prompt:'@Html.DisplayNameFor(model => model.GlobalId)',
+								 required:true,
+                                 formatter:intformatter,
+                                 parser:parsernumber
+                                 " />
+    </div>
+             
+    <!--Short Name-->
+        <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.ShortName)" ><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.ShortName) </label>
+<div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+		<input id="@Html.IdFor(model => model.ShortName)" 
+							name="@Html.NameFor(model => model.ShortName)" 
+							value="@Html.ValueFor(model => model.ShortName)"
+							tabindex="3" 
+			     			class="easyui-textbox" 
+							type="text" 
+                            style="width:100%"
+							data-options="prompt:'@Html.DisplayNameFor(model => model.ShortName)',
+     						 required:true ,validType:'length[0,20]'" />
+    </div>
+             
+    <!--Display Name-->
+        <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.DisplayName)" > @Html.DisplayNameFor(model => model.DisplayName) </label>
+<div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+		<input id="@Html.IdFor(model => model.DisplayName)" 
+							name="@Html.NameFor(model => model.DisplayName)" 
+							value="@Html.ValueFor(model => model.DisplayName)"
+							tabindex="4" 
+			     			class="easyui-textbox" 
+							type="text" 
+                            style="width:100%"
+							data-options="prompt:'@Html.DisplayNameFor(model => model.DisplayName)',
+     						 required:false ,validType:'length[0,56]'" />
+    </div>
+             
+      <!--Book-->
+      <input type="hidden" id="BookTitle" name="BookTitle" value="">
+	  <input id="@Html.IdFor(model => model.BookId)"
+			       name="@Html.NameFor(model => model.BookId)"
+				   value="@Html.ValueFor(model => model.BookId)"
+                   type="hidden" />
+             
+    <!--BarCode-->
+        <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.BarCode)" > @Html.DisplayNameFor(model => model.BarCode) </label>
+<div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+		<input id="@Html.IdFor(model => model.BarCode)" 
+							name="@Html.NameFor(model => model.BarCode)" 
+							value="@Html.ValueFor(model => model.BarCode)"
+							tabindex="6" 
+			     			class="easyui-textbox" 
+							type="text" 
+                            style="width:100%"
+							data-options="prompt:'@Html.DisplayNameFor(model => model.BarCode)',
+     						 required:false ,validType:'length[0,32]'" />
+    </div>
+             
+    <!--ISBN-->
+        <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.ISBN)" > @Html.DisplayNameFor(model => model.ISBN) </label>
+<div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+		<input id="@Html.IdFor(model => model.ISBN)" 
+							name="@Html.NameFor(model => model.ISBN)" 
+							value="@Html.ValueFor(model => model.ISBN)"
+							tabindex="7" 
+			     			class="easyui-textbox" 
+							type="text" 
+                            style="width:100%"
+							data-options="prompt:'@Html.DisplayNameFor(model => model.ISBN)',
+     						 required:false ,validType:'length[0,10]'" />
+    </div>
+             
+    <!--Book Name-->
+        <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.Title)" > @Html.DisplayNameFor(model => model.Title) </label>
+<div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+		<input id="@Html.IdFor(model => model.Title)" 
+							name="@Html.NameFor(model => model.Title)" 
+							value="@Html.ValueFor(model => model.Title)"
+							tabindex="8" 
+			     			class="easyui-textbox" 
+							type="text" 
+                            style="width:100%"
+							data-options="prompt:'@Html.DisplayNameFor(model => model.Title)',
+     						 required:false ,validType:'length[0,128]'" />
+    </div>
+             
+    <!--Qty-->
+        <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.Qty)" ><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Qty) </label>
+<div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+		<input id="@Html.IdFor(model => model.Qty)"
+							name="@Html.NameFor(model => model.Qty)" 
+							value="@Html.ValueFor(model => model.Qty)"
+							tabindex="9" 
+							class="easyui-numberbox" 
+							type="text" 
+                            style="width:100%"
+							data-options="prompt:'@Html.DisplayNameFor(model => model.Qty)',
+								 required:true,
+                                 formatter:intformatter,
+                                 parser:parsernumber
+                                 " />
+    </div>
+             
+    <!--Qty-->
+        <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.BackQty)" > @Html.DisplayNameFor(model => model.BackQty) </label>
+<div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+		<input id="@Html.IdFor(model => model.BackQty)"
+							name="@Html.NameFor(model => model.BackQty)" 
+							value="@Html.ValueFor(model => model.BackQty)"
+							tabindex="10" 
+							class="easyui-numberbox" 
+							type="text" 
+                            style="width:100%"
+							data-options="prompt:'@Html.DisplayNameFor(model => model.BackQty)',
+								 required:false,
+                                 formatter:intformatter,
+                                 parser:parsernumber
+                                 " />
+    </div>
+             
+     <!--Borrow Date-->
+          <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.BorrowDate)" ><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.BorrowDate) </label>
+		  <div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+          <input id="@Html.IdFor(model => model.BorrowDate)" 
+							name="@Html.NameFor(model => model.BorrowDate)" 
+							tabindex="11" 
+							class="easyui-datebox" 
+                            type="text"
+                            style="width:100%"
+							value="@Html.ValueFor(model => model.BorrowDate)"
+							data-options="prompt:'@Html.DisplayNameFor(model => model.BorrowDate)',
+								 formatter:dateformatter,
+                                 required:true " />
+     </div>
+             
+     <!--Back Date-->
+          <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.BackDate)" > @Html.DisplayNameFor(model => model.BackDate) </label>
+		  <div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+          <input id="@Html.IdFor(model => model.BackDate)" 
+							name="@Html.NameFor(model => model.BackDate)" 
+							tabindex="12" 
+							class="easyui-datebox" 
+                            type="text"
+                            style="width:100%"
+							value="@Html.ValueFor(model => model.BackDate)"
+							data-options="prompt:'@Html.DisplayNameFor(model => model.BackDate)',
+								 formatter:dateformatter,
+                                 required:false " />
+     </div>
+             
+     <!--Date of expiry-->
+          <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.ExpiryDate)" > @Html.DisplayNameFor(model => model.ExpiryDate) </label>
+		  <div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+          <input id="@Html.IdFor(model => model.ExpiryDate)" 
+							name="@Html.NameFor(model => model.ExpiryDate)" 
+							tabindex="13" 
+							class="easyui-datebox" 
+                            type="text"
+                            style="width:100%"
+							value="@Html.ValueFor(model => model.ExpiryDate)"
+							data-options="prompt:'@Html.DisplayNameFor(model => model.ExpiryDate)',
+								 formatter:dateformatter,
+                                 required:false " />
+     </div>
+             
+    <!--Days-->
+        <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.Days)" ><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Days) </label>
+<div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+		<input id="@Html.IdFor(model => model.Days)"
+							name="@Html.NameFor(model => model.Days)" 
+							value="@Html.ValueFor(model => model.Days)"
+							tabindex="14" 
+							class="easyui-numberbox" 
+							type="text" 
+                            style="width:100%"
+							data-options="prompt:'@Html.DisplayNameFor(model => model.Days)',
+								 required:true,
+                                 formatter:intformatter,
+                                 parser:parsernumber
+                                 " />
+    </div>
+             
+    <!--Status-->
+        <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.Status)" > @Html.DisplayNameFor(model => model.Status) </label>
+<div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+		<input id="@Html.IdFor(model => model.Status)" 
+							name="@Html.NameFor(model => model.Status)" 
+							value="@Html.ValueFor(model => model.Status)"
+							tabindex="15" 
+			     			class="easyui-textbox" 
+							type="text" 
+                            style="width:100%"
+							data-options="prompt:'@Html.DisplayNameFor(model => model.Status)',
+     						 required:false ,validType:'length[0,20]'" />
+    </div>
+             
+         
+        <!--Notified-->
+           <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.Notified)" ><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Notified) </label>
+<div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+           <div class="custom-control custom-checkbox pt-1">
+                      <input id="@Html.IdFor(model => model.Notified)"
+                                   name="@Html.NameFor(model => model.Notified)"
+                                   value="true" @(Model.Notified ? "checked=\"checked\"" : "")
+                                   data-unchecked-value="false"
+                                   tabindex="16"
+                                   class="custom-control-input"
+                                   type="checkbox" />
+                       <label class="custom-control-label" for="@Html.NameFor(model => model.Notified)"> @Html.DisplayNameFor(model => model.Notified)</label>
+          
+            </div>
+         </div>
+             
+         
+        <!--Expiry-->
+           <label class="col-md-2  col-sm-3 col-xs-3 col-3 form-label text-right p-0" for="@Html.IdFor(model => model.Expiry)" ><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Expiry) </label>
+<div class="col-md-4  col-sm-9 col-xs-9 col-9 mb-1">
+           <div class="custom-control custom-checkbox pt-1">
+                      <input id="@Html.IdFor(model => model.Expiry)"
+                                   name="@Html.NameFor(model => model.Expiry)"
+                                   value="true" @(Model.Expiry ? "checked=\"checked\"" : "")
+                                   data-unchecked-value="false"
+                                   tabindex="17"
+                                   class="custom-control-input"
+                                   type="checkbox" />
+                       <label class="custom-control-label" for="@Html.NameFor(model => model.Expiry)"> @Html.DisplayNameFor(model => model.Expiry)</label>
+          
+            </div>
+         </div>
+             
+  
+           </div>
+       </fieldset>
+    </form>
+  </div>
+</div>
+</div>
+<script type="text/javascript">
+     var form_state = 'Added';
+     var current_index = -1;
+     var checkout = {};
+ 
+     function open_checkoutdlg(index, row, state) {
+         form_state = state;
+         current_index = index;
+         checkout = row;
+         $('#checkoutdlg').dialog('open');
+         if (form_state === 'Added') {
+             $('#checkoutdlg').dialog('setTitle', '新增明细');
+         } else {
+             $('#checkoutdlg').dialog('setTitle', '修改明细');
+         }
+         $('#checkout_form').form('reset');
+         $('#checkout_form').form('load', checkout);
+     }
+     function confirm_checkoutform() {
+         $checkoutform = $('#checkout_form');
+         if ($checkoutform.form('enableValidation').form('validate')) {
+             checkout = $checkoutform.serializeJSON();
+             if (form_state === 'Added') {
+                 $(document).trigger('checkout_form.add', [current_index, checkout])
+             } else {
+                 $(document).trigger('checkout_form.edit', [current_index, checkout])
+             }
+             $('#checkoutdlg').dialog('close');
+         }
+     }
+ </script>
+
+ 

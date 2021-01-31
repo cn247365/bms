@@ -1,0 +1,718 @@
+﻿﻿@model WebApp.Models.Book
+<!-- 弹出编辑窗体表单 -->
+<div id="bookdetailwindow" class="easyui-window"
+     title="编辑Book"
+     data-options="modal:true,
+                    closed:true,
+                    minimizable:false,
+                    collapsible:false,
+                    maximized:false,
+                    iconCls:'fal fa-window',
+                    onRestore:function(){
+                      $bookpicturedg.datagrid('resize');
+                      $checkoutdg.datagrid('resize');
+                      $commentdg.datagrid('resize');
+                    },
+                    onMaximize:function(){
+                      $bookpicturedg.datagrid('resize');
+                      $checkoutdg.datagrid('resize');
+                      $commentdg.datagrid('resize');
+                    }
+                    " style="width:800px;height:450px;display:none">
+  <!-- toolbar -->
+  <div class="panel-content py-2 rounded-bottom border-faded border-left-0 border-right-0  text-muted bg-subtlelight-fade sticky-top">
+    <div class="d-flex justify-content-end pr-4">
+      <div class="btn-group btn-group-sm mr-1">
+        <button name="saveitembutton" class="btn btn-default">
+          <i class="fal fa-save"></i> @Html.L("Save")
+        </button>
+      </div>
+      <div class="btn-group btn-group-sm mr-1" id="deleteitem-btn-group">
+        <button name="deleteitembutton" class="btn btn-danger">
+          <i class="fal fa-trash-alt"></i> @Html.L("Delete")
+        </button>
+      </div>
+    </div>
+  </div>
+  <!-- panel container form  -->
+  <div class="panel-container show">
+    <div class="container">
+      <div class="panel-content">
+        <form id="book_form"
+              class="easyui-form form-horizontal padding-10"
+              method="post" novalidate>
+          @Html.AntiForgeryToken()
+          <!--Primary Key-->
+          @Html.HiddenFor(model => model.Id)
+          <fieldset class="form-group">
+            <div class="row h-100 align-items-center">
+
+              <!--Book Name-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Title)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.Title)"
+                       name="@Html.NameFor(model => model.Title)"
+                       value="@Html.ValueFor(model => model.Title)"
+                       tabindex="0" required
+                       class="easyui-textbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.Title)',
+								 required:true,
+                                 validType: 'length[0,128]'
+                                 " />
+              </div>
+
+              <!--Sub Title-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.SubTitle)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.SubTitle)"
+                       name="@Html.NameFor(model => model.SubTitle)"
+                       value="@Html.ValueFor(model => model.SubTitle)"
+                       tabindex="1"
+                       class="easyui-textbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.SubTitle)',
+								 required:false,
+                                 validType: 'length[0,128]'
+                                 " />
+              </div>
+              <!--ISBN-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.ISBN)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.ISBN)"
+                       name="@Html.NameFor(model => model.ISBN)"
+                       value="@Html.ValueFor(model => model.ISBN)"
+                       tabindex="12"
+                       class="easyui-textbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.ISBN)',
+								 required:false,
+                                 validType: 'length[0,20]'
+                                 " />
+              </div>
+
+              <!--ISBN10-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.ISBN10)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.ISBN10)"
+                       name="@Html.NameFor(model => model.ISBN10)"
+                       value="@Html.ValueFor(model => model.ISBN10)"
+                       tabindex="13"
+                       class="easyui-textbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.ISBN10)',
+								 required:false,
+                                 validType: 'length[0,20]'
+                                 " />
+              </div>
+              <!--Author-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Author)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.Author)"
+                       name="@Html.NameFor(model => model.Author)"
+                       value="@Html.ValueFor(model => model.Author)"
+                       tabindex="4"
+                       class="easyui-textbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.Author)',
+								 required:false,
+                                 validType: 'length[0,50]'
+                                 " />
+              </div>
+              <!--Publisher-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Publisher)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.Publisher)"
+                       name="@Html.NameFor(model => model.Publisher)"
+                       value="@Html.ValueFor(model => model.Publisher)"
+                       tabindex="6"
+                       class="easyui-textbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.Publisher)',
+								 required:false,
+                                 validType: 'length[0,128]'
+                                 " />
+              </div>
+              <!--Summary-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Summary)</label>
+              <div class="col-md-10 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.Summary)"
+                       name="@Html.NameFor(model => model.Summary)"
+                       value="@Html.ValueFor(model => model.Summary)"
+                       tabindex="5"
+                       class="easyui-textbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.Summary)',
+								 required:false,multiline:true, validType: 'length[0,4000]'
+                                 " />
+              </div>
+
+
+
+
+              <!--Pubplace-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Pubplace)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.Pubplace)"
+                       name="@Html.NameFor(model => model.Pubplace)"
+                       value="@Html.ValueFor(model => model.Pubplace)"
+                       tabindex="7"
+                       class="easyui-textbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.Pubplace)',
+								 required:false,
+                                 validType: 'length[0,128]'
+                                 " />
+              </div>
+
+
+              <!--Page-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Page)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.Page)"
+                       name="@Html.NameFor(model => model.Page)"
+                       value="@Html.ValueFor(model => model.Page)"
+                       tabindex="8"
+                       class="easyui-numberbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.Page)',
+								 required:true,formatter:intformatter,
+                                 parser:parsernumber,
+                                 " />
+              </div>
+
+              <!--Price-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Price)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.Price)"
+                       name="@Html.NameFor(model => model.Price)"
+                       value="@Html.ValueFor(model => model.Price)"
+                       tabindex="9"
+                       class="easyui-numberbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.Price)',
+								 required:true,formatter:numberformatter,
+                                 parser:parsernumber,precision:2,
+
+                                 " />
+
+              </div>
+
+
+              <!--PurchasingPrice-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.PurchasingPrice)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.PurchasingPrice)"
+                       name="@Html.NameFor(model => model.PurchasingPrice)"
+                       value="@Html.ValueFor(model => model.PurchasingPrice)"
+                       tabindex="10"
+                       class="easyui-numberbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.PurchasingPrice)',
+								 required:false,formatter:numberformatter,
+                                 parser:parsernumber,precision:2,
+
+                                 " />
+
+              </div>
+
+              <!--Binding-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Binding)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.Binding)"
+                       name="@Html.NameFor(model => model.Binding)"
+                       value="@Html.ValueFor(model => model.Binding)"
+                       tabindex="11"
+                       class="easyui-textbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.Binding)',
+								 required:false,
+                                 validType: 'length[0,128]'
+                                 " />
+              </div>
+
+
+
+
+
+              <!--Keyword-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Keyword)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.Keyword)"
+                       name="@Html.NameFor(model => model.Keyword)"
+                       value="@Html.ValueFor(model => model.Keyword)"
+                       tabindex="14"
+                       class="easyui-textbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.Keyword)',
+								 required:false,
+                                 validType: 'length[0,512]'
+                                 " />
+              </div>
+
+              <!--Edition-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Edition)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.Edition)"
+                       name="@Html.NameFor(model => model.Edition)"
+                       value="@Html.ValueFor(model => model.Edition)"
+                       tabindex="15"
+                       class="easyui-textbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.Edition)',
+								 required:false,
+                                 validType: 'length[0,128]'
+                                 " />
+              </div>
+
+
+              <!--Impression-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Impression)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.Impression)"
+                       name="@Html.NameFor(model => model.Impression)"
+                       value="@Html.ValueFor(model => model.Impression)"
+                       tabindex="16"
+                       class="easyui-textbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.Impression)',
+								 required:false,
+                                 validType: 'length[0,128]'
+                                 " />
+              </div>
+
+              <!--Language-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Language)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.Language)"
+                       name="@Html.NameFor(model => model.Language)"
+                       value="@Html.ValueFor(model => model.Language)"
+                       tabindex="17"
+                       class="easyui-textbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.Language)',
+								 required:false,
+                                 validType: 'length[0,128]'
+                                 " />
+              </div>
+
+
+              <!--Format-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Format)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.Format)"
+                       name="@Html.NameFor(model => model.Format)"
+                       value="@Html.ValueFor(model => model.Format)"
+                       tabindex="18"
+                       class="easyui-textbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.Format)',
+								 required:false,
+                                 validType: 'length[0,128]'
+                                 " />
+              </div>
+
+              <!--Class-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Class)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.Class)"
+                       name="@Html.NameFor(model => model.Class)"
+                       value="@Html.ValueFor(model => model.Class)"
+                       tabindex="19"
+                       class="easyui-textbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.Class)',
+								 required:false,
+                                 validType: 'length[0,128]'
+                                 " />
+              </div>
+
+
+              <!--CIP-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.CIP)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.CIP)"
+                       name="@Html.NameFor(model => model.CIP)"
+                       value="@Html.ValueFor(model => model.CIP)"
+                       tabindex="20"
+                       class="easyui-textbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.CIP)',
+								 required:false,
+                                 validType: 'length[0,128]'
+                                 " />
+              </div>
+
+              <!--Reads-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Reads)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.Reads)"
+                       name="@Html.NameFor(model => model.Reads)"
+                       value="@Html.ValueFor(model => model.Reads)"
+                       tabindex="21"
+                       class="easyui-numberbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.Reads)',
+								 required:false,formatter:intformatter,readonly:true,
+                                 parser:parsernumber,
+                                 " />
+              </div>
+
+
+              <!--Popular-->
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Popular)</label>
+              <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+                <input id="@Html.IdFor(model => model.Popular)"
+                       name="@Html.NameFor(model => model.Popular)"
+                       value="@Html.ValueFor(model => model.Popular)"
+                       tabindex="22"
+                       class="easyui-numberbox"
+                       style="width:100%"
+                       type="text"
+                       data-options="prompt:'@Html.DescriptionFor(model => model.Popular)',
+								 required:false,formatter:intformatter,readonly:true,
+                                 parser:parsernumber,
+                                 " />
+              </div>
+
+            </div>
+          </fieldset>
+        </form>
+        <ul class="nav nav-tabs nav-tabs-clean" role="tablist">
+          <li class="nav-item">
+            <a class="nav-link active"
+               data-toggle="tab"
+               data-model="bookpicture"
+               href="#tab-bookpicture"
+               role="tab">bookpicture</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link "
+               data-toggle="tab"
+               data-model="checkout"
+               href="#tab-checkout"
+               role="tab">checkout</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link "
+               data-toggle="tab"
+               data-model="comment"
+               href="#tab-comment"
+               role="tab">comment</a>
+          </li>
+        </ul>
+        <div class="tab-content p-0">
+          <div class="tab-pane fade show active"
+               id="tab-bookpicture"
+               data-model="bookpicture"
+               role="tabpanel"
+               aria-labelledby="tab-bookpicture">
+
+            <div class="d-flex justify-content-start flex-wrap p-2">
+              <div class="btn-group btn-group-sm mr-2" role="group" aria-label="操作明细按钮">
+                <button name="bookpicture_searchbutton"
+                        type="button"
+                        class="btn btn-default waves-effect waves-themed"
+                        onclick="bookpicture_reloadData()">
+                  查询
+                </button>
+                 
+              </div>
+
+            </div>
+            <div class="table-responsive">
+              <table class="m-0" id="bookpicture_datagrid">
+              </table>
+            </div>
+          </div>
+          <div class="tab-pane fade show "
+               id="tab-checkout"
+               data-model="checkout"
+               role="tabpanel"
+               aria-labelledby="tab-checkout">
+
+            <div class="d-flex justify-content-start flex-wrap p-2">
+              <div class="btn-group btn-group-sm mr-2" role="group" aria-label="操作明细按钮">
+                <button name="checkout_searchbutton"
+                        type="button"
+                        class="btn btn-default waves-effect waves-themed"
+                        onclick="checkout_reloadData()">
+                  查询
+                </button>
+                <button name="checkout_appenditembutton"
+                        type="button"
+                        class="btn btn-default waves-effect waves-themed">
+                  新增
+                </button>
+                 
+              </div>
+
+            </div>
+            <div class="table-responsive">
+              <table class="m-0" id="checkout_datagrid">
+              </table>
+            </div>
+          </div>
+          <div class="tab-pane fade show "
+               id="tab-comment"
+               data-model="comment"
+               role="tabpanel"
+               aria-labelledby="tab-comment">
+
+            <div class="d-flex justify-content-start flex-wrap p-2">
+              <div class="btn-group btn-group-sm mr-2" role="group" aria-label="操作明细按钮">
+                <button name="comment_searchbutton"
+                        type="button"
+                        class="btn btn-default waves-effect waves-themed"
+                        onclick="comment_reloadData()">
+                  查询
+                </button>
+                
+              </div>
+
+            </div>
+            <div class="table-responsive">
+              <table class="m-0" id="comment_datagrid">
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- 弹出窗体form表单 -->
+<!-- 弹出编辑对话框 -->
+<!-- bookpicture datagrid  javascript block -->
+@Html.Partial("_BookPictureEditForm", new WebApp.Models.BookPicture())
+<!-- checkout datagrid  javascript block -->
+@Html.Partial("_CheckOutEditForm", new WebApp.Models.CheckOut())
+<!-- comment datagrid  javascript block -->
+@Html.Partial("_CommentEditForm", new WebApp.Models.Comment())
+
+<!--begin popup detailview javascript block -->
+<script type="text/javascript">
+  //当初始的 HTML 文档被完全加载和解析完成之后
+  document.addEventListener('DOMContentLoaded', function () {
+    //绑定按钮事件
+    $('button[name="saveitembutton"]').on('click', savebookitem);
+    $('button[name="deleteitembutton"]').on('click', deletebookitem);
+    $('button[name="bookpicture_searchbutton"]').on('click', bookpicture_reloadData);
+    $('button[name="bookpicture_appenditembutton"]').on('click', bookpicture_appendItem);
+    $('button[name="bookpicture_deleterowbutton"]').on('click', bookpicture_removeItem);
+    $('button[name="bookpicture_cancelchangesbutton"]').on('click', bookpicture_rejectChanges);
+    $('button[name="bookpicture_savechangesbutton"]').on('click', bookpicture_acceptChanges);
+    $('button[name="checkout_searchbutton"]').on('click', checkout_reloadData);
+    $('button[name="checkout_appenditembutton"]').on('click', checkout_appendItem);
+    $('button[name="checkout_deleterowbutton"]').on('click', checkout_removeItem);
+    $('button[name="checkout_cancelchangesbutton"]').on('click', checkout_rejectChanges);
+    $('button[name="checkout_savechangesbutton"]').on('click', checkout_acceptChanges);
+    $('button[name="comment_searchbutton"]').on('click', comment_reloadData);
+    $('button[name="comment_appenditembutton"]').on('click', comment_appendItem);
+    $('button[name="comment_deleterowbutton"]').on('click', comment_removeItem);
+    $('button[name="comment_cancelchangesbutton"]').on('click', comment_rejectChanges);
+    $('button[name="comment_savechangesbutton"]').on('click', comment_acceptChanges);
+    $('a[data-toggle="tab"]').on('shown.bs.tab', (e) => {
+      const model = $(e.target).data('model');
+      $(`#${model}_datagrid`).datagrid('resize');
+    })
+  });
+  //判断新增编辑状态
+  var MODELSTATE = 'Added';
+  var bookid = null;
+  function openbookdetailwindow(data, state) {
+    MODELSTATE = state;
+    //判断是否显示功能按钮
+    if (MODELSTATE === 'Added') {
+      $('#deleteitem-btn-group').hide();
+    } else {
+      $('#deleteitem-btn-group').show();
+    }
+    initbookdetailview();
+    bookid = (data.Id || 0);
+    $('#bookdetailwindow').window('open');
+    $('#book_form').form('reset');
+    $('#book_form').form('load', data);
+    var url = '/BookPictures/GetDataByBookId?bookid=' + bookid;
+    $bookpicturedg.datagrid('load', url);
+    $bookpicturedg.datagrid('resize');
+    var url = '/CheckOuts/GetDataByBookId?bookid=' + bookid;
+    $checkoutdg.datagrid('load', url);
+    $checkoutdg.datagrid('resize');
+    var url = '/Comments/GetDataByBookId?bookid=' + bookid;
+    $commentdg.datagrid('load', url);
+    $commentdg.datagrid('resize');
+  }
+  //删除当前记录
+  function deletebookitem() {
+    $.messager.confirm('确认', '你确定要删除该记录?', result => {
+      if (result) {
+        const url = `/Books/Delete/${bookid}`;
+        $.get(url).done(res => {
+          if (res.success) {
+            toastr.success("删除成功");
+            $('#bookdetailwindow').window('close');
+            reloadData();
+          } else {
+            $.messager.alert('错误', res.err, 'error');
+          }
+        });
+      }
+    });
+  }
+  //async 保存数据
+  async function savebookitem() {
+    const $bookform = $('#book_form');
+    if ($bookform.form('enableValidation').form('validate')) {
+      let book = $bookform.serializeJSON();
+      //获取明细表数据
+
+      const bookpicture_result = await bookpicture_acceptChanges();
+      if (!bookpicture_result.success) {
+        return false;
+      } else {
+        book.BookPictures = bookpicture_result.changed;
+      }
+
+
+      const checkout_result = await checkout_acceptChanges();
+      if (!checkout_result.success) {
+        return false;
+      } else {
+        book.CheckOuts = checkout_result.changed;
+      }
+
+
+      const comment_result = await comment_acceptChanges();
+      if (!comment_result.success) {
+        return false;
+      } else {
+        book.Comments = comment_result.changed;
+      }
+
+      let url = '/Books/Edit';
+      //判断是新增或是修改方法
+      if (MODELSTATE === 'Added') {
+        url = '/Books/Create';
+      }
+      var token = $('input[name="__RequestVerificationToken"]', $bookform).val();
+      $.ajax({
+        type: "POST",
+        url: url,
+        data: {
+          __RequestVerificationToken: token,
+          book: book
+        },
+        dataType: 'json',
+        contentType: 'application/x-www-form-urlencoded; charset=utf-8'
+      })
+        .done(response => {
+          if (response.success) {
+            hook = false;
+            $bookform.form('disableValidation');
+            $bookform.form('submitChanged');
+            $('#bookdetailwindow').window("close");
+            toastr.success("保存成功");
+            reloadData();
+          } else {
+            $.messager.alert("错误", response.err, "error");
+          }
+        })
+        .fail((jqXHR, textStatus, errorThrown) => {
+          $.messager.alert('异常', `${jqXHR.status}: ${jqXHR.statusText} `, 'error');
+        });
+    }
+  }
+  //判断是否有没有保存的记录
+  function bookhasmodified() {
+    if (!hook) {
+      if (!bookpicture_endEditing()) {
+        return true;
+      }
+      const bookpictures = $bookpicturedg.datagrid("getChanges");
+      if (MODELSTATE == 'Modified' && bookpictures.length > 0) {
+        return true;
+      }
+      if (!checkout_endEditing()) {
+        return true;
+      }
+      const checkouts = $checkoutdg.datagrid("getChanges");
+      if (MODELSTATE == 'Modified' && checkouts.length > 0) {
+        return true;
+      }
+      if (!comment_endEditing()) {
+        return true;
+      }
+      const comments = $commentdg.datagrid("getChanges");
+      if (MODELSTATE == 'Modified' && comments.length > 0) {
+        return true;
+      }
+      return false;
+    } else {
+      return hook;
+    }
+
+  }
+
+
+  function initbookdetailview() {
+    //回车光标移动到下个输入控件
+    //如果是枚举类型需要把numberbox改成combobox
+    //Page
+    $('#Page').numberbox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+    //如果是枚举类型需要把numberbox改成combobox
+    //Price
+    $('#Price').numberbox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+    //如果是枚举类型需要把numberbox改成combobox
+    //PurchasingPrice
+    $('#PurchasingPrice').numberbox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+    //如果是枚举类型需要把numberbox改成combobox
+    //Reads
+    $('#Reads').numberbox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+    //如果是枚举类型需要把numberbox改成combobox
+    //Popular
+    $('#Popular').numberbox('textbox').bind('keydown', function (e) {
+      if (e.keyCode == 13) {
+        $(e.target).emulateTab();
+      }
+    });
+  }
+</script>
+

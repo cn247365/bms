@@ -12,7 +12,7 @@ namespace WebApp
   {
     private readonly string defaultCulture;
 
-    public CultureFilter() => this.defaultCulture = "cn";
+    public CultureFilter() => this.defaultCulture = "en";
 
     public void OnAuthorization(AuthorizationContext filterContext)
     {

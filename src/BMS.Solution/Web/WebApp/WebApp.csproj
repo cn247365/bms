@@ -432,8 +432,14 @@
     <Compile Include="App_Start\ViewBagFilter.cs" />
     <Compile Include="App_Start\WebApi.UnityConfig.cs" />
     <Compile Include="Controllers\AccountController.cs" />
+    <Compile Include="Controllers\BookPicturesController.cs" />
+    <Compile Include="Controllers\BooksController.cs" />
+    <Compile Include="Controllers\CheckOutsController.cs" />
+    <Compile Include="Controllers\CommentsController.cs" />
     <Compile Include="Controllers\EmployeesController.cs" />
     <Compile Include="Controllers\ErrorController.cs" />
+    <Compile Include="Controllers\FavoritesController.cs" />
+    <Compile Include="Controllers\StocksController.cs" />
     <Compile Include="Controllers\TenantsController.cs" />
     <Compile Include="Controllers\AccountManageController.cs" />
     <Compile Include="Controllers\AttachmentsController.cs" />
@@ -481,6 +487,14 @@
     <Compile Include="Migrations\202101301153437_create_tables.designer.cs">
       <DependentUpon>202101301153437_create_tables.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202101310120164_change_field_of_stock.cs" />
+    <Compile Include="Migrations\202101310120164_change_field_of_stock.designer.cs">
+      <DependentUpon>202101310120164_change_field_of_stock.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202101310240599_change_v1.cs" />
+    <Compile Include="Migrations\202101310240599_change_v1.designer.cs">
+      <DependentUpon>202101310240599_change_v1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attachment.cs" />
     <Compile Include="Models\Book.cs" />
@@ -491,17 +505,29 @@
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Favorite.cs" />
     <Compile Include="Models\Metadata\AttachmentMetadata.cs" />
+    <Compile Include="Models\Metadata\BookMetadata.cs" />
+    <Compile Include="Models\Metadata\BookPictureMetadata.cs" />
+    <Compile Include="Models\Metadata\CheckOutMetadata.cs" />
+    <Compile Include="Models\Metadata\CommentMetadata.cs" />
     <Compile Include="Models\Metadata\EmployeeMetadata.cs" />
+    <Compile Include="Models\Metadata\FavoriteMetadata.cs" />
+    <Compile Include="Models\Metadata\StockMetadata.cs" />
     <Compile Include="Models\resource\Attachment.Designer.cs" />
+    <Compile Include="Models\resource\Book.Designer.cs" />
+    <Compile Include="Models\resource\BookPicture.Designer.cs" />
     <Compile Include="Models\resource\Category.Designer.cs" />
+    <Compile Include="Models\resource\CheckOut.Designer.cs" />
+    <Compile Include="Models\resource\Comment.Designer.cs" />
     <Compile Include="Models\resource\Covid19.Designer.cs" />
     <Compile Include="Models\resource\Employee.Designer.cs" />
     <Compile Include="Models\resource\FaceLib.Designer.cs" />
+    <Compile Include="Models\resource\Favorite.Designer.cs" />
     <Compile Include="Models\resource\Log.Designer.cs" />
     <Compile Include="Models\resource\Notification.Designer.cs" />
     <Compile Include="Models\resource\Order.Designer.cs" />
     <Compile Include="Models\resource\OrderDetail.Designer.cs" />
     <Compile Include="Models\resource\Product.Designer.cs" />
+    <Compile Include="Models\resource\Stock.Designer.cs" />
     <Compile Include="Models\resource\Work.Designer.cs" />
     <Compile Include="Models\Stock.cs" />
     <Compile Include="Models\ViewModel\ErrorViewModel.cs" />
@@ -511,12 +537,24 @@
     <Compile Include="Models\ViewModel\SmartSettings.cs" />
     <Compile Include="Repositories\Attachments\AttachmentQuery.cs" />
     <Compile Include="Repositories\Attachments\AttachmentRepository.cs" />
+    <Compile Include="Repositories\BookPictures\BookPictureQuery.cs" />
+    <Compile Include="Repositories\BookPictures\BookPictureRepository.cs" />
+    <Compile Include="Repositories\Books\BookQuery.cs" />
+    <Compile Include="Repositories\Books\BookRepository.cs" />
+    <Compile Include="Repositories\CheckOuts\CheckOutQuery.cs" />
+    <Compile Include="Repositories\CheckOuts\CheckOutRepository.cs" />
+    <Compile Include="Repositories\Comments\CommentQuery.cs" />
+    <Compile Include="Repositories\Comments\CommentRepository.cs" />
     <Compile Include="Repositories\Companies\CompanyQuery.cs" />
     <Compile Include="Repositories\Companies\CompanyRepository.cs" />
     <Compile Include="Repositories\Employees\EmployeeQuery.cs" />
     <Compile Include="Repositories\Employees\EmployeeRepository.cs" />
+    <Compile Include="Repositories\Favorites\FavoriteQuery.cs" />
+    <Compile Include="Repositories\Favorites\FavoriteRepository.cs" />
     <Compile Include="Repositories\Notifications\NotificationQuery.cs" />
     <Compile Include="Repositories\Notifications\NotificationRepository.cs" />
+    <Compile Include="Repositories\Stocks\StockQuery.cs" />
+    <Compile Include="Repositories\Stocks\StockRepository.cs" />
     <Compile Include="resource\Global.zh-TW.Designer.cs">
       <DependentUpon>Global.zh-TW.resx</DependentUpon>
       <AutoGen>True</AutoGen>
@@ -534,12 +572,24 @@
     </Compile>
     <Compile Include="Services\Attachments\AttachmentService.cs" />
     <Compile Include="Services\Attachments\IAttachmentService.cs" />
+    <Compile Include="Services\BookPictures\BookPictureService.cs" />
+    <Compile Include="Services\BookPictures\IBookPictureService.cs" />
+    <Compile Include="Services\Books\BookService.cs" />
+    <Compile Include="Services\Books\IBookService.cs" />
+    <Compile Include="Services\CheckOuts\CheckOutService.cs" />
+    <Compile Include="Services\CheckOuts\ICheckOutService.cs" />
+    <Compile Include="Services\Comments\CommentService.cs" />
+    <Compile Include="Services\Comments\ICommentService.cs" />
     <Compile Include="Services\Companies\CompanyService.cs" />
     <Compile Include="Services\Companies\ICompanyService.cs" />
     <Compile Include="Services\Employees\EmployeeService.cs" />
     <Compile Include="Services\Employees\IEmployeeService.cs" />
+    <Compile Include="Services\Favorites\FavoriteService.cs" />
+    <Compile Include="Services\Favorites\IFavoriteService.cs" />
     <Compile Include="Services\Notifications\INotificationService.cs" />
     <Compile Include="Services\Notifications\NotificationService.cs" />
+    <Compile Include="Services\Stocks\IStockService.cs" />
+    <Compile Include="Services\Stocks\StockService.cs" />
     <Compile Include="SmartHubs\ChatHub.cs" />
     <Compile Include="App_Start\CustomModelBinders.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
@@ -3862,6 +3912,54 @@
     <Content Include="Views\Employees\EditForm.cshtml" />
     <Content Include="Views\Employees\_CheckOutEditForm.cshtml" />
     <Content Include="Views\Employees\_checkoutdatagridjsview.cshtml" />
+    <Content Include="Views\Comments\_DisplayForm.cshtml" />
+    <Content Include="Views\Comments\_PopupDetailFormView.cshtml" />
+    <Content Include="Views\Comments\Index.cshtml" />
+    <Content Include="Views\Comments\Create.cshtml" />
+    <Content Include="Views\Comments\Details.cshtml" />
+    <Content Include="Views\Comments\Edit.cshtml" />
+    <Content Include="Views\Comments\EditForm.cshtml" />
+    <Content Include="Views\BookPictures\_DisplayForm.cshtml" />
+    <Content Include="Views\BookPictures\_PopupDetailFormView.cshtml" />
+    <Content Include="Views\BookPictures\Index.cshtml" />
+    <Content Include="Views\BookPictures\Create.cshtml" />
+    <Content Include="Views\BookPictures\Details.cshtml" />
+    <Content Include="Views\BookPictures\Edit.cshtml" />
+    <Content Include="Views\BookPictures\EditForm.cshtml" />
+    <Content Include="Views\Favorites\_DisplayForm.cshtml" />
+    <Content Include="Views\Favorites\_PopupDetailFormView.cshtml" />
+    <Content Include="Views\Favorites\Index.cshtml" />
+    <Content Include="Views\Favorites\Create.cshtml" />
+    <Content Include="Views\Favorites\Details.cshtml" />
+    <Content Include="Views\Favorites\Edit.cshtml" />
+    <Content Include="Views\Favorites\EditForm.cshtml" />
+    <Content Include="Views\CheckOuts\_DisplayForm.cshtml" />
+    <Content Include="Views\CheckOuts\_PopupDetailFormView.cshtml" />
+    <Content Include="Views\CheckOuts\Index.cshtml" />
+    <Content Include="Views\CheckOuts\Create.cshtml" />
+    <Content Include="Views\CheckOuts\Details.cshtml" />
+    <Content Include="Views\CheckOuts\Edit.cshtml" />
+    <Content Include="Views\CheckOuts\EditForm.cshtml" />
+    <Content Include="Views\Stocks\_DisplayForm.cshtml" />
+    <Content Include="Views\Stocks\_PopupDetailFormView.cshtml" />
+    <Content Include="Views\Stocks\Index.cshtml" />
+    <Content Include="Views\Stocks\Create.cshtml" />
+    <Content Include="Views\Stocks\Details.cshtml" />
+    <Content Include="Views\Stocks\Edit.cshtml" />
+    <Content Include="Views\Stocks\EditForm.cshtml" />
+    <Content Include="Views\Books\_DisplayForm.cshtml" />
+    <Content Include="Views\Books\_PopupDetailFormView.cshtml" />
+    <Content Include="Views\Books\Index.cshtml" />
+    <Content Include="Views\Books\Create.cshtml" />
+    <Content Include="Views\Books\Details.cshtml" />
+    <Content Include="Views\Books\Edit.cshtml" />
+    <Content Include="Views\Books\EditForm.cshtml" />
+    <Content Include="Views\Books\_BookPictureEditForm.cshtml" />
+    <Content Include="Views\Books\_bookpicturedatagridjsview.cshtml" />
+    <Content Include="Views\Books\_CheckOutEditForm.cshtml" />
+    <Content Include="Views\Books\_checkoutdatagridjsview.cshtml" />
+    <Content Include="Views\Books\_CommentEditForm.cshtml" />
+    <Content Include="Views\Books\_commentdatagridjsview.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Helpers\Extensions.Logging\" />
@@ -3951,12 +4049,30 @@
     <EmbeddedResource Include="Migrations\202101301153437_create_tables.resx">
       <DependentUpon>202101301153437_create_tables.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101310120164_change_field_of_stock.resx">
+      <DependentUpon>202101310120164_change_field_of_stock.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202101310240599_change_v1.resx">
+      <DependentUpon>202101310240599_change_v1.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Models\resource\Attachment.en-US.resx" />
     <EmbeddedResource Include="Models\resource\Attachment.resx" />
     <EmbeddedResource Include="Models\resource\Attachment.zh-TW.resx" />
+    <EmbeddedResource Include="Models\resource\Book.en-US.resx" />
+    <EmbeddedResource Include="Models\resource\Book.resx" />
+    <EmbeddedResource Include="Models\resource\Book.zh-TW.resx" />
+    <EmbeddedResource Include="Models\resource\BookPicture.en-US.resx" />
+    <EmbeddedResource Include="Models\resource\BookPicture.resx" />
+    <EmbeddedResource Include="Models\resource\BookPicture.zh-TW.resx" />
     <EmbeddedResource Include="Models\resource\Category.en-US.resx" />
     <EmbeddedResource Include="Models\resource\Category.resx" />
     <EmbeddedResource Include="Models\resource\Category.zh-TW.resx" />
+    <EmbeddedResource Include="Models\resource\CheckOut.en-US.resx" />
+    <EmbeddedResource Include="Models\resource\CheckOut.resx" />
+    <EmbeddedResource Include="Models\resource\CheckOut.zh-TW.resx" />
+    <EmbeddedResource Include="Models\resource\Comment.en-US.resx" />
+    <EmbeddedResource Include="Models\resource\Comment.resx" />
+    <EmbeddedResource Include="Models\resource\Comment.zh-TW.resx" />
     <EmbeddedResource Include="Models\resource\Covid19.en-US.resx" />
     <EmbeddedResource Include="Models\resource\Covid19.resx" />
     <EmbeddedResource Include="Models\resource\Covid19.zh-TW.resx" />
@@ -3966,6 +4082,9 @@
     <EmbeddedResource Include="Models\resource\FaceLib.en-US.resx" />
     <EmbeddedResource Include="Models\resource\FaceLib.resx" />
     <EmbeddedResource Include="Models\resource\FaceLib.zh-TW.resx" />
+    <EmbeddedResource Include="Models\resource\Favorite.en-US.resx" />
+    <EmbeddedResource Include="Models\resource\Favorite.resx" />
+    <EmbeddedResource Include="Models\resource\Favorite.zh-TW.resx" />
     <EmbeddedResource Include="Models\resource\Log.en-US.resx" />
     <EmbeddedResource Include="Models\resource\Log.resx" />
     <EmbeddedResource Include="Models\resource\Log.zh-TW.resx" />
@@ -3981,6 +4100,9 @@
     <EmbeddedResource Include="Models\resource\Product.en-US.resx" />
     <EmbeddedResource Include="Models\resource\Product.resx" />
     <EmbeddedResource Include="Models\resource\Product.zh-TW.resx" />
+    <EmbeddedResource Include="Models\resource\Stock.en-US.resx" />
+    <EmbeddedResource Include="Models\resource\Stock.resx" />
+    <EmbeddedResource Include="Models\resource\Stock.zh-TW.resx" />
     <EmbeddedResource Include="Models\resource\Work.en-US.resx" />
     <EmbeddedResource Include="Models\resource\Work.resx" />
     <EmbeddedResource Include="Models\resource\Work.zh-TW.resx" />

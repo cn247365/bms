@@ -1,0 +1,141 @@
+﻿﻿@model WebApp.Models.Stock
+  <div class="form-row">
+   @Html.HiddenFor(x=>x.Id)
+      
+       <!--Book-->
+       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label"> <span class="text-danger">*</span> @Html.DisplayNameFor(model => model.BookId)</label>
+   	        @Html.DropDownListFor(model => model.BookId, ViewBag.BookId as List<SelectListItem>, htmlAttributes: new { @class = "form-control" }) 
+       </div>
+
+        <!--BarCode-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.BarCode)</label>
+			@Html.EditorFor(x => x.BarCode, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.BarCode) } })
+      
+         </div>
+
+        <!--ISBN-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.ISBN)</label>
+			@Html.EditorFor(x => x.ISBN, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.ISBN) } })
+      
+         </div>
+
+        <!--Book Name-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.Title)</label>
+			@Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Title) } })
+      
+         </div>
+
+        <!--Remark-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.Remark)</label>
+			@Html.EditorFor(x => x.Remark, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Remark) } })
+      
+         </div>
+
+		<!--Qty-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label"> <span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Qty)</label>
+            @Html.EditorFor(x => x.Qty, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.Qty) } })
+
+        </div>
+
+		<!--Price-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label"> <span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Price)</label>
+            @Html.EditorFor(x => x.Price, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.Price) } })
+
+        </div>
+
+		<!--Purchasing Price-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.PurchasingPrice)</label>
+            @Html.EditorFor(x => x.PurchasingPrice, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.PurchasingPrice) } })
+
+        </div>
+
+       <!--Purchase Date-->
+       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.PurchaseDate)</label>
+            <div class="input-group">
+			  @Html.EditorFor(x => x.PurchaseDate, 
+                         new { htmlAttributes = new { @class = "form-control datepicker",
+                               placeholder = Html.DisplayNameFor(x => x.PurchaseDate ) } })
+               <div class="input-group-append">
+                                                            <span class="input-group-text fs-xl">
+                                                                <i class="fal fa-calendar-alt"></i>
+                                                            </span>
+                                                        </div>
+			 </div>
+         </div>
+
+        <!--Manager-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.UserName)</label>
+			@Html.EditorFor(x => x.UserName, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.UserName) } })
+      
+         </div>
+
+        <!--Catetory-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.Catetory)</label>
+			@Html.EditorFor(x => x.Catetory, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Catetory) } })
+      
+         </div>
+
+        <!--Location-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.Location)</label>
+			@Html.EditorFor(x => x.Location, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Location) } })
+      
+         </div>
+
+        <!--Shelves-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.Shelves)</label>
+			@Html.EditorFor(x => x.Shelves, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Shelves) } })
+      
+         </div>
+
+        <!--Tags-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.Tags)</label>
+			@Html.EditorFor(x => x.Tags, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Tags) } })
+      
+         </div>
+
+        <!--Status-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label">  @Html.DisplayNameFor(model => model.Status)</label>
+			@Html.EditorFor(x => x.Status, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Status) } })
+      
+         </div>
+
+		<!--Number Of Trades-->
+        <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label"> <span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Trades)</label>
+            @Html.EditorFor(x => x.Trades, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.Trades) } })
+
+        </div>
+
+       <!--Input Date-->
+       <div class="col-xs-12 col-sm-6 col-md-4 col-lg-3">
+            <label class="form-label"> <span class="text-danger">*</span> @Html.DisplayNameFor(model => model.InputDate)</label>
+            <div class="input-group">
+			  @Html.EditorFor(x => x.InputDate, 
+                         new { htmlAttributes = new { @class = "form-control datepicker",
+                               placeholder = Html.DisplayNameFor(x => x.InputDate ) } })
+               <div class="input-group-append">
+                                                            <span class="input-group-text fs-xl">
+                                                                <i class="fal fa-calendar-alt"></i>
+                                                            </span>
+                                                        </div>
+			 </div>
+         </div>
+
+	    
+</div>
+

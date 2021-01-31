@@ -58,6 +58,8 @@ namespace WebApp
       //注册automapper
       var config = new MapperConfiguration(cfg =>
       {
+        //cfg.SourceMemberNamingConvention = new LowerUnderscoreNamingConvention();
+       // cfg.DestinationMemberNamingConvention = new PascalCaseNamingConvention();
         //Create all maps here
         cfg.AddProfile(new AutoMapperProfile());
       });
@@ -86,7 +88,18 @@ namespace WebApp
       container.RegisterType<IAttachmentService, AttachmentService>();
       container.RegisterType<IRepositoryAsync<Employee>, Repository<Employee>>();
       container.RegisterType<IEmployeeService, EmployeeService>();
-
+      container.RegisterType<IRepositoryAsync<Comment>, Repository<Comment>>();
+      container.RegisterType<ICommentService, CommentService>();
+      container.RegisterType<IRepositoryAsync<BookPicture>, Repository<BookPicture>>();
+      container.RegisterType<IBookPictureService, BookPictureService>();
+      container.RegisterType<IRepositoryAsync<Favorite>, Repository<Favorite>>();
+      container.RegisterType<IFavoriteService, FavoriteService>();
+      container.RegisterType<IRepositoryAsync<CheckOut>, Repository<CheckOut>>();
+      container.RegisterType<ICheckOutService, CheckOutService>();
+      container.RegisterType<IRepositoryAsync<Stock>, Repository<Stock>>();
+      container.RegisterType<IStockService, StockService>();
+      container.RegisterType<IRepositoryAsync<Book>, Repository<Book>>();
+      container.RegisterType<IBookService, BookService>();
 
     }
 

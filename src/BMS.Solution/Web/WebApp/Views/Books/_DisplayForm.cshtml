@@ -1,0 +1,167 @@
+﻿﻿@model WebApp.Models.Book
+  <div class="form-row">
+   @Html.HiddenFor(x=>x.Id)
+         <!--Book Name-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label text-danger">@Html.DisplayNameFor(model => model.Title)</label>
+			@Html.EditorFor(x => x.Title, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Title) } })
+      
+         </div>
+
+        <!--Sub Title-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.SubTitle)</label>
+			@Html.EditorFor(x => x.SubTitle, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.SubTitle) } })
+      
+         </div>
+
+        <!--Picture-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.Pic)</label>
+			@Html.EditorFor(x => x.Pic, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Pic) } })
+      
+         </div>
+
+        <!--Local Picture-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.LocalPic)</label>
+			@Html.EditorFor(x => x.LocalPic, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.LocalPic) } })
+      
+         </div>
+
+        <!--Author-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.Author)</label>
+			@Html.EditorFor(x => x.Author, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Author) } })
+      
+         </div>
+
+        <!--Summary-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.Summary)</label>
+			@Html.EditorFor(x => x.Summary, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Summary) } })
+      
+         </div>
+
+        <!--Publisher-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.Publisher)</label>
+			@Html.EditorFor(x => x.Publisher, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Publisher) } })
+      
+         </div>
+
+        <!--Pubplace-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.Pubplace)</label>
+			@Html.EditorFor(x => x.Pubplace, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Pubplace) } })
+      
+         </div>
+
+		<!--Page-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label text-danger">@Html.DisplayNameFor(model => model.Page)</label>
+            @Html.EditorFor(x => x.Page, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.Page) } })
+
+        </div>
+
+		<!--Price-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label text-danger">@Html.DisplayNameFor(model => model.Price)</label>
+            @Html.EditorFor(x => x.Price, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.Price) } })
+
+        </div>
+
+		<!--PurchasingPrice-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.PurchasingPrice)</label>
+            @Html.EditorFor(x => x.PurchasingPrice, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.PurchasingPrice) } })
+
+        </div>
+
+        <!--Binding-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.Binding)</label>
+			@Html.EditorFor(x => x.Binding, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Binding) } })
+      
+         </div>
+
+        <!--ISBN-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.ISBN)</label>
+			@Html.EditorFor(x => x.ISBN, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.ISBN) } })
+      
+         </div>
+
+        <!--ISBN10-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.ISBN10)</label>
+			@Html.EditorFor(x => x.ISBN10, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.ISBN10) } })
+      
+         </div>
+
+        <!--Keyword-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.Keyword)</label>
+			@Html.EditorFor(x => x.Keyword, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Keyword) } })
+      
+         </div>
+
+        <!--Edition-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.Edition)</label>
+			@Html.EditorFor(x => x.Edition, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Edition) } })
+      
+         </div>
+
+        <!--Impression-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.Impression)</label>
+			@Html.EditorFor(x => x.Impression, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Impression) } })
+      
+         </div>
+
+        <!--Language-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.Language)</label>
+			@Html.EditorFor(x => x.Language, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Language) } })
+      
+         </div>
+
+        <!--Format-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.Format)</label>
+			@Html.EditorFor(x => x.Format, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Format) } })
+      
+         </div>
+
+        <!--Class-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.Class)</label>
+			@Html.EditorFor(x => x.Class, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.Class) } })
+      
+         </div>
+
+        <!--CIP-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.CIP)</label>
+			@Html.EditorFor(x => x.CIP, new { htmlAttributes = new { @class = "form-control", placeholder = Html.DisplayNameFor(x => x.CIP) } })
+      
+         </div>
+
+		<!--Reads-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.Reads)</label>
+            @Html.EditorFor(x => x.Reads, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.Reads) } })
+
+        </div>
+
+		<!--Popular-->
+        <div class="col-xs-12 col-md-6">
+            <label class="form-label ">@Html.DisplayNameFor(model => model.Popular)</label>
+            @Html.EditorFor(x => x.Popular, new { htmlAttributes = new { @class = "form-control",@type="number", placeholder = Html.DisplayNameFor(x => x.Popular) } })
+
+        </div>
+
+	    
+</div>
+
