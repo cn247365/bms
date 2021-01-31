@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using AutoMapper;
+using WebApp.App_Helpers.third_party.api;
 using WebApp.Models;
 
 namespace WebApp
@@ -12,7 +13,7 @@ namespace WebApp
     public AutoMapperProfile()
     {
       CreateMap<Company, CompanyTreeItem>().ReverseMap();
-    
+      CreateMap<isbn_result, Book>();
        
 
     }

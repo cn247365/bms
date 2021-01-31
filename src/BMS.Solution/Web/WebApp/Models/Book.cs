@@ -49,8 +49,7 @@ namespace WebApp.Models
         public string ISBN { get; set; }
         [Display(Name = "ISBN10", Description = "ISBN10")]
         [MaxLength(20)]
-        [Index(IsUnique = true)]
-        public string ISBN10 { get; set; }
+         public string ISBN10 { get; set; }
         [Display(Name = "Keyword", Description = "Keyword")]
         [MaxLength(512)]
         public string Keyword { get; set; }

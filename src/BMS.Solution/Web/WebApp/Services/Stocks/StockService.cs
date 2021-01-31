@@ -14,6 +14,8 @@ using Service.Pattern;
 using System.Text.RegularExpressions;
 using WebApp.Models;
 using WebApp.Repositories;
+using WebApp.App_Helpers.third_party.api;
+using AutoMapper;
 
 namespace WebApp.Services
 {
@@ -33,14 +35,20 @@ namespace WebApp.Services
   {
     private readonly IRepositoryAsync<Stock> repository;
     private readonly IDataTableImportMappingService mappingservice;
+    private readonly IBookService bookService;
     private readonly NLog.ILogger logger;
+    private readonly IMapper mapper;
     public StockService(
+       IMapper mapper,
+      IBookService bookService,
       IRepositoryAsync<Stock> repository,
       IDataTableImportMappingService mappingservice,
       NLog.ILogger logger
       )
         : base(repository)
     {
+      this.mapper = mapper;
+      this.bookService = bookService;
       this.repository = repository;
       this.mappingservice = mappingservice;
       this.logger = logger;
@@ -72,6 +80,7 @@ namespace WebApp.Services
       {
         throw new KeyNotFoundException("没有找到Stock对象的Excel导入配置信息，请执行[系统管理/Excel导入配置]");
       }
+      var list = new List<Stock>();
       foreach (DataRow row in datatable.Rows)
       {
 
@@ -94,20 +103,10 @@ namespace WebApp.Services
                         )
             {
               var propertyInfo = stocktype.GetProperty(field.FieldName);
-              //关联外键查询获取Id
-              switch (field.FieldName)
-              {
-                case "BookId":
-                  var book_title = row[field.SourceFieldName].ToString();
-                  var bookid = await this.getBookIdByTitle(book_title);
-                  propertyInfo.SetValue(item, Convert.ChangeType(bookid, propertyInfo.PropertyType), null);
-                  break;
-                default:
-                  var safetype = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
-                  var safeValue = Convert.ChangeType(row[field.SourceFieldName], safetype);
-                  propertyInfo.SetValue(item, safeValue, null);
-                  break;
-              }
+              var safetype = Nullable.GetUnderlyingType(propertyInfo.PropertyType) ?? propertyInfo.PropertyType;
+              var safeValue = Convert.ChangeType(row[field.SourceFieldName], safetype);
+              propertyInfo.SetValue(item, safeValue, null);
+
             }
             else if (!string.IsNullOrEmpty(defval))
             {
@@ -134,9 +133,44 @@ namespace WebApp.Services
               }
             }
           }
-          this.Insert(item);
+          if(string.IsNullOrEmpty(item.Title) || string.IsNullOrEmpty(item.ISBN) || string.IsNullOrEmpty(item.BarCode))
+          {
+            throw new Exception("Book Name,ISBN,BarCode not allowed empty!");
+          }
+          var isexists =await this.bookService.Queryable().Where(x => x.ISBN == item.ISBN).AnyAsync();
+          if (isexists)
+          {
+            var book = await this.bookService.Queryable().Where(x => x.ISBN == item.ISBN).FirstAsync();
+            item.BookId = book.Id;
+            item.Price = book.Price;
+            book.PurchasingPrice = item.PurchasingPrice;
+            this.bookService.Update(book);
+          }
+          else
+          {
+            var isbn = await isbnapi.GetISBN(item.ISBN);
+            if (isbn == null)
+            {
+              var book = this.mapper.Map<Book>(item);
+              item.Book = book;
+              item.BookId = book.Id;
+              this.bookService.Insert(book);
+            }
+            else
+            {
+              var book = this.mapper.Map<Book>(isbn);
+              item.Book = book;
+              item.BookId = book.Id;
+              this.bookService.Insert(book);
+            }
+           
+          }
+
+          list.Add(item);
         }
       }
+
+      this.InsertRange(list);
     }
     public async Task<Stream> ExportExcel(string filterRules = "", string sort = "Id", string order = "asc")
     {
