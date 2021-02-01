@@ -35,20 +35,20 @@ namespace WebApp.Models
         [MaxLength(128)]
         public string Pubplace { get; set; }
         [Display(Name = "Page", Description = "Page")]
-        public int Page { get; set; }
+        public int? Page { get; set; }
         [Display(Name = "Price", Description = "Price")]
-        public decimal Price { get; set; }
+        public decimal? Price { get; set; }
 
         public decimal? PurchasingPrice { get; set; }
         [Display(Name = "Binding", Description = "Binding")]
         [MaxLength(128)]
         public string Binding { get; set; }
         [Display(Name = "ISBN", Description = "ISBN")]
-        [MaxLength(20)]
+        [MaxLength(30)]
         [Index(IsUnique =true)]
         public string ISBN { get; set; }
         [Display(Name = "ISBN10", Description = "ISBN10")]
-        [MaxLength(20)]
+        [MaxLength(30)]
          public string ISBN10 { get; set; }
         [Display(Name = "Keyword", Description = "Keyword")]
         [MaxLength(512)]

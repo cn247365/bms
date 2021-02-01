@@ -37,7 +37,7 @@ namespace WebApp.Models
     [MaxLength(32)]
     public string BarCode { get; set; }
     [Display(Name = "ISBN", Description = "ISBN")]
-    [MaxLength(10)]
+    [MaxLength(30)]
     public string ISBN { get; set; }
     [Display(Name = "Book Name", Description = "Book Name")]
     [MaxLength(128)]

@@ -14,6 +14,7 @@ namespace WebApp
     {
       CreateMap<Company, CompanyTreeItem>().ReverseMap();
       CreateMap<isbn_result, Book>();
+      CreateMap<Stock, Book>().ReverseMap();
        
 
     }

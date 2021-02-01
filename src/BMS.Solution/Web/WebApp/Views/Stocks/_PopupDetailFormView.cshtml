@@ -32,305 +32,287 @@
  <div class="panel-container show">
    <div class="container">
     <div class="panel-content">
-           <form id="stock_form" 
-              class="easyui-form form-horizontal padding-10" 
-              method="post" novalidate  >
-  @Html.AntiForgeryToken()
-   <!--Primary Key-->
-  @Html.HiddenFor(model=>model.Id)
-   <fieldset class="form-group">
-   <div class="row h-100 align-items-center">
+      <form id="stock_form"
+            class="easyui-form form-horizontal padding-10"
+            method="post" novalidate>
+        @Html.AntiForgeryToken()
+        <!--Primary Key-->
+        @Html.HiddenFor(model => model.Id)
+        @Html.HiddenFor(model => model.BookId)
+        <fieldset class="form-group">
+          <div class="row h-100 align-items-center">
 
-    <!--Book-->
-        <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.BookId)</label>
-		<div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">   	
-            <input id="@Html.IdFor(model => model.BookId)"
-			       name="@Html.NameFor(model => model.BookId)"
-				   value="@Html.ValueFor(model => model.BookId)"
-                   tabindex="0" required
-              	   class="easyui-combobox"      
-                   style="width:100%"
-                   data-options="prompt:'@Html.DescriptionFor(model => model.BookId)' ,
-						required:true ,
-						valueField: 'Id',
-						textField:  'Title' ,
-                        panelHeight:'auto',
-                        editable:false,
-						url: '/Stocks/GetBooks' ,
-						onSelect: function(item){
-						  //console.log(item);
-				        }">
-       </div>
-	   
-   <!--BarCode-->
-        <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.BarCode)</label>
-		<div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">  
-			<input id="@Html.IdFor(model => model.BarCode)" 
-				   name="@Html.NameFor(model => model.BarCode)" 
-				   value="@Html.ValueFor(model => model.BarCode)"
-				   tabindex="1" 
-				   class="easyui-textbox" 
-                   style="width:100%"
-				   type="text" 
-				   data-options="prompt:'@Html.DescriptionFor(model => model.BarCode)',
-								 required:false, 
+
+
+            <!--BarCode-->
+            <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.BarCode)</label>
+            <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+              <input id="@Html.IdFor(model => model.BarCode)"
+                     name="@Html.NameFor(model => model.BarCode)"
+                     value="@Html.ValueFor(model => model.BarCode)"
+                     tabindex="1"
+                     class="easyui-textbox"
+                     style="width:100%"
+                     type="text"
+                     data-options="prompt:'@Html.DescriptionFor(model => model.BarCode)',
+								 required:true,
                                  validType: 'length[0,32]'
                                  " />
-       </div>
-				   
+            </div>
 
-   <!--ISBN-->
-        <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.ISBN)</label>
-		<div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">  
-			<input id="@Html.IdFor(model => model.ISBN)" 
-				   name="@Html.NameFor(model => model.ISBN)" 
-				   value="@Html.ValueFor(model => model.ISBN)"
-				   tabindex="2" 
-				   class="easyui-textbox" 
-                   style="width:100%"
-				   type="text" 
-				   data-options="prompt:'@Html.DescriptionFor(model => model.ISBN)',
-								 required:false, 
+
+            <!--ISBN-->
+            <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.ISBN)</label>
+            <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+              <input id="@Html.IdFor(model => model.ISBN)"
+                     name="@Html.NameFor(model => model.ISBN)"
+                     value="@Html.ValueFor(model => model.ISBN)"
+                     tabindex="2"
+                     class="easyui-textbox"
+                     style="width:100%"
+                     type="text"
+                     data-options="prompt:'@Html.DescriptionFor(model => model.ISBN)',
+								 required:true,
                                  validType: 'length[0,10]'
                                  " />
-       </div>
-				   
-   <!--Book Name-->
-        <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Title)</label>
-		<div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">  
-			<input id="@Html.IdFor(model => model.Title)" 
-				   name="@Html.NameFor(model => model.Title)" 
-				   value="@Html.ValueFor(model => model.Title)"
-				   tabindex="3" 
-				   class="easyui-textbox" 
-                   style="width:100%"
-				   type="text" 
-				   data-options="prompt:'@Html.DescriptionFor(model => model.Title)',
-								 required:false, 
+            </div>
+
+            <!--Book Name-->
+            <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Title)</label>
+            <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+              <input id="@Html.IdFor(model => model.Title)"
+                     name="@Html.NameFor(model => model.Title)"
+                     value="@Html.ValueFor(model => model.Title)"
+                     tabindex="3"
+                     class="easyui-textbox"
+                     style="width:100%"
+                     type="text"
+                     data-options="prompt:'@Html.DescriptionFor(model => model.Title)',
+								 required:true,
                                  validType: 'length[0,128]'
                                  " />
-       </div>
-				   
+            </div>
 
-   <!--Remark-->
-        <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Remark)</label>
-		<div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">  
-			<input id="@Html.IdFor(model => model.Remark)" 
-				   name="@Html.NameFor(model => model.Remark)" 
-				   value="@Html.ValueFor(model => model.Remark)"
-				   tabindex="4" 
-				   class="easyui-textbox" 
-                   style="width:100%"
-				   type="text" 
-				   data-options="prompt:'@Html.DescriptionFor(model => model.Remark)',
-								 required:false, 
+            <!--Qty-->
+            <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Qty)</label>
+            <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+              <input id="@Html.IdFor(model => model.Qty)"
+                     name="@Html.NameFor(model => model.Qty)"
+                     value="@Html.ValueFor(model => model.Qty)"
+                     tabindex="5"
+                     class="easyui-numberbox"
+                     style="width:100%"
+                     type="text"
+                     data-options="prompt:'@Html.DescriptionFor(model => model.Qty)',
+								 required:true,formatter:intformatter,
+                                 parser:parsernumber,
+                                 " />
+            </div>
+            <!--Remark-->
+            <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Remark)</label>
+            <div class="col-md-10 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+              <input id="@Html.IdFor(model => model.Remark)"
+                     name="@Html.NameFor(model => model.Remark)"
+                     value="@Html.ValueFor(model => model.Remark)"
+                     tabindex="4"
+                     class="easyui-textbox"
+                     style="width:100%"
+                     type="text"
+                     data-options="prompt:'@Html.DescriptionFor(model => model.Remark)',
+								 required:false,
                                  validType: 'length[0,256]'
                                  " />
-       </div>
-				   
-   <!--Qty-->
-       <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Qty)</label>
-	   <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">  
-			<input id="@Html.IdFor(model => model.Qty)"
-				   name="@Html.NameFor(model => model.Qty)" 
-				   value="@Html.ValueFor(model => model.Qty)"
-				   tabindex="5" 
-				   class="easyui-numberbox" 
-                   style="width:100%"
-				   type="text" 
-				   data-options="prompt:'@Html.DescriptionFor(model => model.Qty)',
-								 required:true,formatter:intformatter,
-                                 parser:parsernumber,
-                                 " />
-      </div>
-				   
+            </div>
 
-   <!--Price-->
-       <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Price)</label>
-	   <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">  
-             <input id="@Html.IdFor(model => model.Price)"
-				   name="@Html.NameFor(model => model.Price)" 
-				   value="@Html.ValueFor(model => model.Price)"
-				   tabindex="6" 
-				   class="easyui-numberbox" 
-                   style="width:100%"
-				   type="text" 
-				   data-options="prompt:'@Html.DescriptionFor(model => model.Price)',
-								 required:true,formatter:numberformatter,
-                                 parser:parsernumber,precision:2,
-                                 
-                                 "  />
 
-        </div>
-				   
-   <!--Purchasing Price-->
-       <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.PurchasingPrice)</label>
-	   <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">  
-             <input id="@Html.IdFor(model => model.PurchasingPrice)"
-				   name="@Html.NameFor(model => model.PurchasingPrice)" 
-				   value="@Html.ValueFor(model => model.PurchasingPrice)"
-				   tabindex="7" 
-				   class="easyui-numberbox" 
-                   style="width:100%"
-				   type="text" 
-				   data-options="prompt:'@Html.DescriptionFor(model => model.PurchasingPrice)',
+
+
+            <!--Price-->
+            <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Price)</label>
+            <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+              <input id="@Html.IdFor(model => model.Price)"
+                     name="@Html.NameFor(model => model.Price)"
+                     value="@Html.ValueFor(model => model.Price)"
+                     tabindex="6"
+                     class="easyui-numberbox"
+                     style="width:100%"
+                     type="text"
+                     data-options="prompt:'@Html.DescriptionFor(model => model.Price)',
 								 required:false,formatter:numberformatter,
                                  parser:parsernumber,precision:2,
-                                 
-                                 "  />
 
-        </div>
-				   
+                                 " />
 
-   <!--Purchase Date-->
-        <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.PurchaseDate)</label>
-		<div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">  
-                <input id="@Html.IdFor(model => model.PurchaseDate)" 
-			       name="@Html.NameFor(model => model.PurchaseDate)"
-                   value="@Html.ValueFor(model => model.PurchaseDate)"
-           		   tabindex="8"  
-				   class="easyui-datebox" 
-                   style="width:100%"
-				   type="text" 
-				   data-options="prompt:'@Html.DescriptionFor(model => model.PurchaseDate)',
+            </div>
+
+            <!--Purchasing Price-->
+            <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.PurchasingPrice)</label>
+            <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+              <input id="@Html.IdFor(model => model.PurchasingPrice)"
+                     name="@Html.NameFor(model => model.PurchasingPrice)"
+                     value="@Html.ValueFor(model => model.PurchasingPrice)"
+                     tabindex="7"
+                     class="easyui-numberbox"
+                     style="width:100%"
+                     type="text"
+                     data-options="prompt:'@Html.DescriptionFor(model => model.PurchasingPrice)',
+								 required:false,formatter:numberformatter,
+                                 parser:parsernumber,precision:2,
+
+                                 " />
+
+            </div>
+
+
+            <!--Purchase Date-->
+            <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.PurchaseDate)</label>
+            <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+              <input id="@Html.IdFor(model => model.PurchaseDate)"
+                     name="@Html.NameFor(model => model.PurchaseDate)"
+                     value="@Html.ValueFor(model => model.PurchaseDate)"
+                     tabindex="8"
+                     class="easyui-datebox"
+                     style="width:100%"
+                     type="text"
+                     data-options="prompt:'@Html.DescriptionFor(model => model.PurchaseDate)',
 								 required:false,
 								 formatter:dateformatter" />
-     </div>
-				   
-   <!--Manager-->
-        <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.UserName)</label>
-		<div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">  
-			<input id="@Html.IdFor(model => model.UserName)" 
-				   name="@Html.NameFor(model => model.UserName)" 
-				   value="@Html.ValueFor(model => model.UserName)"
-				   tabindex="9" 
-				   class="easyui-textbox" 
-                   style="width:100%"
-				   type="text" 
-				   data-options="prompt:'@Html.DescriptionFor(model => model.UserName)',
-								 required:false, 
+            </div>
+
+            <!--Manager-->
+            <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.UserName)</label>
+            <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+              <input id="@Html.IdFor(model => model.UserName)"
+                     name="@Html.NameFor(model => model.UserName)"
+                     value="@Html.ValueFor(model => model.UserName)"
+                     tabindex="9"
+                     class="easyui-textbox"
+                     style="width:100%"
+                     type="text"
+                     data-options="prompt:'@Html.DescriptionFor(model => model.UserName)',
+								 required:false,
                                  validType: 'length[0,32]'
                                  " />
-       </div>
-				   
+            </div>
 
-   <!--Catetory-->
-        <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Catetory)</label>
-		<div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">  
-			<input id="@Html.IdFor(model => model.Catetory)" 
-				   name="@Html.NameFor(model => model.Catetory)" 
-				   value="@Html.ValueFor(model => model.Catetory)"
-				   tabindex="10" 
-				   class="easyui-textbox" 
-                   style="width:100%"
-				   type="text" 
-				   data-options="prompt:'@Html.DescriptionFor(model => model.Catetory)',
-								 required:false, 
+
+            <!--Catetory-->
+            <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Catetory)</label>
+            <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+              <input id="@Html.IdFor(model => model.Catetory)"
+                     name="@Html.NameFor(model => model.Catetory)"
+                     value="@Html.ValueFor(model => model.Catetory)"
+                     tabindex="10"
+                     class="easyui-textbox"
+                     style="width:100%"
+                     type="text"
+                     data-options="prompt:'@Html.DescriptionFor(model => model.Catetory)',
+								 required:false,
                                  validType: 'length[0,128]'
                                  " />
-       </div>
-				   
-   <!--Location-->
-        <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Location)</label>
-		<div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">  
-			<input id="@Html.IdFor(model => model.Location)" 
-				   name="@Html.NameFor(model => model.Location)" 
-				   value="@Html.ValueFor(model => model.Location)"
-				   tabindex="11" 
-				   class="easyui-textbox" 
-                   style="width:100%"
-				   type="text" 
-				   data-options="prompt:'@Html.DescriptionFor(model => model.Location)',
-								 required:false, 
-                                 validType: 'length[0,32]'
-                                 " />
-       </div>
-				   
+            </div>
 
-   <!--Shelves-->
-        <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Shelves)</label>
-		<div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">  
-			<input id="@Html.IdFor(model => model.Shelves)" 
-				   name="@Html.NameFor(model => model.Shelves)" 
-				   value="@Html.ValueFor(model => model.Shelves)"
-				   tabindex="12" 
-				   class="easyui-textbox" 
-                   style="width:100%"
-				   type="text" 
-				   data-options="prompt:'@Html.DescriptionFor(model => model.Shelves)',
-								 required:false, 
+            <!--Location-->
+            <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Location)</label>
+            <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+              <input id="@Html.IdFor(model => model.Location)"
+                     name="@Html.NameFor(model => model.Location)"
+                     value="@Html.ValueFor(model => model.Location)"
+                     tabindex="11"
+                     class="easyui-textbox"
+                     style="width:100%"
+                     type="text"
+                     data-options="prompt:'@Html.DescriptionFor(model => model.Location)',
+								 required:false,
                                  validType: 'length[0,32]'
                                  " />
-       </div>
-				   
-   <!--Tags-->
-        <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Tags)</label>
-		<div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">  
-			<input id="@Html.IdFor(model => model.Tags)" 
-				   name="@Html.NameFor(model => model.Tags)" 
-				   value="@Html.ValueFor(model => model.Tags)"
-				   tabindex="13" 
-				   class="easyui-textbox" 
-                   style="width:100%"
-				   type="text" 
-				   data-options="prompt:'@Html.DescriptionFor(model => model.Tags)',
-								 required:false, 
+            </div>
+
+
+            <!--Shelves-->
+            <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Shelves)</label>
+            <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+              <input id="@Html.IdFor(model => model.Shelves)"
+                     name="@Html.NameFor(model => model.Shelves)"
+                     value="@Html.ValueFor(model => model.Shelves)"
+                     tabindex="12"
+                     class="easyui-textbox"
+                     style="width:100%"
+                     type="text"
+                     data-options="prompt:'@Html.DescriptionFor(model => model.Shelves)',
+								 required:false,
+                                 validType: 'length[0,32]'
+                                 " />
+            </div>
+
+            <!--Tags-->
+            <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Tags)</label>
+            <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+              <input id="@Html.IdFor(model => model.Tags)"
+                     name="@Html.NameFor(model => model.Tags)"
+                     value="@Html.ValueFor(model => model.Tags)"
+                     tabindex="13"
+                     class="easyui-textbox"
+                     style="width:100%"
+                     type="text"
+                     data-options="prompt:'@Html.DescriptionFor(model => model.Tags)',
+								 required:false,
                                  validType: 'length[0,128]'
                                  " />
-       </div>
-				   
+            </div>
 
-   <!--Status-->
-        <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Status)</label>
-		<div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">  
-			<input id="@Html.IdFor(model => model.Status)" 
-				   name="@Html.NameFor(model => model.Status)" 
-				   value="@Html.ValueFor(model => model.Status)"
-				   tabindex="14" 
-				   class="easyui-textbox" 
-                   style="width:100%"
-				   type="text" 
-				   data-options="prompt:'@Html.DescriptionFor(model => model.Status)',
-								 required:false, 
+
+            <!--Status-->
+            <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.Status)</label>
+            <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+              <input id="@Html.IdFor(model => model.Status)"
+                     name="@Html.NameFor(model => model.Status)"
+                     value="@Html.ValueFor(model => model.Status)"
+                     tabindex="14"
+                     class="easyui-textbox"
+                     style="width:100%"
+                     type="text"
+                     data-options="prompt:'@Html.DescriptionFor(model => model.Status)',
+								 required:false,
                                  validType: 'length[0,12]'
                                  " />
-       </div>
-				   
-   <!--Number Of Trades-->
-       <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Trades)</label>
-	   <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">  
-			<input id="@Html.IdFor(model => model.Trades)"
-				   name="@Html.NameFor(model => model.Trades)" 
-				   value="@Html.ValueFor(model => model.Trades)"
-				   tabindex="15" 
-				   class="easyui-numberbox" 
-                   style="width:100%"
-				   type="text" 
-				   data-options="prompt:'@Html.DescriptionFor(model => model.Trades)',
+            </div>
+
+            <!--Number Of Trades-->
+            <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.Trades)</label>
+            <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+              <input id="@Html.IdFor(model => model.Trades)"
+                     name="@Html.NameFor(model => model.Trades)"
+                     value="@Html.ValueFor(model => model.Trades)"
+                     tabindex="15"
+                     class="easyui-numberbox"
+                     style="width:100%"
+                     type="text"
+                     data-options="prompt:'@Html.DescriptionFor(model => model.Trades)',
 								 required:true,formatter:intformatter,
                                  parser:parsernumber,
                                  " />
-      </div>
-				   
+            </div>
 
-   <!--Input Date-->
-        <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.InputDate)</label>
-		<div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">  
-                <input id="@Html.IdFor(model => model.InputDate)" 
-			       name="@Html.NameFor(model => model.InputDate)"
-                   value="@Html.ValueFor(model => model.InputDate)"
-           		   tabindex="16"  required
-				   class="easyui-datebox" 
-                   style="width:100%"
-				   type="text" 
-				   data-options="prompt:'@Html.DescriptionFor(model => model.InputDate)',
+
+            <!--Input Date-->
+            <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.InputDate)</label>
+            <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
+              <input id="@Html.IdFor(model => model.InputDate)"
+                     name="@Html.NameFor(model => model.InputDate)"
+                     value="@Html.ValueFor(model => model.InputDate)"
+                     tabindex="16" required
+                     class="easyui-datebox"
+                     style="width:100%"
+                     type="text"
+                     data-options="prompt:'@Html.DescriptionFor(model => model.InputDate)',
 								 required:true,
 								 formatter:dateformatter" />
-     </div>
-				   
-	    </div> 
-      </fieldset>
-   </form>
+            </div>
+
+          </div>
+        </fieldset>
+      </form>
     </div>
     </div>
     </div>
@@ -427,53 +409,7 @@
 
 
 function initstockdetailview() {
-//回车光标移动到下个输入控件
-    //如果是枚举类型需要把numberbox改成combobox
-    //Qty
-	$('#Qty').numberbox('textbox').bind('keydown', function (e) {
-      if (e.keyCode == 13) {
-        $(e.target).emulateTab();
-      }
-    });
-    //如果是枚举类型需要把numberbox改成combobox
-    //Price
-	$('#Price').numberbox('textbox').bind('keydown', function (e) {
-      if (e.keyCode == 13) {
-        $(e.target).emulateTab();
-      }
-    });
-    //如果是枚举类型需要把numberbox改成combobox
-    //Purchasing Price
-	$('#PurchasingPrice').numberbox('textbox').bind('keydown', function (e) {
-      if (e.keyCode == 13) {
-        $(e.target).emulateTab();
-      }
-    });
-    //如果是枚举类型需要把numberbox改成combobox
-    //Number Of Trades
-	$('#Trades').numberbox('textbox').bind('keydown', function (e) {
-      if (e.keyCode == 13) {
-        $(e.target).emulateTab();
-      }
-    });
-    //日期类型 Purchase Date
-	$('#PurchaseDate').datebox('textbox').bind('keydown', function (e) {
-      if (e.keyCode == 13) {
-        $(e.target).emulateTab();
-      }
-    });
-    //日期类型 Input Date
-	$('#InputDate').datebox('textbox').bind('keydown', function (e) {
-      if (e.keyCode == 13) {
-        $(e.target).emulateTab();
-      }
-    });
-    //Book默认外键使用combobox,也可以使用combogrid
-	$('#BookId').combobox('textbox').bind('keydown', function (e) {
-      if (e.keyCode == 13) {
-        $(e.target).emulateTab();
-      }
-    });
+ 
 }
 </script>
 

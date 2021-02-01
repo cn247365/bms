@@ -144,7 +144,11 @@
        }
     //新增记录
     async function appendData() {
-       stock = { PurchaseDate: null, 
+      stock = {
+        BookId: null,
+        UserName: '@ViewBag.GivenName',
+        PurchaseDate: null,
+         Qty:1,
 InputDate: moment().format('YYYY-MM-DD HH:mm:ss'), 
  };
         //需要后台创建对象
@@ -238,7 +242,7 @@ InputDate: moment().format('YYYY-MM-DD HH:mm:ss'),
                           }
                         },
                         onUncheckAll: function () {
-                         $("button[name*='deleterowbutton']").prop('disabled', true);
+                         $("button[name*='deleterowbutton']").prop('ViewBagisabled', true);
                         },
                         onSelect: function(index,row) {
                            stock = row;

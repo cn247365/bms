@@ -57,8 +57,8 @@ namespace WebApp.App_Helpers.third_party.api
     public string publisher { get; set; }
     public string pubplace { get; set; }
     public string pubdate { get; set; }
-    public int page { get; set; }
-    public string price { get; set; }
+    public int? page { get; set; }
+    public decimal? price { get; set; }
     public string binding { get; set; }
     public string isbn { get; set; }
     public string isbn10 { get; set; }

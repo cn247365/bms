@@ -79,7 +79,7 @@
                                  " />
               </div>
               <!--ISBN-->
-              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"> @Html.DisplayNameFor(model => model.ISBN)</label>
+              <label class="col-md-2 col-sm-3 col-xs-3 col-3 pt-1 pl-0 pr-0 form-label text-right"><span class="text-danger">*</span> @Html.DisplayNameFor(model => model.ISBN)</label>
               <div class="col-md-4 col-sm-9 col-xs-9 col-9 mb-1 pl-1">
                 <input id="@Html.IdFor(model => model.ISBN)"
                        name="@Html.NameFor(model => model.ISBN)"
@@ -89,8 +89,8 @@
                        style="width:100%"
                        type="text"
                        data-options="prompt:'@Html.DescriptionFor(model => model.ISBN)',
-								 required:false,
-                                 validType: 'length[0,20]'
+								 required:true,
+                                 validType: 'length[0,30]'
                                  " />
               </div>
 
@@ -106,7 +106,7 @@
                        type="text"
                        data-options="prompt:'@Html.DescriptionFor(model => model.ISBN10)',
 								 required:false,
-                                 validType: 'length[0,20]'
+                                 validType: 'length[0,30]'
                                  " />
               </div>
               <!--Author-->
@@ -185,7 +185,7 @@
                        style="width:100%"
                        type="text"
                        data-options="prompt:'@Html.DescriptionFor(model => model.Page)',
-								 required:true,formatter:intformatter,
+								 required:false,formatter:intformatter,
                                  parser:parsernumber,
                                  " />
               </div>
@@ -201,7 +201,7 @@
                        style="width:100%"
                        type="text"
                        data-options="prompt:'@Html.DescriptionFor(model => model.Price)',
-								 required:true,formatter:numberformatter,
+								 required:false,formatter:numberformatter,
                                  parser:parsernumber,precision:2,
 
                                  " />
@@ -504,12 +504,7 @@
 
 <!-- 弹出窗体form表单 -->
 <!-- 弹出编辑对话框 -->
-<!-- bookpicture datagrid  javascript block -->
-@Html.Partial("_BookPictureEditForm", new WebApp.Models.BookPicture())
-<!-- checkout datagrid  javascript block -->
-@Html.Partial("_CheckOutEditForm", new WebApp.Models.CheckOut())
-<!-- comment datagrid  javascript block -->
-@Html.Partial("_CommentEditForm", new WebApp.Models.Comment())
+ 
 
 <!--begin popup detailview javascript block -->
 <script type="text/javascript">
@@ -677,42 +672,8 @@
 
 
   function initbookdetailview() {
-    //回车光标移动到下个输入控件
-    //如果是枚举类型需要把numberbox改成combobox
-    //Page
-    $('#Page').numberbox('textbox').bind('keydown', function (e) {
-      if (e.keyCode == 13) {
-        $(e.target).emulateTab();
-      }
-    });
-    //如果是枚举类型需要把numberbox改成combobox
-    //Price
-    $('#Price').numberbox('textbox').bind('keydown', function (e) {
-      if (e.keyCode == 13) {
-        $(e.target).emulateTab();
-      }
-    });
-    //如果是枚举类型需要把numberbox改成combobox
-    //PurchasingPrice
-    $('#PurchasingPrice').numberbox('textbox').bind('keydown', function (e) {
-      if (e.keyCode == 13) {
-        $(e.target).emulateTab();
-      }
-    });
-    //如果是枚举类型需要把numberbox改成combobox
-    //Reads
-    $('#Reads').numberbox('textbox').bind('keydown', function (e) {
-      if (e.keyCode == 13) {
-        $(e.target).emulateTab();
-      }
-    });
-    //如果是枚举类型需要把numberbox改成combobox
-    //Popular
-    $('#Popular').numberbox('textbox').bind('keydown', function (e) {
-      if (e.keyCode == 13) {
-        $(e.target).emulateTab();
-      }
-    });
+    
+    
   }
 </script>
 

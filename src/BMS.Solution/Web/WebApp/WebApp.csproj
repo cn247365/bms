@@ -515,6 +515,14 @@
     <Compile Include="Migrations\202101310900085_remove_index_of_ISBN10.designer.cs">
       <DependentUpon>202101310900085_remove_index_of_ISBN10.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202102011120063_change_price_optional.cs" />
+    <Compile Include="Migrations\202102011120063_change_price_optional.designer.cs">
+      <DependentUpon>202102011120063_change_price_optional.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202102011141074_change_ISBN_Lenght.cs" />
+    <Compile Include="Migrations\202102011141074_change_ISBN_Lenght.designer.cs">
+      <DependentUpon>202102011141074_change_ISBN_Lenght.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attachment.cs" />
     <Compile Include="Models\Book.cs" />
@@ -4077,6 +4085,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202101310900085_remove_index_of_ISBN10.resx">
       <DependentUpon>202101310900085_remove_index_of_ISBN10.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102011120063_change_price_optional.resx">
+      <DependentUpon>202102011120063_change_price_optional.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102011141074_change_ISBN_Lenght.resx">
+      <DependentUpon>202102011141074_change_ISBN_Lenght.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\resource\Attachment.en-US.resx" />
     <EmbeddedResource Include="Models\resource\Attachment.resx" />

@@ -128,3 +128,8 @@
 2021-01-31 10:04:43.8852|FATAL|WebApp.MvcApplication|A public action method 'GetComments' was not found on controller 'WebApp.Controllers.BooksController'.
 2021-01-31 11:42:58.7396|FATAL|WebApp.MvcApplication|?“??????”???? DataTableImportMapping?
 2021-01-31 12:20:52.5156|FATAL|WebApp.MvcApplication|A public action method 'CheckIn' was not found on controller 'WebApp.Controllers.CheckOutsController'.
+2021-02-01 19:23:47.3730|FATAL|WebApp.MvcApplication|?????:“System.Decimal WebApp.Models.Stock.get_Price()”?
+2021-02-01 19:29:12.6880|FATAL|WebApp.MvcApplication|d:\github\bms\src\BMS.Solution\Web\WebApp\Views\Stocks\Index.cshtml(149): error CS0103: The name 'View' does not exist in the current context
+2021-02-01 19:49:51.9411|FATAL|WebApp.MvcApplication|?????:“Int32 WebApp.Models.Book.get_Page()”?
+2021-02-01 19:50:57.5898|FATAL|WebApp.MvcApplication|?????:“Int32 WebApp.Models.Book.get_Page()”?
+2021-02-01 19:53:21.4130|FATAL|WebApp.MvcApplication|?????:“Int32 WebApp.Models.Book.get_Page()”?

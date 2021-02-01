@@ -23,7 +23,7 @@ namespace WebApp.Models
     [Index(IsUnique =true)]
     public string BarCode { get; set; }
     [Display(Name = "ISBN", Description = "ISBN")]
-    [MaxLength(10)]
+    [MaxLength(30)]
     public string ISBN { get; set; }
     [Display(Name = "Book Name", Description = "Book Name")]
     [MaxLength(128)]
@@ -34,7 +34,7 @@ namespace WebApp.Models
     [Display(Name = "Qty", Description = "Qty")]
     public int Qty { get; set; }
     [Display(Name = "Price", Description = "Price")]
-    public decimal Price { get; set; }
+    public decimal? Price { get; set; }
     [Display(Name = "Purchasing Price", Description = "Purchasing Price")]
     public decimal? PurchasingPrice { get; set; }
     [Display(Name = "Purchase Date", Description = "Purchase Date")]

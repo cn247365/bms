@@ -149,7 +149,7 @@ namespace WebApp.Services
           else
           {
             var isbn = await isbnapi.GetISBN(item.ISBN);
-            if (isbn == null)
+            if (isbn == null ||isbn.status!=0)
             {
               var book = this.mapper.Map<Book>(item);
               item.Book = book;
@@ -158,7 +158,7 @@ namespace WebApp.Services
             }
             else
             {
-              var book = this.mapper.Map<Book>(isbn);
+              var book = this.mapper.Map<Book>(isbn.result);
               item.Book = book;
               item.BookId = book.Id;
               this.bookService.Insert(book);
