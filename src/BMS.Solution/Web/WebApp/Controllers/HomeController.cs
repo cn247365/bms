@@ -34,10 +34,15 @@ namespace WebApp.Controllers
 
     public async Task<ActionResult> Index()
     {
-          this.logger.Debug("访问首页");
+          //this.logger.Debug("访问首页");
       //var result  =await isbnapi.GetISBN("9787212058937");
       
       return this.View();
+    }
+    public async Task<ActionResult> PublicPage()
+    {
+
+      return View();
     }
     [AllowAnonymous]
     public ActionResult BlankPage() => this.View();
