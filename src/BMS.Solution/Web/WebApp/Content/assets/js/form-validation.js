@@ -22,26 +22,45 @@
 		}
 	});
 
-	$( "#form-validation2" ).validate({
+  $( "#return-validation" ).validate({
 		ignore: ':hidden:not(:checkbox)',
 		errorElement: 'label',
 		errorClass: 'error',
 		rules: {
-			inputName2: {
+      globalid: {
 				required: true
 			},
-			inputEmail2: {
+      phone: {
 				required: true,
-				email: true
 			},
-			inputSubject2: {
+      isbn: {
 				required: true
 			},
-			inputMessage2: {
+      bookname: {
 				required: true
 			},
 		}
-	});
+  });
+
+  $("#borrow-validation").validate({
+    ignore: ':hidden:not(:checkbox)',
+    errorElement: 'label',
+    errorClass: 'error',
+    rules: {
+      globalid: {
+        required: true
+      },
+      phone: {
+        required: true,
+      },
+      isbn: {
+        required: true
+      },
+      bookname: {
+        required: true
+      },
+    }
+  });
 
 	$( "#form-validation3" ).validate({
 		ignore: ':hidden:not(:checkbox)',

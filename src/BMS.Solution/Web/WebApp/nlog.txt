@@ -140,3 +140,7 @@
 
 2021-02-02 21:50:54.4688|FATAL|WebApp.MvcApplication|d:\github\bms\src\BMS.Solution\Web\WebApp\Views\Home\PublicPage.cshtml(1013): error CS0103: The name 'mdo' does not exist in the current context
 2021-02-02 21:51:07.6618|FATAL|WebApp.MvcApplication|d:\github\bms\src\BMS.Solution\Web\WebApp\Views\Home\PublicPage.cshtml(1033): error CS0103: The name 'fat' does not exist in the current context
+2021-02-05 18:52:10.1159|FATAL|WebApp.MvcApplication|A space or line break was encountered after the "@" character.  Only valid identifiers, keywords, comments, "(" and "{" are valid at the start of a code block and they must occur immediately following "@" with no space in between.
+
+2021-02-05 18:52:45.6555|FATAL|WebApp.MvcApplication|A space or line break was encountered after the "@" character.  Only valid identifiers, keywords, comments, "(" and "{" are valid at the start of a code block and they must occur immediately following "@" with no space in between.
+
