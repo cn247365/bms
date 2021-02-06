@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
@@ -44,9 +45,12 @@ namespace WebApp.Controllers
 
     public async Task<ActionResult> Index()
     {
-          //this.logger.Debug("访问首页");
+      //this.logger.Debug("访问首页");
       //var result  =await isbnapi.GetISBN("9787212058937");
-      
+      var checkout =await this.checkOutService.Queryable().Where(x => x.Status == "Pending")
+        .OrderBy(x=>x.Days)
+        .ToListAsync();
+      ViewBag.Records = checkout;
       return this.View();
     }
     [AllowAnonymous]

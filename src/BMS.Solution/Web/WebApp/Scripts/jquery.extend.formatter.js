@@ -1,3 +1,120 @@
+//-------Check Status---------//
+var checkstatusfiltersource = [{ value: '', text: 'All'}];
+var checkstatusdatasource = [];
+checkstatusfiltersource.push({ value: 'Pending',text:'Pending'  });
+checkstatusdatasource.push({ value: 'Pending',text:'Pending'  });
+checkstatusfiltersource.push({ value: 'Returned',text:'Returned'  });
+checkstatusdatasource.push({ value: 'Returned',text:'Returned'  });
+//for datagrid checkstatus field  formatter
+function checkstatusformatter(value, row, index) { 
+     let multiple = false; 
+     if (value === null || value === '' || value === undefined) 
+     { 
+         return "";
+     } 
+     if (multiple) { 
+         let valarray = value.split(','); 
+         let result = checkstatusdatasource.filter(item => valarray.includes(item.value));
+         let textarray = result.map(x => x.text);
+         if (textarray.length > 0)
+             return textarray.join(",");
+         else 
+             return value;
+      } else { 
+         let result = checkstatusdatasource.filter(x => x.value == value);
+               if (result.length > 0)
+                    return result[0].text;
+               else
+                    return value;
+       } 
+ } 
+//for datagrid   checkstatus  field filter 
+$.extend($.fn.datagrid.defaults.filters, {
+checkstatusfilter: {
+     init: function(container, options) {
+        var input = $('<select class="easyui-combobox" >').appendTo(container);
+        var myoptions = {
+             panelHeight: 'auto',
+             editable: false,
+             data: checkstatusfiltersource ,
+             onChange: function () {
+                input.trigger('combobox.filter');
+             }
+         };
+         $.extend(options, myoptions);
+         input.combobox(options);
+         input.combobox('textbox').bind('keydown', function (e) {   
+            if (e.keyCode === 13) {
+              $(e.target).emulateTab();
+            }
+          });  
+         return input;
+      },
+     destroy: function(target) {
+                  
+     },
+     getValue: function(target) {
+         return $(target).combobox('getValue');
+     },
+     setValue: function(target, value) {
+         $(target).combobox('setValue', value);
+     },
+     resize: function(target, width) {
+         $(target).combobox('resize', width);
+     }
+   }
+});
+//for datagrid   checkstatus   field  editor 
+$.extend($.fn.datagrid.defaults.editors, {
+checkstatuseditor: {
+     init: function(container, options) {
+        var input = $('<input type="text">').appendTo(container);
+        var myoptions = {
+         panelHeight: 'auto',
+         editable: false,
+         data: checkstatusdatasource,
+         multiple: false,
+         valueField: 'value',
+         textField: 'text'
+     };
+    $.extend(options, myoptions);
+           input.combobox(options);
+         input.combobox('textbox').bind('keydown', function (e) {   
+            if (e.keyCode === 13) {
+              $(e.target).emulateTab();
+            }
+          });  
+           return input;
+       },
+     destroy: function(target) {
+         $(target).combobox('destroy');
+        },
+     getValue: function(target) {
+        let opts = $(target).combobox('options');
+        if (opts.multiple) {
+           return $(target).combobox('getValues').join(opts.separator);
+         } else {
+            return $(target).combobox('getValue');
+         }
+        },
+     setValue: function(target, value) {
+         let opts = $(target).combobox('options');
+         if (opts.multiple) {
+             if (value == '' || value == null) { 
+                 $(target).combobox('clear'); 
+              } else { 
+                  $(target).combobox('setValues', value.split(opts.separator));
+               }
+          }
+          else {
+             $(target).combobox('setValue', value);
+           }
+         },
+     resize: function(target, width) {
+         $(target).combobox('resize', width);
+        }
+  }  
+});
 //-------文件类型---------//
 var filetypefiltersource = [{ value: '', text: 'All'}];
 var filetypedatasource = [];
@@ -31,7 +148,7 @@ filetypefiltersource.push({ value: '9',text:'doc'  });
 filetypedatasource.push({ value: '9',text:'doc'  });
 //for datagrid FileType field  formatter
 function filetypeformatter(value, row, index) { 
-     let multiple = true; 
+     let multiple = false; 
      if (value === null || value === '' || value === undefined) 
      { 
          return "";
@@ -97,7 +214,7 @@ filetypeeditor: {
          panelHeight: 'auto',
          editable: false,
          data: filetypedatasource,
-         multiple: true,
+         multiple: false,
          valueField: 'value',
          textField: 'text'
      };
@@ -214,6 +331,123 @@ statuseditor: {
          panelHeight: 'auto',
          editable: false,
          data: statusdatasource,
+         multiple: false,
+         valueField: 'value',
+         textField: 'text'
+     };
+    $.extend(options, myoptions);
+           input.combobox(options);
+         input.combobox('textbox').bind('keydown', function (e) {   
+            if (e.keyCode === 13) {
+              $(e.target).emulateTab();
+            }
+          });  
+           return input;
+       },
+     destroy: function(target) {
+         $(target).combobox('destroy');
+        },
+     getValue: function(target) {
+        let opts = $(target).combobox('options');
+        if (opts.multiple) {
+           return $(target).combobox('getValues').join(opts.separator);
+         } else {
+            return $(target).combobox('getValue');
+         }
+        },
+     setValue: function(target, value) {
+         let opts = $(target).combobox('options');
+         if (opts.multiple) {
+             if (value == '' || value == null) { 
+                 $(target).combobox('clear'); 
+              } else { 
+                  $(target).combobox('setValues', value.split(opts.separator));
+               }
+          }
+          else {
+             $(target).combobox('setValue', value);
+           }
+         },
+     resize: function(target, width) {
+         $(target).combobox('resize', width);
+        }
+  }  
+});
+//-------Stock Status---------//
+var stockstatusfiltersource = [{ value: '', text: 'All'}];
+var stockstatusdatasource = [];
+stockstatusfiltersource.push({ value: 'In Stock',text:'In Stock'  });
+stockstatusdatasource.push({ value: 'In Stock',text:'In Stock'  });
+stockstatusfiltersource.push({ value: 'Out of Stock',text:'Out of Stock'  });
+stockstatusdatasource.push({ value: 'Out of Stock',text:'Out of Stock'  });
+//for datagrid stockstatus field  formatter
+function stockstatusformatter(value, row, index) { 
+     let multiple = false; 
+     if (value === null || value === '' || value === undefined) 
+     { 
+         return "";
+     } 
+     if (multiple) { 
+         let valarray = value.split(','); 
+         let result = stockstatusdatasource.filter(item => valarray.includes(item.value));
+         let textarray = result.map(x => x.text);
+         if (textarray.length > 0)
+             return textarray.join(",");
+         else 
+             return value;
+      } else { 
+         let result = stockstatusdatasource.filter(x => x.value == value);
+               if (result.length > 0)
+                    return result[0].text;
+               else
+                    return value;
+       } 
+ } 
+//for datagrid   stockstatus  field filter 
+$.extend($.fn.datagrid.defaults.filters, {
+stockstatusfilter: {
+     init: function(container, options) {
+        var input = $('<select class="easyui-combobox" >').appendTo(container);
+        var myoptions = {
+             panelHeight: 'auto',
+             editable: false,
+             data: stockstatusfiltersource ,
+             onChange: function () {
+                input.trigger('combobox.filter');
+             }
+         };
+         $.extend(options, myoptions);
+         input.combobox(options);
+         input.combobox('textbox').bind('keydown', function (e) {   
+            if (e.keyCode === 13) {
+              $(e.target).emulateTab();
+            }
+          });  
+         return input;
+      },
+     destroy: function(target) {
+                  
+     },
+     getValue: function(target) {
+         return $(target).combobox('getValue');
+     },
+     setValue: function(target, value) {
+         $(target).combobox('setValue', value);
+     },
+     resize: function(target, width) {
+         $(target).combobox('resize', width);
+     }
+   }
+});
+//for datagrid   stockstatus   field  editor 
+$.extend($.fn.datagrid.defaults.editors, {
+stockstatuseditor: {
+     init: function(container, options) {
+        var input = $('<input type="text">').appendTo(container);
+        var myoptions = {
+         panelHeight: 'auto',
+         editable: false,
+         data: stockstatusdatasource,
          multiple: false,
          valueField: 'value',
          textField: 'text'

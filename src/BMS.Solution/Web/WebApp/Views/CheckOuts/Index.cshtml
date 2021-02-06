@@ -1,8 +1,8 @@
 ﻿@model WebApp.Models.CheckOut
 @{
-  ViewData["Title"] = "Check Out";
+  ViewData["Title"] = "Borrow Record";
   ViewData["PageName"] = "CheckOuts_Index";
-  ViewData["Heading"] = "<i class='fal fa-window text-primary'></i>  Check Out";
+  ViewData["Heading"] = "<i class='fal fa-window text-primary'></i>  Borrow Record";
   ViewData["Category1"] = "Books Management";
   ViewData["PageDescription"] = "";
 }
@@ -16,7 +16,7 @@
     <div id="panel-1" class="panel">
       <div class="panel-hdr">
         <h2>
-          Check Out
+          Borrow Record
         </h2>
         <div class="panel-toolbar">
           <button class="btn btn-panel bg-transparent fs-xl w-auto h-auto rounded-0" data-action="panel-collapse" data-toggle="tooltip" data-offset="0,10" data-original-title="Collapse"><i class="fal fa-window-minimize"></i></button>
@@ -84,7 +84,7 @@
   <script src="@Fingerprint.Tag("/Scripts/plugin/jquery.serializejson/jquery.serializejson.min.js")"></script>
   <script src="@Fingerprint.Tag("/Scripts/plugin/filesaver/FileSaver.min.js")"></script>
   <script src="@Fingerprint.Tag("/Scripts/plugin/filesaver/jquery.fileDownload.js")"></script>
-<script type="text/javascript">
+  <script type="text/javascript">
     //绑定按钮事件
     $('button[name="searchbutton"]').on('click', reloadData);
     $('button[name="appendbutton"]').on('click', appendData);
@@ -133,7 +133,7 @@
         }
         //显示帮助信息
         function dohelp() {
-            toastr.info('有问题请联系管理员 <br><i class="fa fa-envelope-o" aria-hidden="true"></i> : demo@admin.com','帮助');  
+            toastr.info('有问题请联系管理员 <br><i class="fa fa-envelope-o" aria-hidden="true"></i> : demo@admin.com','帮助');
         }
        var editIndex = undefined;
        //重新加载数据
@@ -144,13 +144,13 @@
        }
     //新增记录
     async function appendData() {
-       checkout = { Qty: 1, 
-BorrowDate: moment().format('YYYY-MM-DD HH:mm:ss'), 
-BackDate: null, 
-Days: 1, 
-Status: 'Check Out', 
-Notified: false, 
-Expiry: false, 
+       checkout = { Qty: 1,
+BorrowDate: moment().format('YYYY-MM-DD HH:mm:ss'),
+BackDate: null,
+Days: 1,
+Status: 'Check Out',
+Notified: false,
+Expiry: false,
  };
         //需要后台创建对象
        if (REQUIRBACKEND) {
@@ -181,7 +181,7 @@ Expiry: false,
          $.post('/CheckOuts/DeleteChecked', { id: selected })
                          .done(response => {
                                 if (response.success) {
-                                    toastr.error(`成功删除 [${selected.length}] 行记录`);  
+                                    toastr.error(`成功删除 [${selected.length}] 行记录`);
                                     reloadData();
                                 } else {
                                     $.messager.alert('错误', response.err,'error');
@@ -251,7 +251,7 @@ Expiry: false,
                         frozenColumns: [[
                          /*开启CheckBox选择功能*/
                          { field: 'ck', checkbox: true },
-                         { 
+                         {
                             field: 'action',
                             title:'@Html.L("Command")',
                             align:'center',
@@ -271,165 +271,149 @@ Expiry: false,
                           }
                         ]],
                         columns: [[
-            
-            {   /*Employee*/
-                field:'EmployeeId',
-                title:'@Html.DisplayNameFor(model => model.EmployeeId)',
-                width:160, 
-                sortable:true, 
-                resizable:true,
-                hidden:false,
-                formatter:(value,row) => {
-                        return row.EmployeeShortName;
-                    },
-            },
            {     /*Global Id*/
-                 field:'GlobalId', 
-                 title:'@Html.DisplayNameFor(model => model.GlobalId)', 
-                 width:100, 
-                 align:'right',
-                 hidden:false,
-                formatter:intformatter,
-                sortable:true,
-                resizable:true 
-            },
-            {    /*Short Name*/
-                 field:'ShortName', 
-                 title:'@Html.DisplayNameFor(model => model.ShortName)', 
-                 width:120,
-                 hidden:false,
-                 sortable:true,
-                 resizable:true 
-            },
-            {    /*Display Name*/
-                 field:'DisplayName', 
-                 title:'@Html.DisplayNameFor(model => model.DisplayName)', 
-                 width:200,
-                 hidden:false,
-                 sortable:true,
-                 resizable:true 
-            },
-            {   /*Book*/
-                field:'BookId',
-                title:'@Html.DisplayNameFor(model => model.BookId)',
-                width:160, 
-                sortable:true, 
-                resizable:true,
-                hidden:false,
-                formatter:(value,row) => {
-                        return row.BookTitle;
-                    },
-            },
-            {    /*BarCode*/
-                 field:'BarCode', 
-                 title:'@Html.DisplayNameFor(model => model.BarCode)', 
-                 width:120,
-                 hidden:false,
-                 sortable:true,
-                 resizable:true 
-            },
-            {    /*ISBN*/
-                 field:'ISBN', 
-                 title:'@Html.DisplayNameFor(model => model.ISBN)', 
-                 width:120,
-                 hidden:false,
-                 sortable:true,
-                 resizable:true 
-            },
-            {    /*Book Name*/
-                 field:'Title', 
-                 title:'@Html.DisplayNameFor(model => model.Title)', 
-                 width:260,
-                 hidden:false,
-                 sortable:true,
-                 resizable:true 
-            },
-           {     /*Qty*/
-                 field:'Qty', 
-                 title:'@Html.DisplayNameFor(model => model.Qty)', 
-                 width:100, 
-                 align:'right',
-                 hidden:false,
-                formatter:intformatter,
-                sortable:true,
-                resizable:true 
-            },
-            {   /*Borrow Date*/
-                field:'BorrowDate', 
-                title:'@Html.DisplayNameFor(model => model.BorrowDate)', 
-                width:100, 
-                align:'right',
-                hidden:false,
-                formatter:dateformatter, 
-                sortable:true, 
-                resizable:true
-            } ,
-            {   /*Back Date*/
-                field:'BackDate', 
-                title:'@Html.DisplayNameFor(model => model.BackDate)', 
-                width:100, 
-                align:'right',
-                hidden:false,
-                formatter:dateformatter, 
-                sortable:true, 
-                resizable:true
-            } ,
-            {   /*Date of expiry*/
-                field:'ExpiryDate', 
-                title:'@Html.DisplayNameFor(model => model.ExpiryDate)', 
-                width:100, 
-                align:'right',
-                hidden:false,
-                formatter:dateformatter, 
-                sortable:true, 
-                resizable:true
-            } ,
-           {     /*Days*/
-                 field:'Days', 
-                 title:'@Html.DisplayNameFor(model => model.Days)', 
-                 width:100, 
-                 align:'right',
-                 hidden:false,
-                formatter:intformatter,
-                sortable:true,
-                resizable:true 
-            },
-            {    /*Status*/
-                 field:'Status',
-                 title:'@Html.DisplayNameFor(model => model.Status)', 
+                 field:'GlobalId',
+                 title:'@Html.DisplayNameFor(model => model.GlobalId)',
                  width:100,
                  align:'right',
                  hidden:false,
-                 formatter: statusformatter
+                sortable:true,
+                resizable:true
             },
+            {    /*Short Name*/
+                 field:'ShortName',
+                 title:'@Html.DisplayNameFor(model => model.ShortName)',
+                 width:120,
+                 hidden:false,
+                 sortable:true,
+                 resizable:true
+            },
+            {    /*Display Name*/
+                 field:'DisplayName',
+                 title:'@Html.DisplayNameFor(model => model.DisplayName)',
+                 width:200,
+                 hidden:false,
+                 sortable:true,
+                 resizable:true
+            },
+
+            {    /*BarCode*/
+                 field:'BarCode',
+                 title:'@Html.DisplayNameFor(model => model.BarCode)',
+                 width:120,
+                 hidden:false,
+                 sortable:true,
+                 resizable:true
+            },
+            {    /*ISBN*/
+                 field:'ISBN',
+                 title:'@Html.DisplayNameFor(model => model.ISBN)',
+                 width:120,
+                 hidden:false,
+                 sortable:true,
+                 resizable:true
+            },
+            {    /*Book Name*/
+                 field:'Title',
+                 title:'@Html.DisplayNameFor(model => model.Title)',
+                 width:260,
+                 hidden:false,
+                 sortable:true,
+                 resizable:true
+                          },
+            {    /*Status*/
+                 field:'Status',
+                 title:'@Html.DisplayNameFor(model => model.Status)',
+                 width:100,
+                 align:'right',
+                 hidden:false,
+              formatter: function (val) {
+                if (val == 'Pending') {
+                  return `<span class="badge badge-warning">${val}</span>`;
+                } else {
+                  return `<span class="badge badge-infor">${val}</span>`;
+                }
+              }
+            },
+           {     /*Qty*/
+                 field:'Qty',
+                 title:'@Html.DisplayNameFor(model => model.Qty)',
+                 width:100,
+                 align:'right',
+                 hidden:false,
+                formatter:intformatter,
+                sortable:true,
+                resizable:true
+            },
+            {   /*Borrow Date*/
+                field:'BorrowDate',
+                title:'@Html.DisplayNameFor(model => model.BorrowDate)',
+                width:100,
+                align:'right',
+                hidden:false,
+                formatter:dateformatter,
+                sortable:true,
+                resizable:true
+            } ,
+            {   /*Back Date*/
+                field:'BackDate',
+                title:'@Html.DisplayNameFor(model => model.BackDate)',
+                width:100,
+                align:'right',
+                hidden:false,
+                formatter:dateformatter,
+                sortable:true,
+                resizable:true
+            } ,
+            {   /*Date of expiry*/
+                field:'ExpiryDate',
+                title:'@Html.DisplayNameFor(model => model.ExpiryDate)',
+                width:100,
+                align:'right',
+                hidden:false,
+                formatter:dateformatter,
+                sortable:true,
+                resizable:true
+            } ,
+           {     /*Days*/
+                 field:'Days',
+                 title:'@Html.DisplayNameFor(model => model.Days)',
+                 width:100,
+                 align:'right',
+                 hidden:false,
+                formatter:intformatter,
+                sortable:true,
+                resizable:true
+            },
+
             {  /*Notified*/
-               field:'Notified', 
-               title:'@Html.DisplayNameFor(model => model.Notified)', 
-               width:90, 
+               field:'Notified',
+               title:'@Html.DisplayNameFor(model => model.Notified)',
+               width:90,
                align:'center',
                hidden:false,
                 formatter:checkboxformatter,
-                sortable:true, 
-                resizable:true 
+                sortable:true,
+                resizable:true
             },
             {  /*Expiry*/
-               field:'Expiry', 
-               title:'@Html.DisplayNameFor(model => model.Expiry)', 
-               width:90, 
+               field:'Expiry',
+               title:'@Html.DisplayNameFor(model => model.Expiry)',
+               width:90,
                align:'center',
                hidden:false,
                 formatter:checkboxformatter,
-                sortable:true, 
-                resizable:true 
+                sortable:true,
+                resizable:true
             },
                  ]]
            }).datagrid('enableFilter',[
                 /*需要在键值队维护好status枚举值*/
                 {  /*Status*/
                       field: 'Status',
-                      type: 'statusfilter',
+                      type: 'checkstatusfilter',
                       options: {
-                    
+
                                }
                  },
                 {   /*Global Id*/
@@ -473,58 +457,13 @@ Expiry: false,
                       field: 'Expiry',
                       type: 'booleanfilter'
                  },
-           {   /*Employee*/
-                 field: 'EmployeeId',
-                 type:'combobox',
-                 options:{  
-                                panelHeight:'auto',
-                                valueField:'Id',
-                                textField:'ShortName',
-                                method:'get',
-                                url:'/CheckOuts/GetEmployees',
-                                onChange: value => {
-                                if (value === '' || value === null) {
-                                    $dg.datagrid('removeFilterRule', 'EmployeeId');
-                                } else {
-                                    $dg.datagrid('addFilterRule', {
-                                        field: 'EmployeeId',
-                                        op: 'equal',
-                                        value: value
-                                });
-                            }
-                            $dg.datagrid('doFilter');
-                        }
-                    }
-           },
-           {   /*Book*/
-                 field: 'BookId',
-                 type:'combobox',
-                 options:{  
-                                panelHeight:'auto',
-                                valueField:'Id',
-                                textField:'Title',
-                                method:'get',
-                                url:'/CheckOuts/GetBooks',
-                                onChange: value => {
-                                if (value === '' || value === null) {
-                                    $dg.datagrid('removeFilterRule', 'BookId');
-                                } else {
-                                    $dg.datagrid('addFilterRule', {
-                                        field: 'BookId',
-                                        op: 'equal',
-                                        value: value
-                                });
-                            }
-                            $dg.datagrid('doFilter');
-                        }
-                    }
-           },
+            
            ])
            .datagrid('load', '/CheckOuts/GetData');
-           
+
      });
- 
-</script>
+
+  </script>
 
 
 

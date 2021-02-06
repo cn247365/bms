@@ -54,10 +54,19 @@ namespace WebApp.Controllers
         [Route("Index", Name = "Stock", Order = 1)]
 		public ActionResult Index() => this.View();
 
-		//Get :Stocks/GetData
-		//For Index View datagrid datasource url
-        
-		[HttpPost]
+
+    public async Task<JsonResult> GetBook(string barcode)
+    {
+      var item = await this.stockService
+       .Queryable()
+       .Where(x => (x.ISBN == barcode || x.BarCode==barcode) && x.Qty>0)
+       .FirstOrDefaultAsync();
+      return Json(item, JsonRequestBehavior.AllowGet);
+    }
+    //Get :Stocks/GetData
+    //For Index View datagrid datasource url
+
+    [HttpPost]
         //[OutputCache(Duration = 10, VaryByParam = "*")]
 		 public async Task<JsonResult> GetData(int page = 1, int rows = 10, string sort = "Id", string order = "asc", string filterRules = "")
 		{

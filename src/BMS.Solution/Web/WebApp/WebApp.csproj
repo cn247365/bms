@@ -523,12 +523,17 @@
     <Compile Include="Migrations\202102011141074_change_ISBN_Lenght.designer.cs">
       <DependentUpon>202102011141074_change_ISBN_Lenght.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202102060913364_add_phone_field.cs" />
+    <Compile Include="Migrations\202102060913364_add_phone_field.designer.cs">
+      <DependentUpon>202102060913364_add_phone_field.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Attachment.cs" />
     <Compile Include="Models\Book.cs" />
     <Compile Include="Models\BookPicture.cs" />
     <Compile Include="Models\CheckOut.cs" />
     <Compile Include="Models\Comment.cs" />
+    <Compile Include="Models\Dto\BorrowInputDto.cs" />
     <Compile Include="Models\Dto\CompanyTreeItem.cs" />
     <Compile Include="Models\Dto\PublicDataDto.cs" />
     <Compile Include="Models\Employee.cs" />
@@ -4287,6 +4292,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202102011141074_change_ISBN_Lenght.resx">
       <DependentUpon>202102011141074_change_ISBN_Lenght.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202102060913364_add_phone_field.resx">
+      <DependentUpon>202102060913364_add_phone_field.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Models\resource\Attachment.en-US.resx" />
     <EmbeddedResource Include="Models\resource\Attachment.resx" />

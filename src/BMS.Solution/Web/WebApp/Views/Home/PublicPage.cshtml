@@ -304,28 +304,36 @@
             <tbody>
               @foreach (var item in Model.Checkouts)
               {
-                <tr class="bg-white">
-                  <td>
-                   @item.DisplayName 
-                  </td>
-                  <td>
-                    <div class="list-media">
-                      <div class="list-item">
-                        <div class="media-img">
-                          <img src="@item.Book.Pic" alt="">
-                        </div>
-                        <div class="info">
-                          <span class="title">@item.Book.Title</span>
-                          <span class="sub-title">@item.Book.Author</span>
-                        </div>
+              <tr class="bg-white">
+                <td>
+                  @item.DisplayName
+                </td>
+                <td>
+                  <div class="list-media">
+                    <div class="list-item">
+                      <div class="media-img">
+                        <img src="@item.Book.Pic" alt="">
+                      </div>
+                      <div class="info">
+                        <span class="title">@item.Book.Title</span>
+                        <span class="sub-title">@item.Book.Author</span>
                       </div>
                     </div>
-                  </td>
-                  <td>@item.BorrowDate.ToString("MMM,dd")</td>
-                  <td>@item.Qty</td>
+                  </div>
+                </td>
+                <td>@item.BorrowDate.ToString("MMM,dd")</td>
+                <td>@item.Qty</td>
+                @if (item.Status == "Pending")
+                {
                   <td><span class="badge badge-pill badge-warning">@item.Status</span></td>
-                  <td>@item.BackDate?.ToString("MMM,dd")</td>
-                </tr>
+                }
+                else
+                {
+                  <td><span class="badge badge-pill badge-success">@item.Status</span></td>
+                }
+
+                <td>@(item.BackDate!=null?item.BackDate.Value.ToString("MMM,dd"):"")</td>
+              </tr>
               }
 
 
@@ -366,10 +374,10 @@
                   <div class="col-md-6 sub-col-right">
                     <div class="form-group">
                       <div class="md-input">
-                        <input type="text" class="md-form-control" id="phone" name="phone" required="" aria-required="true">
+                        <input type="text" class="md-form-control" id="displayname" name="displayname" required="" aria-required="true">
                         <span class="highlight"></span>
                         <span class="bar"></span>
-                        <label><i class="material-icons fs-18 mr-5 va-middle">phone_iphone</i> <span class="va-middle">Mobile Phone</span></label>
+                        <label><i class="material-icons fs-18 mr-5 va-middle">phone_iphone</i> <span class="va-middle">Display Name</span></label>
                       </div><!-- / md-input -->
                     </div><!-- / form-group -->
                   </div><!-- / column -->
@@ -397,7 +405,7 @@
                   </div><!-- / column -->
                 </div><!-- / row -->
 
-                <button type="submit" class="btn btn-success btn-submit ripple-element ripple-941027557 ripple-running-608988543">Add</button>
+                <button type="button" class="btn btn-success btn-submit ripple-element ripple-941027557 ripple-running-608988543">Return</button>
               </form><!-- / form-group -->
             </div><!-- / col-md-6 -->
 
@@ -473,7 +481,7 @@
                   </div><!-- / column -->
                 </div><!-- / row -->
 
-                <button type="submit" class="btn btn-success btn-submit ripple-element ripple-941027557 ripple-running-608988543">Add</button>
+                <button type="button" class="btn btn-success btn-submit ripple-element ripple-941027557 ripple-running-608988543">Add</button>
               </form><!-- / form-group -->
             </div><!-- / col-md-6 -->
 
@@ -546,7 +554,109 @@
   </script>
 
   <script>
+    $(() => {
 
+      $('.modal').on('shown.bs.modal', function (e) {
+        $("#borrow-validation #globalid").val('');
+        $("#borrow-validation #phone").val('');
+        $("#borrow-validation #isbn").val('');
+        $("#borrow-validation #bookname").val('');
+
+        $("#return-validation #globalid").val('');
+        $("#return-validation #displayname").val('');
+        $("#return-validation #isbn").val('');
+        $("#return-validation #bookname").val('');
+      })
+
+
+      $("#borrow-validation #globalid").on('input propertychange', function () {
+        var globalid = $(this).val();
+        console.log(globalid, globalid.length)
+        if (globalid.length > 4) {
+          $.get(`/Employees/GetEmployee?globalId=${globalid}`).done(res => {
+            if (res != null) {
+              $('#borrow-validation #phone').val(res.Phone);
+            }
+          });
+        }
+      });
+
+      $("#borrow-validation #isbn").on('input propertychange', function () {
+        var isbn = $(this).val();
+        console.log(isbn, isbn.length)
+        if (isbn.length > 9) {
+          $.get(`/Stocks/GetBook?barcode=${isbn}`).done(res => {
+            if (res != null) {
+              $('#borrow-validation #bookname').val(res.Title);
+            }
+          });
+        }
+      });
+
+      $("#borrow-validation button").on('click', function () {
+        var valid = $("#borrow-validation").valid();
+        if (valid) {
+          const inputdto = {
+            GlobalId: $('#borrow-validation #globalid').val(),
+            Phone: $('#borrow-validation #phone').val(),
+            BarCode: $('#borrow-validation #isbn').val(),
+          };
+          $.post('/CheckOuts/Borrow', { inputdto }).done(res => {
+            if (res.success) {
+              alert('借书完成');
+              $('.default-example-modal-left').modal('toggle')
+              
+            } else {
+              alert(res.err)
+            }
+          })
+        }
+      })
+      //=======================================================//
+      $("#return-validation #globalid").on('input propertychange', function () {
+        var globalid = $(this).val();
+        console.log(globalid, globalid.length)
+        if (globalid.length > 4) {
+          $.get(`/Employees/GetEmployee?globalId=${globalid}`).done(res => {
+            if (res != null) {
+              $('#return-validation #displayname').val(res.DisplayName);
+            }
+          });
+        }
+      });
+
+      $("#return-validation #isbn").on('input propertychange', function () {
+        var isbn = $(this).val();
+        var globalid = $("#return-validation #globalid").val();
+        console.log(isbn, isbn.length)
+        if (isbn.length > 9 && globalid.length>4) {
+          $.get(`/CheckOuts/GetBook?globalid=${globalid}&barcode=${isbn}`).done(res => {
+            if (res != null) {
+              $('#return-validation #bookname').val(res.Title);
+            }
+          });
+        }
+      });
+
+      $("#return-validation button").on('click', function () {
+        var valid = $("#return-validation").valid();
+        if (valid) {
+          const inputdto = {
+            GlobalId: $('#return-validation #globalid').val(),
+            BarCode: $('#return-validation #isbn').val(),
+          };
+          $.post('/CheckOuts/Returning', { inputdto }).done(res => {
+            if (res.success) {
+              alert('还书完成');
+              $('.default-example-modal-right').modal('toggle')
+
+            } else {
+              alert(res.err)
+            }
+          })
+        }
+      })
+    });
   </script>
 
   <script>

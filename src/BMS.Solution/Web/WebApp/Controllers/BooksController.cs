@@ -54,6 +54,8 @@ namespace WebApp.Controllers
     [Route("Index", Name = "Book", Order = 1)]
     public ActionResult Index() => this.View();
 
+    
+
     //Get :Books/GetData
     //For Index View datagrid datasource url
 

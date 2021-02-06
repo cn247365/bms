@@ -14,6 +14,7 @@ using Service.Pattern;
 using System.Text.RegularExpressions;
 using WebApp.Models;
 using WebApp.Repositories;
+using WebApp.Models.Dto;
 
 namespace WebApp.Services
 {
@@ -34,7 +35,13 @@ namespace WebApp.Services
     private readonly IRepositoryAsync<CheckOut> repository;
     private readonly IDataTableImportMappingService mappingservice;
     private readonly NLog.ILogger logger;
+    private readonly IEmployeeService employeeService;
+    private readonly IBookService bookService;
+    private readonly IStockService stockService;
     public CheckOutService(
+      IEmployeeService employeeService,
+      IBookService bookService,
+      IStockService stockService,
       IRepositoryAsync<CheckOut> repository,
       IDataTableImportMappingService mappingservice,
       NLog.ILogger logger
@@ -44,6 +51,9 @@ namespace WebApp.Services
       this.repository = repository;
       this.mappingservice = mappingservice;
       this.logger = logger;
+      this.employeeService = employeeService;
+      this.bookService = bookService;
+      this.stockService = stockService;
     }
     public async Task<IEnumerable<CheckOut>> GetByEmployeeId(int employeeid) => await repository.GetByEmployeeId(employeeid);
     public async Task<IEnumerable<CheckOut>> GetByBookId(int bookid) => await repository.GetByBookId(bookid);
@@ -216,6 +226,93 @@ namespace WebApp.Services
           .ToListAsync();
         return result;
        
+    }
+
+    public async Task Borrow(BorrowInputDto inputdto)
+    {
+      var isExist = await this.isExists(inputdto.GlobalId);
+      if (!isExist)
+      {
+        throw new Exception($"{inputdto.GlobalId},员工不存在,不允许借书.");
+      }
+      var isAvailable = await this.isAvailable(inputdto.BarCode);
+      if (!isAvailable)
+      {
+        throw new Exception($"{inputdto.BarCode},图书不存在,请联系管理员.");
+      }
+      var emp =await this.employeeService.Queryable().Where(x => x.GlobalId == inputdto.GlobalId).FirstAsync();
+      var stock=await this.stockService.Queryable().Where(x => ( x.BarCode == inputdto.BarCode || x.ISBN == inputdto.BarCode ) && x.Qty > 0)
+        .Include(x=>x.Book)
+        .FirstAsync();
+
+      var checkout = new CheckOut();
+      checkout.GlobalId = emp.GlobalId;
+      checkout.Employee = emp;
+      checkout.EmployeeId = emp.Id;
+      checkout.Phone = inputdto.Phone;
+      checkout.ShortName = emp.ShortName;
+      checkout.DisplayName = emp.DisplayName;
+      checkout.BorrowDate = DateTime.Now;
+      checkout.ExpiryDate = DateTime.Now.AddMonths(1);
+      checkout.Expiry = false;
+      checkout.Days = ( checkout.ExpiryDate.Value - checkout.BorrowDate ).Days;
+      checkout.Qty = 1;
+      checkout.Book = stock.Book;
+      checkout.BookId = stock.BookId;
+      checkout.BarCode = stock.BarCode;
+      checkout.ISBN = stock.ISBN;
+      checkout.Status = "Pending";
+      checkout.Title = stock.Title;
+      stock.Qty = stock.Qty - 1;
+      
+      if (stock.Qty == 0)
+      {
+        stock.Status = "Out of Stock";
+      }
+
+      emp.Phone = inputdto.Phone;
+      var book =await this.bookService.FindAsync(stock.BookId);
+      book.Reads = book.Reads + 1;
+      this.bookService.Update(book);
+      this.employeeService.Update(emp);
+      this.stockService.Update(stock);
+      this.Insert(checkout);
+      this.logger.Info($"Borrow:{inputdto.GlobalId},{emp.DisplayName},{inputdto.BarCode},{stock.Title}");
+    }
+    private async Task<bool> isExists(int globalid)
+    {
+      return await this.employeeService.Queryable().Where(x => x.GlobalId == globalid).AnyAsync();
+    }
+    private async Task<bool> isAvailable(string barcode)
+    {
+      return await this.stockService.Queryable().Where(x => (x.BarCode == barcode || x.ISBN == barcode) && x.Qty > 0).AnyAsync();
+    }
+    private async Task<bool> isReturningAvailable(string barcode)
+    {
+      return await this.Queryable().Where(x => ( x.BarCode == barcode || x.ISBN == barcode ) && x.Status== "Pending").AnyAsync();
+    }
+    public async Task Returning(RetuningInputDto inputdto) {
+      var isExist = await this.isExists(inputdto.GlobalId);
+      if (!isExist)
+      {
+        throw new Exception($"{inputdto.GlobalId},员工不存在,请检查.");
+      }
+      var isAvailable = await this.isReturningAvailable(inputdto.BarCode);
+      if (!isAvailable)
+      {
+        throw new Exception($"{inputdto.BarCode},没有找到借书记录,请联系管理员.");
+      }
+      var checkout=await this.Queryable().Where(x => ( x.BarCode == inputdto.BarCode || x.ISBN == inputdto.BarCode ) && x.Status == "Pending").FirstAsync();
+      var stock = await this.stockService.Queryable().Where(x => ( x.BarCode == inputdto.BarCode || x.ISBN == inputdto.BarCode ))
+         .FirstAsync();
+      stock.Qty = stock.Qty + checkout.Qty;
+      this.stockService.Update(stock);
+      checkout.BackDate = DateTime.Now;
+      checkout.BackQty = checkout.Qty;
+      checkout.Status = "Returned";
+      checkout.Days = ( checkout.BackDate.Value - checkout.BorrowDate ).Days;
+      this.Update(checkout);
+
     }
   }
 }

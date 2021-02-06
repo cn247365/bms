@@ -84,7 +84,7 @@
   <script src="@Fingerprint.Tag("/Scripts/plugin/jquery.serializejson/jquery.serializejson.min.js")"></script>
   <script src="@Fingerprint.Tag("/Scripts/plugin/filesaver/FileSaver.min.js")"></script>
   <script src="@Fingerprint.Tag("/Scripts/plugin/filesaver/jquery.fileDownload.js")"></script>
-<script type="text/javascript">
+  <script type="text/javascript">
     //绑定按钮事件
     $('button[name="searchbutton"]').on('click', reloadData);
     $('button[name="appendbutton"]').on('click', appendData);
@@ -133,7 +133,7 @@
         }
         //显示帮助信息
         function dohelp() {
-            toastr.info('有问题请联系管理员 <br><i class="fa fa-envelope-o" aria-hidden="true"></i> : demo@admin.com','帮助');  
+            toastr.info('有问题请联系管理员 <br><i class="fa fa-envelope-o" aria-hidden="true"></i> : demo@admin.com','帮助');
         }
        var editIndex = undefined;
        //重新加载数据
@@ -149,7 +149,7 @@
         UserName: '@ViewBag.GivenName',
         PurchaseDate: null,
          Qty:1,
-InputDate: moment().format('YYYY-MM-DD HH:mm:ss'), 
+InputDate: moment().format('YYYY-MM-DD HH:mm:ss'),
  };
         //需要后台创建对象
        if (REQUIRBACKEND) {
@@ -180,7 +180,7 @@ InputDate: moment().format('YYYY-MM-DD HH:mm:ss'),
          $.post('/Stocks/DeleteChecked', { id: selected })
                          .done(response => {
                                 if (response.success) {
-                                    toastr.error(`成功删除 [${selected.length}] 行记录`);  
+                                    toastr.error(`成功删除 [${selected.length}] 行记录`);
                                     reloadData();
                                 } else {
                                     $.messager.alert('错误', response.err,'error');
@@ -250,7 +250,7 @@ InputDate: moment().format('YYYY-MM-DD HH:mm:ss'),
                         frozenColumns: [[
                          /*开启CheckBox选择功能*/
                          { field: 'ck', checkbox: true },
-                         { 
+                         {
                             field: 'action',
                             title:'@Html.L("Command")',
                             align:'center',
@@ -270,146 +270,154 @@ InputDate: moment().format('YYYY-MM-DD HH:mm:ss'),
                           }
                         ]],
                         columns: [[
-            
+
 
             {    /*BarCode*/
-                 field:'BarCode', 
-                 title:'@Html.DisplayNameFor(model => model.BarCode)', 
+                 field:'BarCode',
+                 title:'@Html.DisplayNameFor(model => model.BarCode)',
                  width:120,
                  hidden:false,
                  sortable:true,
-                 resizable:true 
+                 resizable:true
             },
             {    /*ISBN*/
-                 field:'ISBN', 
-                 title:'@Html.DisplayNameFor(model => model.ISBN)', 
+                 field:'ISBN',
+                 title:'@Html.DisplayNameFor(model => model.ISBN)',
                  width:120,
                  hidden:false,
                  sortable:true,
-                 resizable:true 
+                 resizable:true
             },
             {    /*Book Name*/
-                 field:'Title', 
-                 title:'@Html.DisplayNameFor(model => model.Title)', 
+                 field:'Title',
+                 title:'@Html.DisplayNameFor(model => model.Title)',
                  width:260,
                  hidden:false,
                  sortable:true,
-                 resizable:true 
-            },
-            {    /*Remark*/
-                 field:'Remark', 
-                 title:'@Html.DisplayNameFor(model => model.Remark)', 
-                 width:260,
-                 hidden:false,
-                 sortable:true,
-                 resizable:true 
-            },
-           {     /*Qty*/
-                 field:'Qty', 
-                 title:'@Html.DisplayNameFor(model => model.Qty)', 
-                 width:100, 
-                 align:'right',
-                 hidden:false,
-                formatter:intformatter,
-                sortable:true,
-                resizable:true 
-            },
-            {    /*Price*/
-                 field:'Price', 
-                 title:'@Html.DisplayNameFor(model => model.Price)', 
-                 width:100, 
-                 align:'right',
-                 hidden:false,
-                formatter:numberformatter,
-                sortable:true,
-                resizable:true 
-            },
-            {    /*Purchasing Price*/
-                 field:'PurchasingPrice', 
-                 title:'@Html.DisplayNameFor(model => model.PurchasingPrice)', 
-                 width:150, 
-                 align:'right',
-                 hidden:false,
-                formatter:numberformatter,
-                sortable:true,
-                resizable:true 
-            },
-            {   /*Purchase Date*/
-                field:'PurchaseDate', 
-                title:'@Html.DisplayNameFor(model => model.PurchaseDate)', 
-                width:130, 
-                align:'right',
-                hidden:false,
-                formatter:dateformatter, 
-                sortable:true, 
-                resizable:true
-            } ,
-            {    /*Manager*/
-                 field:'UserName', 
-                 title:'@Html.DisplayNameFor(model => model.UserName)', 
-                 width:120,
-                 hidden:false,
-                 sortable:true,
-                 resizable:true 
-            },
-            {    /*Catetory*/
-                 field:'Catetory', 
-                 title:'@Html.DisplayNameFor(model => model.Catetory)', 
-                 width:260,
-                 hidden:false,
-                 sortable:true,
-                 resizable:true 
-            },
-            {    /*Location*/
-                 field:'Location', 
-                 title:'@Html.DisplayNameFor(model => model.Location)', 
-                 width:120,
-                 hidden:false,
-                 sortable:true,
-                 resizable:true 
-            },
-            {    /*Shelves*/
-                 field:'Shelves', 
-                 title:'@Html.DisplayNameFor(model => model.Shelves)', 
-                 width:120,
-                 hidden:false,
-                 sortable:true,
-                 resizable:true 
-            },
-            {    /*Tags*/
-                 field:'Tags', 
-                 title:'@Html.DisplayNameFor(model => model.Tags)', 
-                 width:260,
-                 hidden:false,
-                 sortable:true,
-                 resizable:true 
-            },
-            {    /*Status*/
-                 field:'Status',
-                 title:'@Html.DisplayNameFor(model => model.Status)', 
+                 resizable:true
+                          },
+            {     /*Qty*/
+                 field:'Qty',
+                 title:'@Html.DisplayNameFor(model => model.Qty)',
                  width:100,
                  align:'right',
                  hidden:false,
-                 formatter: statusformatter
+                formatter:intformatter,
+                sortable:true,
+                resizable:true
             },
+            {    /*Status*/
+                 field:'Status',
+                 title:'@Html.DisplayNameFor(model => model.Status)',
+                 width:100,
+                 align:'right',
+                 hidden:false,
+              formatter: function (val) {
+                if (val == 'In Stock') {
+                  return `<span class="badge badge-info">${val}</span>`;
+                } else {
+                  return `<span class="badge badge-warning">${val}</span>`;
+                }
+              }
+            },
+            {    /*Remark*/
+                 field:'Remark',
+                 title:'@Html.DisplayNameFor(model => model.Remark)',
+                 width:260,
+                 hidden:false,
+                 sortable:true,
+                 resizable:true
+            },
+
+            {    /*Price*/
+                 field:'Price',
+                 title:'@Html.DisplayNameFor(model => model.Price)',
+                 width:100,
+                 align:'right',
+                 hidden:false,
+                formatter:numberformatter,
+                sortable:true,
+                resizable:true
+            },
+            {    /*Purchasing Price*/
+                 field:'PurchasingPrice',
+                 title:'@Html.DisplayNameFor(model => model.PurchasingPrice)',
+                 width:150,
+                 align:'right',
+                 hidden:false,
+                formatter:numberformatter,
+                sortable:true,
+                resizable:true
+            },
+            {   /*Purchase Date*/
+                field:'PurchaseDate',
+                title:'@Html.DisplayNameFor(model => model.PurchaseDate)',
+                width:130,
+                align:'right',
+                hidden:false,
+                formatter:dateformatter,
+                sortable:true,
+                resizable:true
+            } ,
+            {    /*Manager*/
+                 field:'UserName',
+                 title:'@Html.DisplayNameFor(model => model.UserName)',
+                 width:120,
+                 hidden:false,
+                 sortable:true,
+                 resizable:true
+            },
+            {    /*Catetory*/
+                 field:'Catetory',
+                 title:'@Html.DisplayNameFor(model => model.Catetory)',
+                 width:260,
+                 hidden:false,
+                 sortable:true,
+                 resizable:true
+            },
+            {    /*Location*/
+                 field:'Location',
+                 title:'@Html.DisplayNameFor(model => model.Location)',
+                 width:120,
+                 hidden:false,
+                 sortable:true,
+                 resizable:true
+            },
+            {    /*Shelves*/
+                 field:'Shelves',
+                 title:'@Html.DisplayNameFor(model => model.Shelves)',
+                 width:120,
+                 hidden:false,
+                 sortable:true,
+                 resizable:true
+            },
+            {    /*Tags*/
+                 field:'Tags',
+                 title:'@Html.DisplayNameFor(model => model.Tags)',
+                 width:260,
+                 hidden:false,
+                 sortable:true,
+                 resizable:true
+            },
+
            {     /*Number Of Trades*/
-                 field:'Trades', 
-                 title:'@Html.DisplayNameFor(model => model.Trades)', 
-                 width:160, 
+                 field:'Trades',
+                 title:'@Html.DisplayNameFor(model => model.Trades)',
+                 width:160,
                  align:'right',
                  hidden:false,
                 formatter:intformatter,
                 sortable:true,
-                resizable:true 
+                resizable:true
             },
             {   /*Input Date*/
-                field:'InputDate', 
-                title:'@Html.DisplayNameFor(model => model.InputDate)', 
-                width:100, 
+                field:'InputDate',
+                title:'@Html.DisplayNameFor(model => model.InputDate)',
+                width:100,
                 align:'right',
                 hidden:false,
-                formatter:dateformatter, 
-                sortable:true, 
+                formatter:dateformatter,
+                sortable:true,
                 resizable:true
             } ,
                  ]]
@@ -417,9 +425,9 @@ InputDate: moment().format('YYYY-MM-DD HH:mm:ss'),
                 /*需要在键值队维护好status枚举值*/
                 {  /*Status*/
                       field: 'Status',
-                      type: 'statusfilter',
+               type: 'stockstatusfilter',
                       options: {
-                    
+
                                }
                  },
                 {   /*Qty*/
@@ -454,13 +462,13 @@ InputDate: moment().format('YYYY-MM-DD HH:mm:ss'),
                       options: {
                       }
                   },
-           
+
            ])
            .datagrid('load', '/Stocks/GetData');
-           
+
      });
- 
-</script>
+
+  </script>
 
 
 

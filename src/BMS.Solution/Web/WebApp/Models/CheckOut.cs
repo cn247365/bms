@@ -27,7 +27,9 @@ namespace WebApp.Models
     [Display(Name = "Display Name", Description = "Display Name")]
     [MaxLength(56)]
     public string DisplayName { get; set; }
-
+    [Display(Name = "Phone", Description = "Phone")]
+    [MaxLength(56)]
+    public string Phone { get; set; }
     [Display(Name = "Book", Description = "Book")]
     public int BookId { get; set; }
     [Display(Name = "Book", Description = "Book")]

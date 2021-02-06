@@ -31,7 +31,7 @@
           <div class="row no-gutters align-items-center">
             <div class="col">
               <!-- 开启授权控制请参考 @@if (Html.IsAuthorize("Create") -->
-               <div class="btn-group btn-group-sm">
+              <div class="btn-group btn-group-sm">
                 <button name="searchbutton" class="btn btn-default"> <span class="fal fa-search mr-1"></span> @Html.L("Refresh") </button>
               </div>
               <div class="btn-group btn-group-sm">
@@ -40,9 +40,9 @@
               <div class="btn-group btn-group-sm">
                 <button name="deleterowbutton" disabled class="btn btn-default"> <span class="fal fa-trash-alt mr-1"></span> @Html.L("Delete") </button>
               </div>
-              
+
               <div class="btn-group btn-group-sm hidden-xs">
-                <button name="importexcelbutton" type="button"  class="btn btn-default"><span class="fal fa-cloud-upload mr-1"></span> @Html.L("Import") </button>
+                <button name="importexcelbutton" type="button" class="btn btn-default"><span class="fal fa-cloud-upload mr-1"></span> @Html.L("Import") </button>
                 <button type="button" class="btn btn-default dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                   <span class="sr-only">Toggle Dropdown</span>
                 </button>
@@ -69,10 +69,10 @@
     </div>
   </div>
 </div>
- 
+
 @section ScriptsBlock {
- @{ Html.RenderPartial("_ImportWindow",new {template="Employee" ,model="Employee",url="/Employees/ImportData",callback = "reloadData()",autosave=false }); }		 
- @{ Html.RenderPartial("_PopupDetailFormView",new WebApp.Models.Employee()); }
+  @{ Html.RenderPartial("_ImportWindow", new { template = "Employee", model = "Employee", url = "/Employees/ImportData", callback = "reloadData()", autosave = false }); }
+  @{ Html.RenderPartial("_PopupDetailFormView", new WebApp.Models.Employee()); }
   <script src="@Fingerprint.Tag("/Scripts/notifications/toastr/toastr.js")"></script>
   <script src="@Fingerprint.Tag("/Scripts/formplugins/bootstrap-daterangepicker/bootstrap-daterangepicker.js")"></script>
   <script src="@Fingerprint.Tag("/Scripts/easyui/jquery.easyui.min.js")"></script>
@@ -84,7 +84,7 @@
   <script src="@Fingerprint.Tag("/Scripts/plugin/jquery.serializejson/jquery.serializejson.min.js")"></script>
   <script src="@Fingerprint.Tag("/Scripts/plugin/filesaver/FileSaver.min.js")"></script>
   <script src="@Fingerprint.Tag("/Scripts/plugin/filesaver/jquery.fileDownload.js")"></script>
-<script type="text/javascript">
+  <script type="text/javascript">
     //绑定按钮事件
     $('button[name="searchbutton"]').on('click', reloadData);
     $('button[name="appendbutton"]').on('click', appendData);
@@ -133,7 +133,7 @@
         }
         //显示帮助信息
         function dohelp() {
-            toastr.info('有问题请联系管理员 <br><i class="fa fa-envelope-o" aria-hidden="true"></i> : demo@admin.com','帮助');  
+            toastr.info('有问题请联系管理员 <br><i class="fa fa-envelope-o" aria-hidden="true"></i> : demo@admin.com','帮助');
         }
        var editIndex = undefined;
        //重新加载数据
@@ -144,13 +144,15 @@
        }
     //新增记录
     async function appendData() {
-       employee = {  };
-        //需要后台创建对象
-       if (REQUIRBACKEND) {
-         employee = await $.get('/Employees/NewItem');
-       }
-           //弹出新增窗口
-           openemployeedetailwindow(employee, 'Added');
+      employee = {
+        GlobalId:null,
+      };
+      //需要后台创建对象
+      if (REQUIRBACKEND) {
+        employee = await $.get('/Employees/NewItem');
+      }
+      //弹出新增窗口
+      openemployeedetailwindow(employee, 'Added');
     }
     //删除编辑的行
     function deleteRow() {
@@ -174,7 +176,7 @@
          $.post('/Employees/DeleteChecked', { id: selected })
                          .done(response => {
                                 if (response.success) {
-                                    toastr.error(`成功删除 [${selected.length}] 行记录`);  
+                                    toastr.error(`成功删除 [${selected.length}] 行记录`);
                                     reloadData();
                                 } else {
                                     $.messager.alert('错误', response.err,'error');
@@ -244,7 +246,7 @@
                         frozenColumns: [[
                          /*开启CheckBox选择功能*/
                          { field: 'ck', checkbox: true },
-                         { 
+                         {
                             field: 'action',
                             title:'@Html.L("Command")',
                             align:'center',
@@ -264,89 +266,94 @@
                           }
                         ]],
                         columns: [[
-            
+
            {     /*Global Id*/
-                 field:'GlobalId', 
-                 title:'@Html.DisplayNameFor(model => model.GlobalId)', 
-                 width:100, 
-                 align:'right',
-                 hidden:false,
-                formatter:intformatter,
-                sortable:true,
-                resizable:true 
-            },
-            {    /*Short Name*/
-                 field:'ShortName', 
-                 title:'@Html.DisplayNameFor(model => model.ShortName)', 
-                 width:120,
-                 hidden:false,
-                 sortable:true,
-                 resizable:true 
-            },
-            {    /*Display Name*/
-                 field:'DisplayName', 
-                 title:'@Html.DisplayNameFor(model => model.DisplayName)', 
-                 width:200,
-                 hidden:false,
-                 sortable:true,
-                 resizable:true 
-            },
-            {    /*Cost Center*/
-                 field:'CostCenter', 
-                 title:'@Html.DisplayNameFor(model => model.CostCenter)', 
-                 width:120,
-                 hidden:false,
-                 sortable:true,
-                 resizable:true 
-            },
-            {    /*Department*/
-                 field:'Department', 
-                 title:'@Html.DisplayNameFor(model => model.Department)', 
-                 width:120,
-                 hidden:false,
-                 sortable:true,
-                 resizable:true 
-            },
-            {    /*Company*/
-                 field:'Company', 
-                 title:'@Html.DisplayNameFor(model => model.Company)', 
-                 width:260,
-                 hidden:false,
-                 sortable:true,
-                 resizable:true 
-            },
-            {    /*Email*/
-                 field:'Email', 
-                 title:'@Html.DisplayNameFor(model => model.Email)', 
-                 width:200,
-                 hidden:false,
-                 sortable:true,
-                 resizable:true 
-            },
-            {    /*Phone*/
-                 field:'Phone', 
-                 title:'@Html.DisplayNameFor(model => model.Phone)', 
-                 width:200,
-                 hidden:false,
-                 sortable:true,
-                 resizable:true 
-            },
-            {    /*Status*/
-                 field:'Status',
-                 title:'@Html.DisplayNameFor(model => model.Status)', 
+                 field:'GlobalId',
+                 title:'@Html.DisplayNameFor(model => model.GlobalId)',
                  width:100,
                  align:'right',
                  hidden:false,
-                 formatter: statusformatter
+                sortable:true,
+                resizable:true
+            },
+            {    /*Short Name*/
+                 field:'ShortName',
+                 title:'@Html.DisplayNameFor(model => model.ShortName)',
+                 width:120,
+                 hidden:false,
+                 sortable:true,
+                 resizable:true
+            },
+            {    /*Display Name*/
+                 field:'DisplayName',
+                 title:'@Html.DisplayNameFor(model => model.DisplayName)',
+                 width:200,
+                 hidden:false,
+                 sortable:true,
+                 resizable:true
+            },
+            {    /*Cost Center*/
+                 field:'CostCenter',
+                 title:'@Html.DisplayNameFor(model => model.CostCenter)',
+                 width:120,
+                 hidden:false,
+                 sortable:true,
+                 resizable:true
+            },
+            {    /*Department*/
+                 field:'Department',
+                 title:'@Html.DisplayNameFor(model => model.Department)',
+                 width:120,
+                 hidden:false,
+                 sortable:true,
+                 resizable:true
+            },
+            {    /*Company*/
+                 field:'Company',
+                 title:'@Html.DisplayNameFor(model => model.Company)',
+                 width:260,
+                 hidden:false,
+                 sortable:true,
+                 resizable:true
+            },
+            {    /*Email*/
+                 field:'Email',
+                 title:'@Html.DisplayNameFor(model => model.Email)',
+                 width:200,
+                 hidden:false,
+                 sortable:true,
+                 resizable:true
+            },
+            {    /*Phone*/
+                 field:'Phone',
+                 title:'@Html.DisplayNameFor(model => model.Phone)',
+                 width:200,
+                 hidden:false,
+                 sortable:true,
+                 resizable:true
+            },
+            {    /*Status*/
+                 field:'Status',
+                 title:'@Html.DisplayNameFor(model => model.Status)',
+                 width:100,
+                 align:'right',
+                 hidden:false,
+              formatter: function (val) {
+                if (val == 'Disabled') {
+                  return `<span class="badge badge-warning">${val}</span>`;
+                } else {
+                  return `<span class="badge badge-infor">${val}</span>`;
+                }
+              }
             },
                  ]]
            }).datagrid('enableFilter',[
                 /*需要在键值队维护好status枚举值*/
                 {  /*Status*/
                       field: 'Status',
-                      type: 'statusfilter',
+                      type: 'checkstatusfilter',
                       options: {
-                    
+
                                }
                  },
                 {   /*Global Id*/
@@ -356,13 +363,13 @@
                   },
            ])
            .datagrid('load', '/Employees/GetData');
-           
+
      });
- 
-</script>
+
+  </script>
 
 
 
 }
 
- 
+

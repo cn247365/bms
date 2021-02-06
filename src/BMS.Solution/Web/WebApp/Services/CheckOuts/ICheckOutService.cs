@@ -10,6 +10,8 @@ using WebApp.Models;
 using WebApp.Repositories;
 using System.Data;
 using System.IO;
+using WebApp.Models.Dto;
+
 namespace WebApp.Services
 {
   /// <summary>
@@ -31,5 +33,8 @@ namespace WebApp.Services
     Task<Stream> ExportExcel(string filterRules = "", string sort = "Id", string order = "asc");
     Task Delete(int[] id);
     Task<IEnumerable<CheckOut>> GetPageData(int page, int size);
+
+    Task Borrow(BorrowInputDto inputdto);
+    Task Returning(RetuningInputDto inputdto);
   }
 }

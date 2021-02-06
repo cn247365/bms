@@ -142,19 +142,22 @@
               </tr>
             </thead>
             <tbody>
-              <tr>
-                <td>268410636</td>
-                <td>Cooley, Walker J.</td>
-                <td>Book Name</td>
-                <td>2020-1-1</td>
-                <td>-1</td>
-                <td><button type="button" class="btn btn-sm btn-info waves-effect waves-themed">send notification</button></td>
-               
-              </tr>
-       
-            
-              
-             
+              @foreach (var item in ViewBag.Records)
+              {
+                <tr>
+                  <td>@item.GlobalId</td>
+                  <td>@item.DisplayName</td>
+                  <td>@item.Title</td>
+                  <td>@item.BorrowDate.ToString("MMMM,dd")</td>
+                  <td>@item.Days</td>
+                  <td><button type="button" class="btn btn-sm btn-info waves-effect waves-themed">send notification</button></td>
+
+                </tr>
+              }
+
+
+
+
           </table>
           <!-- datatable end -->
         </div>
@@ -163,24 +166,53 @@
   </div>
 </div>
 
-  @section ScriptsBlock {
-    <script type="text/javascript">
-      /* Activate smart panels */
-      $('#js-page-content').smartPanel();
-    </script>
+@section ScriptsBlock {
+  <script type="text/javascript" src="https://unpkg.com/@("@antv")/g2plot@latest/dist/g2plot.min.js"></script>
+  <script type="text/javascript">
+    /* Activate smart panels */
+    $('#js-page-content').smartPanel();
+  </script>
 
 
-    <script type="module">
-      import { CountUp } from '/Scripts/plugin/countup/countUp.min.js';
-      $(async () => {
-        new CountUp('p1', 100).start();
-        new CountUp('p2', 100).start();
-        new CountUp('p3', 100).start();
-        new CountUp('p4', 100).start();
+  <script type="module">
+    import { CountUp } from '/Scripts/plugin/countup/countUp.min.js';
+    $(async () => {
+      new CountUp('p1', 100).start();
+      new CountUp('p2', 100).start();
+      new CountUp('p3', 100).start();
+      new CountUp('p4', 100).start();
 
-      })
+    })
 
-    </script>
+    const data = [
+      { time: '2020-03', value: 350, count: 800 },
+      { time: '2020-04', value: 900, count: 600 },
+      { time: '2020-05', value: 300, count: 400 },
+      { time: '2020-06', value: 450, count: 380 },
+      { time: '2020-07', value: 470, count: 220 },
+    ];
+    const { DualAxes } = G2Plot;
+    const dualAxes = new DualAxes('flot-toggles', {
+      data: [data, data],
+      xField: 'time',
+      yField: ['value', 'count'],
+      geometryOptions: [
+        {
+          geometry: 'column',
+        },
+        {
+          geometry: 'line',
+          lineStyle: {
+            lineWidth: 2,
+          },
+        },
+      ],
+    });
+
+    dualAxes.render();
 
 
-  }
+  </script>
+
+
+}
