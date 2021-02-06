@@ -144,3 +144,4 @@
 
 2021-02-05 18:52:45.6555|FATAL|WebApp.MvcApplication|A space or line break was encountered after the "@" character.  Only valid identifiers, keywords, comments, "(" and "{" are valid at the start of a code block and they must occur immediately following "@" with no space in between.
 
+2021-02-06 08:43:03.6804|FATAL|WebApp.MvcApplication|d:\github\bms\src\BMS.Solution\Web\WebApp\Views\Home\PublicPage.cshtml(315): error CS0103: The name 'mdo' does not exist in the current context

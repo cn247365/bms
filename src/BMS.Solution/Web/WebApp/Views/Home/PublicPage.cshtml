@@ -70,7 +70,6 @@
       -webkit-transform: translate(25%, 0);
       transform: translate(25%, 0);
     }
-
   </style>
 </head>
 <body>
@@ -116,7 +115,7 @@
         </ul>
         <ul class="navbar-button p-0 m-0 ml-30">
           <li class="nav-item">
-            <a href="#" class="btn btn-sm btn-success"  data-toggle="modal" data-target=".default-example-modal-right"><i class="fas fa-book fs-12 mr-5"></i> <span>Returning</span></a>
+            <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target=".default-example-modal-right"><i class="fas fa-book fs-12 mr-5"></i> <span>Returning</span></a>
           </li>
 
         </ul>
@@ -283,6 +282,144 @@
         </div>
       </div><!-- / container -->
     </section>
+
+    <section class="lg pb-0" id="logs">
+      <div class="container">
+        <!-- tables -->
+        <h6 class="mb-20">Book Search</h6>
+        <!-- / data table -->
+        <div class="widget text-left p-x-30 p-y-15 bg-white">
+          <div class="input-group input-w-overlap-btn mb-0 md-input-group sm-input">
+            <div class="md-input">
+              <input type="text" class="md-form-control" required="" placeholder="">
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>Search</label>
+            </div><!-- / md-input -->
+            <span class="input-group-btn">
+              <button class="btn btn-sm btn-primary lh-0 pill ripple-element ripple-920023844 ripple-running-292919543" type="button"><i class="material-icons fs-16 mr-5">search</i> Search</button>
+            </span><!-- / input-group-btn -->
+          </div><!-- / input-group -->
+        </div>                                                              </p>
+        <div class="table-overflow">
+          <table class="table table-xl border">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Book Name</th>
+                <th scope="col">Catetory</th>
+                <th scope="col">Tags</th>
+                <th scope="col">Location</th>
+                <th scope="col">Status</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="bg-white">
+                <td>
+                  <div class="list-media">
+                    <div class="list-item">
+                      <div class="media-img">
+                        <img src="http://api.jisuapi.com/isbn/upload/62/67cf24f72fe9c9.jpg" alt="">
+                      </div>
+                      <div class="info">
+                        <span class="title">蓟与玫瑰</span>
+                        <span class="sub-title">尼古拉·容克 著</span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  文学
+                </td>
+                <td>女王,伊丽莎白</td>
+                <td>3-5-309</td>
+                <td><span class="badge badge-pill badge-success">In Stock</span></td>
+              </tr>
+              <tr class="bg-white">
+                <td>
+                  <div class="list-media">
+                    <div class="list-item">
+                      <div class="media-img">
+                        <img src="http://api.jisuapi.com/isbn/upload/62/67cf24f72fe9c9.jpg" alt="">
+                      </div>
+                      <div class="info">
+                        <span class="title">蓟与玫瑰</span>
+                        <span class="sub-title">尼古拉·容克 著</span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>
+                  文学
+                </td>
+                <td>女王,伊丽莎白</td>
+                <td>3-5-309</td>
+                <td><span class="badge badge-pill badge-warning">Out of Stock</span></td>
+              </tr>
+            </tbody>
+          </table>
+        </div><!-- / table-overflow -->
+        <!-- / data table -->
+
+        <div class="spacer-50">&nbsp;</div>
+
+        <!-- tables -->
+        <h6 class="mb-20">LOGS</h6>
+        <!-- / data table -->
+        <div class="widget text-left p-x-30 p-y-15 bg-white">
+          <div class="input-group input-w-overlap-btn mb-0 md-input-group sm-input">
+            <div class="md-input">
+              <input type="text" class="md-form-control" required="" placeholder="">
+              <span class="highlight"></span>
+              <span class="bar"></span>
+              <label>Global Id</label>
+            </div><!-- / md-input -->
+            <span class="input-group-btn">
+              <button class="btn btn-sm btn-primary lh-0 pill ripple-element ripple-920023844 ripple-running-292919543" type="button"><i class="material-icons fs-16 mr-5">search</i> Search</button>
+            </span><!-- / input-group-btn -->
+          </div><!-- / input-group -->
+        </div>                                                              </p>
+        <div class="table-overflow">
+          <table class="table table-xl border">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Display Name</th>
+                <th scope="col">Book Name</th>
+                <th scope="col">Borrow Time</th>
+                <th scope="col">Remaining days</th>
+                <th scope="col">Status</th>
+                <th scope="col">Return Time</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr class="bg-white">
+                <td>
+                  Hualin, Zhu<!-- / list-media -->
+                </td>
+                <td>
+                  <div class="list-media">
+                    <div class="list-item">
+                      <div class="media-img">
+                        <img src="/content/assets/images/mini8.jpg" alt="">
+                      </div>
+                      <div class="info">
+                        <span class="title">Sunglasses</span>
+                        <span class="sub-title">Accessories</span>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+                <td>Jun 01, 2020</td>
+                <td>3</td>
+                <td><span class="badge badge-pill badge-warning">Pending</span></td>
+                <td></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div><!-- / table-overflow -->
+        <!-- / data table -->
+      </div>
+    </section>
   </div><!-- / main-container -->
   <!-- Modal Right -->
   <div class="modal fade default-example-modal-right" tabindex="-1" role="dialog" aria-hidden="true">
@@ -420,12 +557,12 @@
                     </div><!-- / form-group -->
                   </div><!-- / column -->
                 </div><!-- / row -->
-    
+
                 <button type="submit" class="btn btn-success btn-submit ripple-element ripple-941027557 ripple-running-608988543">Add</button>
               </form><!-- / form-group -->
             </div><!-- / col-md-6 -->
 
-      
+
           </div>
         </div>
         <div class="modal-footer">

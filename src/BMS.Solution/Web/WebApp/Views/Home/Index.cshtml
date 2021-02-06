@@ -58,27 +58,129 @@
 
 }
 <div class="row">
- 
+  <div class="col-sm-6 col-xl-3">
+    <div class="p-3 bg-primary-300 rounded overflow-hidden position-relative text-white mb-g">
+      <div class="">
+        <h3 class="display-4 d-block l-h-n m-0 fw-500">
+          21.5k
+          <small class="m-0 l-h-n">users signed up</small>
+        </h3>
+      </div>
+      <i class="fal fa-user position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n1" style="font-size:6rem"></i>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="p-3 bg-info-400 rounded overflow-hidden position-relative text-white mb-g">
+      <div class="">
+        <h3 class="display-4 d-block l-h-n m-0 fw-500">
+          1,203
+          <small class="m-0 l-h-n">books in sotck</small>
+        </h3>
+      </div>
+      <i class="fal fa-gem position-absolute pos-right pos-bottom opacity-15  mb-n1 mr-n4" style="font-size: 6rem;"></i>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="p-3 bg-success-200 rounded overflow-hidden position-relative text-white mb-g">
+      <div class="">
+        <h3 class="display-4 d-block l-h-n m-0 fw-500">
+          18
+          <small class="m-0 l-h-n">out of stock</small>
+        </h3>
+      </div>
+      <i class="fal fa-lightbulb position-absolute pos-right pos-bottom opacity-15 mb-n5 mr-n6" style="font-size: 8rem;"></i>
+    </div>
+  </div>
+  <div class="col-sm-6 col-xl-3">
+    <div class="p-3 bg-info-200 rounded overflow-hidden position-relative text-white mb-g">
+      <div class="">
+        <h3 class="display-4 d-block l-h-n m-0 fw-500">
+          +36%
+          <small class="m-0 l-h-n">usage rate</small>
+        </h3>
+      </div>
+      <i class="fal fa-globe position-absolute pos-right pos-bottom opacity-15 mb-n1 mr-n4" style="font-size: 6rem;"></i>
+    </div>
+  </div>
 </div>
- 
-@section ScriptsBlock {
-  <script type="text/javascript">
-    /* Activate smart panels */
-    $('#js-page-content').smartPanel();
-  </script>
-  
- 
-  <script type="module">
-   import { CountUp } from '/Scripts/plugin/countup/countUp.min.js';
-    $(async () => {
-      new CountUp('p1', 100).start();
-      new CountUp('p2', 100).start();
-      new CountUp('p3', 100).start();
-      new CountUp('p4', 100).start();
 
-    })
+<div class="row">
 
-  </script>
-   
- 
-}
+  <div class="col-lg-12">
+    <div id="panel-1" class="panel">
+      <div class="panel-hdr">
+        <h2>
+          Book turnover rate
+        </h2>
+      </div>
+      <div class="panel-container show">
+        <div class="panel-content bg-subtlelight-fade">
+          <div id="flot-toggles" class="w-100 mt-4" style="height: 300px"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="col-lg-12">
+    <div id="panel-4" class="panel">
+      <div class="panel-hdr">
+        <h2>
+          Over time <span class="fw-300"><i>Records</i></span>
+        </h2>
+      </div>
+      <div class="panel-container show">
+        <div class="panel-content">
+          <table id="dt-basic-example" class="table table-bordered table-hover table-striped w-100">
+            <thead class="bg-warning-200">
+              <tr>
+                <th>Global Id</th>
+                <th>Display Name</th>
+                <th>Book Name</th>
+                <th>Borrow Date</th>
+                <th>Remaining days </th>
+                <th>Controls</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>268410636</td>
+                <td>Cooley, Walker J.</td>
+                <td>Book Name</td>
+                <td>2020-1-1</td>
+                <td>-1</td>
+                <td><button type="button" class="btn btn-sm btn-info waves-effect waves-themed">send notification</button></td>
+               
+              </tr>
+       
+            
+              
+             
+          </table>
+          <!-- datatable end -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  @section ScriptsBlock {
+    <script type="text/javascript">
+      /* Activate smart panels */
+      $('#js-page-content').smartPanel();
+    </script>
+
+
+    <script type="module">
+      import { CountUp } from '/Scripts/plugin/countup/countUp.min.js';
+      $(async () => {
+        new CountUp('p1', 100).start();
+        new CountUp('p2', 100).start();
+        new CountUp('p3', 100).start();
+        new CountUp('p4', 100).start();
+
+      })
+
+    </script>
+
+
+  }

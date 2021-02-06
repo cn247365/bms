@@ -39,6 +39,7 @@ namespace WebApp.Controllers
       
       return this.View();
     }
+    [AllowAnonymous]
     public async Task<ActionResult> PublicPage()
     {
 
