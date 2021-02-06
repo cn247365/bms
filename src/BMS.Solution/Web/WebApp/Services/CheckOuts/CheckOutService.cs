@@ -255,7 +255,7 @@ namespace WebApp.Services
       checkout.BorrowDate = DateTime.Now;
       checkout.ExpiryDate = DateTime.Now.AddMonths(1);
       checkout.Expiry = false;
-      checkout.Days = ( checkout.ExpiryDate.Value - checkout.BorrowDate ).Days;
+      checkout.Days = ( checkout.ExpiryDate.Value - checkout.BorrowDate ).Days +1;
       checkout.Qty = 1;
       checkout.Book = stock.Book;
       checkout.BookId = stock.BookId;
@@ -310,7 +310,7 @@ namespace WebApp.Services
       checkout.BackDate = DateTime.Now;
       checkout.BackQty = checkout.Qty;
       checkout.Status = "Returned";
-      checkout.Days = ( checkout.BackDate.Value - checkout.BorrowDate ).Days;
+      checkout.Days = ( checkout.BackDate.Value - checkout.BorrowDate ).Days +1;
       this.Update(checkout);
 
     }
