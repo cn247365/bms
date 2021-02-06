@@ -29,5 +29,6 @@ namespace WebApp.Services
 		Task ImportDataTable(DataTable datatable,string username="");
 		Task<Stream> ExportExcel( string filterRules = "",string sort = "Id", string order = "asc");
 	    Task Delete(int[] id);
+    Task<IEnumerable<Stock>> GetPageData(int page, int size);
     }
 }

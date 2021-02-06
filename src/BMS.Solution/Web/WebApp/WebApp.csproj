@@ -530,6 +530,7 @@
     <Compile Include="Models\CheckOut.cs" />
     <Compile Include="Models\Comment.cs" />
     <Compile Include="Models\Dto\CompanyTreeItem.cs" />
+    <Compile Include="Models\Dto\PublicDataDto.cs" />
     <Compile Include="Models\Employee.cs" />
     <Compile Include="Models\Favorite.cs" />
     <Compile Include="Models\Metadata\AttachmentMetadata.cs" />

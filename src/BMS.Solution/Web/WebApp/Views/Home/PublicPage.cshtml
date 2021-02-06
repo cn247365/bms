@@ -1,4 +1,5 @@
-﻿@{
+﻿@model WebApp.Models.Dto.PublicDataDto
+@{
   Layout = null;
 }
 <!DOCTYPE html>
@@ -102,7 +103,7 @@
             <div class="dropdown-menu" aria-labelledby="dropdown">
               <a class="dropdown-item smooth-scroll" href="#popular"><i class="material-icons mr-5">star_border</i> <span>Popular</span></a>
               <a class="dropdown-item smooth-scroll" href="#books"><i class="material-icons mr-5">library_books</i> <span>Books</span></a>
-
+              <a class="dropdown-item smooth-scroll" href="#logs"><i class="material-icons mr-5">search</i> <span>Search</span></a>
             </div><!-- / dropdown-menu -->
           </li><!-- / dropdown -->
         </ul><!-- / navbar-nav -->
@@ -142,65 +143,20 @@
         </div><!-- / section-title-area -->
         <!-- testimonial carousel -->
         <div id="testimonial-carousel" class="owl-carousel owl-theme">
-          <div class="card mb-0">
-            <div class="card-body text-center">
-              <img class="mb-30 rounded raised m-x-auto" style="max-width:50%" src="/content/assets/images/square1.jpg" alt="">
-              <h6 class="card-title mb-5">Leo Fritz</h6>
-              <p class="mb-0 fs-10 secondary-font fw-bold text-secondary-dark">Project Manager  twitter.com</p>
-              <p class="card-text mt-15 mb-15">"Etiam in gravida ligula. Phasellus a blandit lectus. Sed in libero ac ex."</p>
-              <p class="ratings mb-0"><i class="material-icons fs-12 va-middle">star</i> <i class="material-icons fs-18 va-middle">star</i> <i class="material-icons fs-30 va-middle">star</i> <i class="material-icons fs-18 va-middle">star</i> <i class="material-icons fs-12 va-middle">star</i></p>
-            </div><!-- / card-body -->
-          </div><!-- / card -->
+          @foreach (var item in Model.Books)
+          {
+            <div class="card mb-0">
+              <div class="card-body text-center">
+                <img class="mb-30 rounded raised m-x-auto" style="max-width:50%" src="@item.Pic" alt="@item.Title">
+                <h6 class="card-title mb-5">@item.Title</h6>
+                <p class="mb-0 fs-10 secondary-font fw-bold text-secondary-dark">@item.SubTitle</p>
+                <p class="card-text mt-15 mb-15">@Html.Truncate(item.Summary,80)</p>
+                <p class="ratings mb-0"><i class="material-icons fs-12 va-middle">star</i> <i class="material-icons fs-18 va-middle">star</i> <i class="material-icons fs-30 va-middle">star_half</i> <i class="material-icons fs-18 va-middle">star</i> <i class="material-icons fs-12 va-middle">star</i></p>
+              </div><!-- / card-body -->
+            </div><!-- / card -->
+          }
 
-          <div class="card mb-0">
-            <div class="card-body text-center">
-              <img class="mb-30 rounded raised m-x-auto" style="max-width:50%" src="/content/assets/images/square2.jpg" alt="">
-              <h6 class="card-title mb-5">Edith Koenig</h6>
-              <p class="mb-0 fs-10 secondary-font fw-bold text-secondary-dark">Photographer  unsplash.com</p>
-              <p class="card-text mt-15 mb-15">"Etiam in gravida ligula. Phasellus a blandit lectus. Sed in libero ac ex."</p>
-              <p class="ratings mb-0"><i class="material-icons fs-12 va-middle">star</i> <i class="material-icons fs-18 va-middle">star</i> <i class="material-icons fs-30 va-middle">star_outline</i> <i class="material-icons fs-18 va-middle">star</i> <i class="material-icons fs-12 va-middle">star</i></p>
-            </div><!-- / card-body -->
-          </div><!-- / card -->
 
-          <div class="card mb-0">
-            <div class="card-body text-center">
-              <img class="mb-30 rounded raised m-x-auto" style="max-width:50%" src="/content/assets/images/square3.jpg" alt="">
-              <h6 class="card-title mb-5">Leo Gill</h6>
-              <p class="mb-0 fs-10 secondary-font fw-bold text-secondary-dark">Web Designer  facebook.com</p>
-              <p class="card-text mt-15 mb-15">"Etiam in gravida ligula. Phasellus a blandit lectus. Sed in libero ac ex."</p>
-              <p class="ratings mb-0"><i class="material-icons fs-12 va-middle">star</i> <i class="material-icons fs-18 va-middle">star</i> <i class="material-icons fs-30 va-middle">star_half</i> <i class="material-icons fs-18 va-middle">star</i> <i class="material-icons fs-12 va-middle">star</i></p>
-            </div><!-- / card-body -->
-          </div><!-- / card -->
-
-          <div class="card mb-0">
-            <div class="card-body text-center">
-              <img class="mb-30 rounded raised m-x-auto" style="max-width:50%" src="/content/assets/images/square4.jpg" alt="">
-              <h6 class="card-title mb-5">Ariyanna Hicks</h6>
-              <p class="mb-0 fs-10 secondary-font fw-bold text-secondary-dark">Project Manager  twitter.com</p>
-              <p class="card-text mt-15 mb-15">"Etiam in gravida ligula. Phasellus a blandit lectus. Sed in libero ac ex."</p>
-              <p class="ratings mb-0"><i class="material-icons fs-12 va-middle">star</i> <i class="material-icons fs-18 va-middle">star</i> <i class="material-icons fs-30 va-middle">star_outline</i> <i class="material-icons fs-18 va-middle">star</i> <i class="material-icons fs-12 va-middle">star</i></p>
-            </div><!-- / card-body -->
-          </div><!-- / card -->
-
-          <div class="card mb-0">
-            <div class="card-body text-center">
-              <img class="mb-30 rounded raised m-x-auto" style="max-width:50%" src="/content/assets/images/square5.jpg" alt="">
-              <h6 class="card-title mb-5">Clint Dunham</h6>
-              <p class="mb-0 fs-10 secondary-font fw-bold text-secondary-dark">Software Engineer  google.com</p>
-              <p class="card-text mt-15 mb-15">"Etiam in gravida ligula. Phasellus a blandit lectus. Sed in libero ac ex."</p>
-              <p class="ratings mb-0"><i class="material-icons fs-12 va-middle">star</i> <i class="material-icons fs-18 va-middle">star</i> <i class="material-icons fs-30 va-middle">star</i> <i class="material-icons fs-18 va-middle">star</i> <i class="material-icons fs-12 va-middle">star</i></p>
-            </div><!-- / card-body -->
-          </div><!-- / card -->
-
-          <div class="card mb-0">
-            <div class="card-body text-center">
-              <img class="mb-30 rounded raised m-x-auto" style="max-width:50%" src="/content/assets/images/square6.jpg" alt="">
-              <h6 class="card-title mb-5">Lucy Walker</h6>
-              <p class="mb-0 fs-10 secondary-font fw-bold text-secondary-dark">Influencer instagram.com</p>
-              <p class="card-text mt-15 mb-15">"Etiam in gravida ligula. Phasellus a blandit lectus. Sed in libero ac ex."</p>
-              <p class="ratings mb-0"><i class="material-icons fs-12 va-middle">star</i> <i class="material-icons fs-18 va-middle">star</i> <i class="material-icons fs-30 va-middle">star_half</i> <i class="material-icons fs-18 va-middle">star</i> <i class="material-icons fs-12 va-middle">star</i></p>
-            </div><!-- / card-body -->
-          </div><!-- / card -->
 
         </div><!-- / owl-carousel -->
         <!-- / testimonial carousel -->
@@ -215,65 +171,20 @@
       </div><!-- / section-title-area -->
       <div class="container">
         <div class="row">
-          <div class="col-md-6 col-lg-4">
-            <div class="card">
-              <div class="card-body text-center">
-                <img class="card-raised-img-top raised rounded mb-30" src="/content/assets/images/img14.jpg" alt="">
-                <h5 class="card-title">Web Design</h5>
-                <p class="card-text">Vestibulum non neque lacinia mi laoreet viverra ac in nisi. Integer varius, lorem et eleifend placerat, felis neque posuere risus.</p>
-              </div><!-- / card-body -->
-            </div><!-- / card -->
-          </div><!-- / column -->
+          @foreach (var item in Model.BooksPageData)
+          {
+            <div class="col-md-6 col-lg-4">
+              <div class="card">
+                <div class="card-body text-center">
+                  <img class="card-raised-img-top raised rounded mb-30" src="@item.Pic" alt="@item.Title">
+                  <h5 class="card-title">@item.Title</h5>
+                  <p class="card-text">@Html.Truncate(item.Summary, 80)</p>
+                </div><!-- / card-body -->
+              </div><!-- / card -->
+            </div><!-- / column -->
+          }
 
-          <div class="col-md-6 col-lg-4">
-            <div class="card">
-              <div class="card-body text-center">
-                <img class="card-raised-img-top raised rounded mb-30" src="/content/assets/images/img15.jpg" alt="">
-                <h5 class="card-title">Logo Design</h5>
-                <p class="card-text">Vestibulum non neque lacinia mi laoreet viverra ac in nisi. Integer varius, lorem et eleifend placerat, felis neque posuere risus.</p>
-              </div><!-- / card-body -->
-            </div><!-- / card -->
-          </div><!-- / column -->
-
-          <div class="col-md-6 col-lg-4">
-            <div class="card">
-              <div class="card-body text-center">
-                <img class="card-raised-img-top raised rounded mb-30" src="/content/assets/images/img16.jpg" alt="">
-                <h5 class="card-title">Photography</h5>
-                <p class="card-text">Vestibulum non neque lacinia mi laoreet viverra ac in nisi. Integer varius, lorem et eleifend placerat, felis neque posuere risus.</p>
-              </div><!-- / card-body -->
-            </div><!-- / card -->
-          </div><!-- / column -->
-
-          <div class="col-md-6 col-lg-4">
-            <div class="card">
-              <div class="card-body text-center">
-                <img class="card-raised-img-top raised rounded mb-30" src="/content/assets/images/img17.jpg" alt="">
-                <h5 class="card-title">Marketing</h5>
-                <p class="card-text">Vestibulum non neque lacinia mi laoreet viverra ac in nisi. Integer varius, lorem et eleifend placerat, felis neque posuere risus.</p>
-              </div><!-- / card-body -->
-            </div><!-- / card -->
-          </div><!-- / column -->
-
-          <div class="col-md-6 col-lg-4">
-            <div class="card">
-              <div class="card-body text-center">
-                <img class="card-raised-img-top raised rounded mb-30" src="/content/assets/images/img18.jpg" alt="">
-                <h5 class="card-title">SEO</h5>
-                <p class="card-text">Vestibulum non neque lacinia mi laoreet viverra ac in nisi. Integer varius, lorem et eleifend placerat, felis neque posuere risus.</p>
-              </div><!-- / card-body -->
-            </div><!-- / card -->
-          </div><!-- / column -->
-
-          <div class="col-md-6 col-lg-4">
-            <div class="card">
-              <div class="card-body text-center">
-                <img class="card-raised-img-top raised rounded mb-30" src="/content/assets/images/img19.jpg" alt="">
-                <h5 class="card-title">Analytics</h5>
-                <p class="card-text">Vestibulum non neque lacinia mi laoreet viverra ac in nisi. Integer varius, lorem et eleifend placerat, felis neque posuere risus.</p>
-              </div><!-- / card-body -->
-            </div><!-- / card -->
-          </div><!-- / column -->
+ 
 
 
         </div><!-- / row -->
@@ -307,59 +218,59 @@
               <tr>
                 <th scope="col">Book Name</th>
                 <th scope="col">Catetory</th>
-                <th scope="col">Tags</th>
+                <th scope="col">Summary</th>
                 <th scope="col">Location</th>
                 <th scope="col">Status</th>
               </tr>
             </thead>
             <tbody>
+              @foreach (var item in Model.Stocks)
+              {
               <tr class="bg-white">
                 <td>
                   <div class="list-media">
                     <div class="list-item">
                       <div class="media-img">
-                        <img src="http://api.jisuapi.com/isbn/upload/62/67cf24f72fe9c9.jpg" alt="">
+                        <img src="@item.Book.Pic" alt="@item.Title">
                       </div>
                       <div class="info">
-                        <span class="title">蓟与玫瑰</span>
-                        <span class="sub-title">尼古拉·容克 著</span>
+                        <span class="title">@item.Title</span>
+                        <span class="sub-title">@item.Book.Author</span>
                       </div>
                     </div>
                   </div>
                 </td>
                 <td>
-                  文学
+                  @item.Catetory
                 </td>
-                <td>女王,伊丽莎白</td>
-                <td>3-5-309</td>
-                <td><span class="badge badge-pill badge-success">In Stock</span></td>
+                <td>@Html.Truncate(item.Book.Summary, 30)</td>
+                <td>@item.Location</td>
+                @if (item.Status == "Out of Stock")
+                {
+                  <td><span class="badge badge-pill badge-warning">@item.Status</span></td>
+                }
+                else
+                {
+                  <td><span class="badge badge-pill badge-success">@item.Status</span></td>
+                }
+
               </tr>
-              <tr class="bg-white">
-                <td>
-                  <div class="list-media">
-                    <div class="list-item">
-                      <div class="media-img">
-                        <img src="http://api.jisuapi.com/isbn/upload/62/67cf24f72fe9c9.jpg" alt="">
-                      </div>
-                      <div class="info">
-                        <span class="title">蓟与玫瑰</span>
-                        <span class="sub-title">尼古拉·容克 著</span>
-                      </div>
-                    </div>
-                  </div>
-                </td>
-                <td>
-                  文学
-                </td>
-                <td>女王,伊丽莎白</td>
-                <td>3-5-309</td>
-                <td><span class="badge badge-pill badge-warning">Out of Stock</span></td>
-              </tr>
+              }
+
+
             </tbody>
           </table>
         </div><!-- / table-overflow -->
         <!-- / data table -->
-
+        <nav aria-label="pagination-center">
+          <ul class="pagination pill-pagination justify-content-center">
+            <li class="page-item disabled"><a class="page-link" href="#x"><i class="material-icons fs-18 mb-5">arrow_back</i></a></li>
+            <li class="page-item active"><a class="page-link" href="#x">1</a></li>
+            <li class="page-item "><a class="page-link" href="#x">2</a></li>
+            <li class="page-item"><a class="page-link" href="#x">3</a></li>
+            <li class="page-item"><a class="page-link" href="#x"><i class="material-icons fs-18 mb-5">arrow_forward</i></a></li>
+          </ul>
+        </nav><!-- / pagination-center -->
         <div class="spacer-50">&nbsp;</div>
 
         <!-- tables -->
@@ -391,28 +302,32 @@
               </tr>
             </thead>
             <tbody>
-              <tr class="bg-white">
-                <td>
-                  Hualin, Zhu<!-- / list-media -->
-                </td>
-                <td>
-                  <div class="list-media">
-                    <div class="list-item">
-                      <div class="media-img">
-                        <img src="/content/assets/images/mini8.jpg" alt="">
-                      </div>
-                      <div class="info">
-                        <span class="title">Sunglasses</span>
-                        <span class="sub-title">Accessories</span>
+              @foreach (var item in Model.Checkouts)
+              {
+                <tr class="bg-white">
+                  <td>
+                   @item.DisplayName 
+                  </td>
+                  <td>
+                    <div class="list-media">
+                      <div class="list-item">
+                        <div class="media-img">
+                          <img src="@item.Book.Pic" alt="">
+                        </div>
+                        <div class="info">
+                          <span class="title">@item.Book.Title</span>
+                          <span class="sub-title">@item.Book.Author</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </td>
-                <td>Jun 01, 2020</td>
-                <td>3</td>
-                <td><span class="badge badge-pill badge-warning">Pending</span></td>
-                <td></td>
-              </tr>
+                  </td>
+                  <td>@item.BorrowDate.ToString("MMM,dd")</td>
+                  <td>@item.Qty</td>
+                  <td><span class="badge badge-pill badge-warning">@item.Status</span></td>
+                  <td>@item.BackDate?.ToString("MMM,dd")</td>
+                </tr>
+              }
+
 
             </tbody>
           </table>

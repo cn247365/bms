@@ -221,5 +221,15 @@ namespace WebApp.Services
       }
 
     }
+
+    public async Task<IEnumerable<Stock>> GetPageData(int page, int size) {
+      var result =await this.Queryable().OrderByDescending(x => x.Id)
+        .Skip(page * size)
+        .Take(size)
+        .Include(x => x.Book)
+        .ToListAsync();
+      return result;
+    }
+   
   }
 }

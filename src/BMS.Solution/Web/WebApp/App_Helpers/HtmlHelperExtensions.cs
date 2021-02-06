@@ -33,6 +33,9 @@ namespace WebApp
       var text = resource.GetString(name);
       return new HtmlString(text ?? name);
     }
+
+    public static HtmlString Truncate(this HtmlHelper helper, string str, int maxchars) => new HtmlString(str.Length <= maxchars ? str : str.Substring(0, maxchars) + "...");
+
     public static HtmlString LangScriptTag(this HtmlHelper helper, string defaultsrc)
     {
       var src = defaultsrc;
