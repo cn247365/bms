@@ -1,2 +1,3 @@
 # bms
-books management system
+This is a simple library management system
+
